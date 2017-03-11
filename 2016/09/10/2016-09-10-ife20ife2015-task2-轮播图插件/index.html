@@ -1,0 +1,716 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,ife," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="小练习3：轮播图组件任务描述实现一个轮播图的功能。
+
+图片数量及URL均在HTML中写好
+在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片
+图片切换的动画要流畅
+可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ife20ife2015-task2-轮播图插件">
+<meta property="og:url" content="https://hewei0928.github.io/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/index.html">
+<meta property="og:site_name" content="小狗窝">
+<meta property="og:description" content="小练习3：轮播图组件任务描述实现一个轮播图的功能。
+
+图片数量及URL均在HTML中写好
+在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片
+图片切换的动画要流畅
+可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长">
+<meta property="og:updated_time" content="2016-09-10T07:55:53.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ife20ife2015-task2-轮播图插件">
+<meta name="twitter:description" content="小练习3：轮播图组件任务描述实现一个轮播图的功能。
+
+图片数量及URL均在HTML中写好
+在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片
+图片切换的动画要流畅
+可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/"/>
+
+  <title> ife20ife2015-task2-轮播图插件 | 小狗窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小狗窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">邪不压皮</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+            个人作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            Über
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ife20ife2015-task2-轮播图插件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-09-10T13:40:51+08:00" content="2016-09-10">
+              2016-09-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="小练习3：轮播图组件"><a href="#小练习3：轮播图组件" class="headerlink" title="小练习3：轮播图组件"></a>小练习3：轮播图组件</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>实现一个轮播图的功能。</p>
+<ul>
+<li>图片数量及URL均在HTML中写好</li>
+<li>在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片</li>
+<li>图片切换的动画要流畅</li>
+<li>可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长<a id="more"></a>
+###实现思路：###<blockquote>
+<p>主要是对于考察对于定时器，以及事件绑定的处理，以及动画效果。这里用到了我之前博客<a href="https://hewei0928.github.io/2016/09/08/JavaScript%E5%AE%8C%E7%BE%8E%E8%BF%90%E5%8A%A8%E6%A1%86%E6%9E%B6%E7%9A%84%E8%BF%9B%E9%98%B6%E4%B9%8B%E6%97%85/">《JavaScript完美运动框架的进阶之旅》</a>中的封装好的程序。 </p>
+</blockquote>
+</li>
+</ul>
+<p>###第一步：HTML与CSS的编写###</p>
+<blockquote>
+<p>因为题目要求小点自动生成，所以先在css中设置好对应样式</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"Slideshow"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgContainer"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/1.jpg"</span> <span class="attr">alt</span>=<span class="string">"小乔"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/2.jpg"</span> <span class="attr">alt</span>=<span class="string">"桂纶镁"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/3.jpg"</span> <span class="attr">alt</span>=<span class="string">"动漫"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/4.jpg"</span> <span class="attr">alt</span>=<span class="string">"IU"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/5.jpg"</span> <span class="attr">alt</span>=<span class="string">"桂纶镁"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/6.jpg"</span> <span class="attr">alt</span>=<span class="string">"小乔"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">		* &#123;</div><div class="line">		    margin: 0;</div><div class="line">		    padding: 0;</div><div class="line">		    -webkit-box-sizing: border-box;</div><div class="line">		    -moz-box-sizing: border-box;</div><div class="line">		    box-sizing: border-box;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		body &#123;</div><div class="line">		    padding: 40px;</div><div class="line">		    min-width: 560px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		ul, li &#123;</div><div class="line">		    list-style: none;</div><div class="line">		&#125;</div><div class="line"></div><div class="line"></div><div class="line">		/*标题*/</div><div class="line"></div><div class="line">		.title h2, .title h3, .title h4 &#123;</div><div class="line">		    margin-bottom: 15px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.title ol &#123;</div><div class="line">		    padding-left: 40px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.title li &#123;</div><div class="line">		    list-style: decimal;</div><div class="line">		    margin-bottom: 8px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.title span &#123;</div><div class="line">		    background-color: #eee;</div><div class="line">		    color: red;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		.Slideshow&#123;</div><div class="line">			width: 500px;</div><div class="line">			height: 300px;</div><div class="line">			position: relative;</div><div class="line">			overflow: hidden;</div><div class="line">		&#125;</div><div class="line">		.imgContainer&#123;</div><div class="line">			position: absolute;</div><div class="line">			left: 0;</div><div class="line">		&#125;</div><div class="line">		.imgContainer img &#123;</div><div class="line">		    display: block;</div><div class="line">		    float: left;</div><div class="line">		    width: 500px;</div><div class="line">		    height: 300px;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.Slideshow-nav&#123;</div><div class="line">			position: absolute;</div><div class="line">			transform: translateX(-50%);</div><div class="line">			left: 50%;</div><div class="line">			bottom: 5%;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.Slideshow-nav li&#123;</div><div class="line">			height: 15px;</div><div class="line">			width: 15px;</div><div class="line">			float: left;</div><div class="line">			margin-left: 5px;</div><div class="line">			border: 1px solid #ddd;</div><div class="line">			background-color: #ddd;</div><div class="line">		    border-radius: 50%;</div><div class="line">		    cursor: pointer;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.Slideshow-nav .active &#123;</div><div class="line">		    background-color: #000;</div><div class="line">		    border: 1px solid #000;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		.left-right span &#123;</div><div class="line">		    position: absolute;</div><div class="line">		    top: 50%;</div><div class="line">		    transform: translateY(-50%);</div><div class="line">		    font-size: 50px;</div><div class="line">		    font-weight: bold;</div><div class="line">		    z-index: 999;</div><div class="line">		    color: #eee;</div><div class="line">		    cursor: pointer</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.left-right span:hover &#123;</div><div class="line">		    color: #eee;</div><div class="line">		    background-color: rgba(0, 0, 0, 0.7);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.left-right .nav-right &#123;</div><div class="line">		    right: 5%;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		.left-right .nav-left &#123;</div><div class="line">		    left: 5%;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="第二步：实现点击切换"><a href="#第二步：实现点击切换" class="headerlink" title="第二步：实现点击切换"></a>第二步：实现点击切换</h3><p>编写幻灯片函数：<code>Slideshow(element)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">slideShow</span>(<span class="params">element</span>)</span>&#123;</div><div class="line">    		<span class="keyword">var</span> imgArr = element.getElementsByTagName(<span class="string">'img'</span>);</div><div class="line">    		<span class="keyword">var</span> imgWidth = <span class="built_in">parseInt</span>(getStyle(imgArr[<span class="number">0</span>],<span class="string">'width'</span>))<span class="comment">//图片宽度</span></div><div class="line">    		<span class="keyword">var</span> imgLen = imgArr.length;<span class="comment">//图片数量</span></div><div class="line">    		<span class="keyword">var</span> createUl = <span class="built_in">document</span>.createElement(<span class="string">'ul'</span>);<span class="comment">//创建小点的ul</span></div><div class="line">    		element.style.width = imgLen*imgWidth + <span class="string">'px'</span>;<span class="comment">//设置图片容器的宽度。</span></div><div class="line">    		<span class="comment">//创建li</span></div><div class="line">    		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; imgLen; i++) &#123;</div><div class="line">    			createUl.innerHTML += <span class="string">"&lt;li&gt;&lt;/li&gt;"</span>;</div><div class="line">    		&#125;</div><div class="line">    		addClass(createUl,<span class="string">'Slideshow-nav'</span>);<span class="comment">//添加导航样式</span></div><div class="line">    		addClass(createUl.firstElementChild, <span class="string">'active'</span>);<span class="comment">//默认设置第一个为第当前活动的li</span></div><div class="line">    		<span class="keyword">var</span> liArr = createUl.getElementsByTagName(<span class="string">'li'</span>);<span class="comment">//获取小点</span></div><div class="line">    		element.parentNode.appendChild(createUl); <span class="comment">//插入导航</span></div><div class="line"></div><div class="line">    		clickLi();</div><div class="line">            <span class="comment">/**</span></div><div class="line">             * 点击导航</div><div class="line">             */</div><div class="line">    		<span class="function"><span class="keyword">function</span> <span class="title">clickLi</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    			delegateEvent(createUl, <span class="string">'li'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    				<span class="keyword">var</span> iTarget = -imgWidth*getIndex(<span class="keyword">this</span>);</div><div class="line">    				<span class="built_in">console</span>.log(iTarget);</div><div class="line">    				removeAllClass();</div><div class="line">    				addClass(<span class="keyword">this</span>, <span class="string">'active'</span>);</div><div class="line">    				startMove(element,&#123;</div><div class="line">    					<span class="string">'left'</span>:iTarget</div><div class="line">    				&#125;);</div><div class="line">    			&#125;)</div><div class="line">    		&#125;</div><div class="line">    		</div><div class="line">    		<span class="comment">/**</span></div><div class="line">            * 用于移除所有的Li的选中状态：active</div><div class="line">            */</div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">removeAllClass</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    			<span class="keyword">var</span> oLi = createUl.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line">    			<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; oLi.length; i++) &#123;</div><div class="line">    				removeClass(oLi[i], <span class="string">'active'</span>);</div><div class="line">    			&#125;</div><div class="line">    		&#125;</div></pre></td></tr></table></figure>
+<h3 id="第三步：-实现自动播放"><a href="#第三步：-实现自动播放" class="headerlink" title="第三步： 实现自动播放"></a>第三步： 实现自动播放</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* 移入图片容器暂停，移除继续播放。</div><div class="line">*/</div><div class="line"><span class="keyword">var</span> speed = <span class="number">4000</span>;</div><div class="line">hoverEvent();</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hoverEvent</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		addEvent(element.parentNode,<span class="string">'mouseover'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			clearInterval(timer);</div><div class="line">		&#125;);</div><div class="line">		addEvent(element.parentNode,<span class="string">'mouseout'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			timer = setInterval(autoPlay,speed);</div><div class="line">		&#125;)</div><div class="line">&#125;</div><div class="line">    		</div><div class="line"><span class="keyword">var</span> timer = <span class="literal">null</span>;</div><div class="line">timer = setInterval(autoPlay, iSpeed);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">autoPlay</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> icur = getIndex(createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		removeAllClass();</div><div class="line">		<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">		 	iTarget = <span class="number">0</span>;</div><div class="line">		 	addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">		 &#125;<span class="keyword">else</span>&#123;</div><div class="line">		 	iTarget = - (icur+<span class="number">1</span>)*imgWidth;</div><div class="line">		 	addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">		 &#125;</div><div class="line">		startMove(element, &#123;<span class="string">'left'</span>:iTarget&#125;);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h3 id="第四步：添加左右切换按钮"><a href="#第四步：添加左右切换按钮" class="headerlink" title="第四步：添加左右切换按钮"></a>第四步：添加左右切换按钮</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> createSpan = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">addClass(createSpan, <span class="string">'left-right'</span>);</div><div class="line">createSpan.innerHTML = <span class="string">"&lt;span class='nav-left'&gt;&amp;lt;&lt;/span&gt;&lt;span class='nav-right'&gt;&amp;gt;&lt;/span&gt;"</span>;</div><div class="line">element.parentNode.appendChild(createSpan);</div><div class="line"></div><div class="line">clickSpan();</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">clickSpan</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	delegateEvent(createSpan, <span class="string">'span'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> index = getIndex(<span class="keyword">this</span>);</div><div class="line">		<span class="keyword">var</span> icur = getIndex(createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		removeAllClass();</div><div class="line">		<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">			iTarget = <span class="number">0</span>;</div><div class="line">			addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			iTarget = -(icur+<span class="number">1</span>)*imgWidth;</div><div class="line">			addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">		&#125;</div><div class="line">		startMove(element, &#123;<span class="string">'left'</span>: iTarget&#125;);</div><div class="line">	&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="第五步：添加配置项"><a href="#第五步：添加配置项" class="headerlink" title="第五步：添加配置项"></a>第五步：添加配置项</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * @param &#123;JSON&#125;         option       配置项</div><div class="line"> *   @config   &#123;Boolean&#125;  loop      </div><div class="line"> *   @config   &#123;String&#125;  slide      </div><div class="line"> *   @config   &#123;Number&#125;  time</div><div class="line">*/</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">slideShow(element,&#123;</div><div class="line">    			slide: <span class="string">'forward'</span>,</div><div class="line">    			loop: <span class="literal">true</span>,</div><div class="line">    			time: <span class="number">4000</span></div><div class="line">    		&#125;);</div></pre></td></tr></table></figure>
+<p>最终javascript程序为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> element = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'Slideshow'</span>)[<span class="number">0</span>].getElementsByClassName(<span class="string">'imgContainer'</span>)[<span class="number">0</span>];</div><div class="line">	slideShow(element,&#123;</div><div class="line">		slide: <span class="string">'forward'</span>,</div><div class="line">		loop: <span class="literal">true</span>,</div><div class="line">		time: <span class="number">4000</span></div><div class="line">	&#125;);</div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">slideShow</span>(<span class="params">element,option</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> speed = option.time;</div><div class="line">	<span class="keyword">var</span> imgArr = element.getElementsByTagName(<span class="string">'img'</span>);</div><div class="line">	<span class="keyword">var</span> imgWidth = <span class="built_in">parseInt</span>(getStyle(imgArr[<span class="number">0</span>],<span class="string">'width'</span>))<span class="comment">//图片宽度</span></div><div class="line">	<span class="keyword">var</span> imgLen = imgArr.length;<span class="comment">//图片数量</span></div><div class="line">	<span class="keyword">var</span> createUl = <span class="built_in">document</span>.createElement(<span class="string">'ul'</span>);</div><div class="line">	element.style.width = imgLen*imgWidth + <span class="string">'px'</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; imgLen; i++) &#123;</div><div class="line">		createUl.innerHTML += <span class="string">"&lt;li&gt;&lt;/li&gt;"</span>;</div><div class="line">	&#125;</div><div class="line">	addClass(createUl,<span class="string">'Slideshow-nav'</span>);</div><div class="line">	addClass(createUl.firstElementChild, <span class="string">'active'</span>);</div><div class="line">	<span class="keyword">var</span> liArr = createUl.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line">	element.parentNode.appendChild(createUl);</div><div class="line"></div><div class="line">	<span class="comment">//点击导航栏切换函数</span></div><div class="line">	clickLi();</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">clickLi</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		delegateEvent(createUl, <span class="string">'li'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">var</span> iTarget = -imgWidth*getIndex(<span class="keyword">this</span>);</div><div class="line">			<span class="built_in">console</span>.log(iTarget);</div><div class="line">			removeAllClass();</div><div class="line">			addClass(<span class="keyword">this</span>, <span class="string">'active'</span>);</div><div class="line">			startMove(element,&#123;</div><div class="line">				<span class="string">'left'</span>:iTarget</div><div class="line">			&#125;);</div><div class="line">		&#125;)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//添加左右按钮</span></div><div class="line">	<span class="keyword">var</span> createSpan = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">	addClass(createSpan, <span class="string">'left-right'</span>);</div><div class="line">	createSpan.innerHTML = <span class="string">"&lt;span class='nav-left'&gt;&amp;lt;&lt;/span&gt;&lt;span class='nav-right'&gt;&amp;gt;&lt;/span&gt;"</span>;</div><div class="line">	element.parentNode.appendChild(createSpan);</div><div class="line"></div><div class="line">	<span class="comment">//左右点击切换函数</span></div><div class="line">	clickSpan();</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">clickSpan</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		delegateEvent(createSpan, <span class="string">'span'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">var</span> index = getIndex(<span class="keyword">this</span>);</div><div class="line">			<span class="keyword">var</span> icur = getIndex(createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</div><div class="line">			<span class="keyword">var</span> iTarget;</div><div class="line">			removeAllClass();</div><div class="line">			<span class="comment">// if (index == 0) &#123;</span></div><div class="line">			<span class="comment">// 	if (icur == 0) &#123;</span></div><div class="line">			<span class="comment">// 		iTarget = -(imgLen-1)*imgWidth;</span></div><div class="line">			<span class="comment">// 		addClass(liArr[imgLen-1],'active');</span></div><div class="line">			<span class="comment">// 	&#125;else&#123;</span></div><div class="line">			<span class="comment">// 		iTarget = -(icur-1)*imgWidth;</span></div><div class="line">			<span class="comment">// 		addClass(liArr[icur-1],'active')</span></div><div class="line">			<span class="comment">// 	&#125;</span></div><div class="line">			<span class="comment">// &#125;else&#123;</span></div><div class="line">			<span class="comment">// 	if (icur == imgLen-1) &#123;</span></div><div class="line">			<span class="comment">// 		iTarget = 0;</span></div><div class="line">			<span class="comment">// 		addClass(liArr[0],'active');</span></div><div class="line">			<span class="comment">// 	&#125;else&#123;</span></div><div class="line">			<span class="comment">// 		iTarget = -(icur+1)*imgWidth;</span></div><div class="line">			<span class="comment">// 		addClass(liArr[icur+1],'active');</span></div><div class="line">			<span class="comment">// 	&#125;</span></div><div class="line">			<span class="comment">// &#125;</span></div><div class="line">			<span class="keyword">if</span> (option.loop == <span class="literal">true</span>) &#123;</div><div class="line">				<span class="keyword">if</span> (index == <span class="number">0</span>) &#123;</div><div class="line">					<span class="keyword">if</span> (icur == <span class="number">0</span>) &#123;</div><div class="line">    					iTarget = -(imgLen<span class="number">-1</span>)*imgWidth;</div><div class="line">    					addClass(liArr[imgLen<span class="number">-1</span>],<span class="string">'active'</span>);</div><div class="line">    				&#125;<span class="keyword">else</span>&#123;</div><div class="line">    					iTarget = -(icur<span class="number">-1</span>)*imgWidth;</div><div class="line">    					addClass(liArr[icur<span class="number">-1</span>],<span class="string">'active'</span>)</div><div class="line">    				&#125;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">						iTarget = <span class="number">0</span>;</div><div class="line">						addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">					&#125;<span class="keyword">else</span>&#123;</div><div class="line">						iTarget = -(icur+<span class="number">1</span>)*imgWidth;</div><div class="line">						addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				<span class="keyword">if</span> (index == <span class="number">0</span>) &#123;</div><div class="line">					<span class="keyword">if</span> (icur == <span class="number">0</span>) &#123;</div><div class="line">    					iTarget = <span class="number">0</span>;</div><div class="line">    					addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">    				&#125;<span class="keyword">else</span>&#123;</div><div class="line">    					iTarget = -(icur<span class="number">-1</span>)*imgWidth;</div><div class="line">    					addClass(liArr[icur<span class="number">-1</span>],<span class="string">'active'</span>)</div><div class="line">    				&#125;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">						iTarget = -(icur)*imgWidth;</div><div class="line">    					addClass(liArr[icur],<span class="string">'active'</span>)</div><div class="line">					&#125;<span class="keyword">else</span>&#123;</div><div class="line">						iTarget = -(icur+<span class="number">1</span>)*imgWidth;</div><div class="line">						addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			startMove(element, &#123;<span class="string">'left'</span>: iTarget&#125;);</div><div class="line">		&#125;)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//自动播放函数</span></div><div class="line">	<span class="keyword">var</span> timer = <span class="literal">null</span>;</div><div class="line">	timer = setInterval(autoPlay,speed);</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">autoPlay</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> icur = getIndex(createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		removeAllClass();</div><div class="line">		<span class="comment">// if (icur == imgLen-1) &#123;</span></div><div class="line">		<span class="comment">// 	iTarget = 0;</span></div><div class="line">		<span class="comment">// 	addClass(liArr[0],'active');</span></div><div class="line">		<span class="comment">// &#125;else&#123;</span></div><div class="line">		<span class="comment">// 	iTarget = -(icur+1)*imgWidth;</span></div><div class="line">		<span class="comment">// 	addClass(liArr[icur+1],'active');</span></div><div class="line">		<span class="comment">// &#125;</span></div><div class="line">		<span class="keyword">if</span> (option.slide == <span class="string">'forward'</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (option.loop == <span class="literal">true</span>) &#123;</div><div class="line">				<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">    				iTarget = <span class="number">0</span>;</div><div class="line">    				addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;<span class="keyword">else</span>&#123;</div><div class="line">    				iTarget = -(icur+<span class="number">1</span>)*imgWidth;</div><div class="line">    				addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				<span class="keyword">if</span> (icur == imgLen<span class="number">-1</span>) &#123;</div><div class="line">    				iTarget = -icur*imgWidth;</div><div class="line">    				addClass(liArr[icur],<span class="string">'active'</span>);</div><div class="line">    			&#125;<span class="keyword">else</span>&#123;</div><div class="line">    				iTarget = -(icur+<span class="number">1</span>)*imgWidth;</div><div class="line">    				addClass(liArr[icur+<span class="number">1</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">if</span> (option.loop == <span class="literal">true</span>) &#123;</div><div class="line">				<span class="keyword">if</span> (icur == <span class="number">0</span>) &#123;</div><div class="line">    				iTarget = -(imgLen<span class="number">-1</span>)*imgWidth;</div><div class="line">    				addClass(liArr[imgLen<span class="number">-1</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;<span class="keyword">else</span>&#123;</div><div class="line">    				iTarget = -(icur<span class="number">-1</span>)*imgWidth;</div><div class="line">    				addClass(liArr[icur<span class="number">-1</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				<span class="keyword">if</span> (icur == <span class="number">0</span>) &#123;</div><div class="line">    				iTarget = <span class="number">0</span>;</div><div class="line">    				addClass(liArr[<span class="number">0</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;<span class="keyword">else</span>&#123;</div><div class="line">    				iTarget = -(icur<span class="number">-1</span>)*imgWidth;</div><div class="line">    				addClass(liArr[icur<span class="number">-1</span>],<span class="string">'active'</span>);</div><div class="line">    			&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		startMove(element, &#123;<span class="string">'left'</span>:iTarget&#125;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//鼠标移入时取消自动播放</span></div><div class="line">	hoverEvent();</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hoverEvent</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			addEvent(element.parentNode,<span class="string">'mouseover'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				clearInterval(timer);</div><div class="line">			&#125;);</div><div class="line">			addEvent(element.parentNode,<span class="string">'mouseout'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				timer = setInterval(autoPlay,speed);</div><div class="line">			&#125;)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">removeAllClass</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> oLi = createUl.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; oLi.length; i++) &#123;</div><div class="line">			removeClass(oLi[i], <span class="string">'active'</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样一个轮播图插件就有了一个雏形，但是可以看到程序里面有很多的<code>if-else</code>语句非常的复杂也非常的不友好。<br>因此我设置了一个<code>play</code>函数，来进行正向反向的操作，传入的参数是option.reserve。</p>
+<p>最终js函数为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> element = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'Slideshow'</span>)[<span class="number">0</span>].getElementsByClassName(<span class="string">'imgContainer'</span>)[<span class="number">0</span>];</div><div class="line">	slideShow(element,&#123;</div><div class="line">		reverse: <span class="number">1</span>,<span class="comment">//reverse==0为正向运动</span></div><div class="line">		loop: <span class="literal">true</span>,</div><div class="line">		time: <span class="number">4000</span></div><div class="line">	&#125;);</div><div class="line">&#125; </div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">slideShow</span>(<span class="params">element,option</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> speed = option.time;</div><div class="line">	<span class="keyword">var</span> imgArr = element.getElementsByTagName(<span class="string">'img'</span>);</div><div class="line">	<span class="keyword">var</span> imgWidth = <span class="built_in">parseInt</span>(getStyle(imgArr[<span class="number">0</span>],<span class="string">'width'</span>))<span class="comment">//图片宽度</span></div><div class="line">	<span class="keyword">var</span> imgLen = imgArr.length;<span class="comment">//图片数量</span></div><div class="line">	<span class="keyword">var</span> createUl = <span class="built_in">document</span>.createElement(<span class="string">'ul'</span>);</div><div class="line">	element.style.width = imgLen*imgWidth + <span class="string">'px'</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; imgLen; i++) &#123;</div><div class="line">		createUl.innerHTML += <span class="string">"&lt;li&gt;&lt;/li&gt;"</span>;</div><div class="line">	&#125;</div><div class="line">	addClass(createUl,<span class="string">'Slideshow-nav'</span>);</div><div class="line">	addClass(createUl.firstElementChild, <span class="string">'active'</span>);</div><div class="line">	<span class="keyword">var</span> liArr = createUl.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line">	element.parentNode.appendChild(createUl);</div><div class="line"></div><div class="line">	<span class="comment">//点击导航栏切换函数</span></div><div class="line">	clickLi();</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">clickLi</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		delegateEvent(createUl, <span class="string">'li'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">var</span> iTarget = -imgWidth*getIndex(<span class="keyword">this</span>);</div><div class="line">			<span class="built_in">console</span>.log(iTarget);</div><div class="line">			removeAllClass();</div><div class="line">			addClass(<span class="keyword">this</span>, <span class="string">'active'</span>);</div><div class="line">			startMove(element,&#123;</div><div class="line">				<span class="string">'left'</span>:iTarget</div><div class="line">			&#125;);</div><div class="line">		&#125;)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//添加左右按钮</span></div><div class="line">	<span class="keyword">var</span> createSpan = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">	addClass(createSpan, <span class="string">'left-right'</span>);</div><div class="line">	createSpan.innerHTML = <span class="string">"&lt;span class='nav-left'&gt;&amp;lt;&lt;/span&gt;&lt;span class='nav-right'&gt;&amp;gt;&lt;/span&gt;"</span>;</div><div class="line">	element.parentNode.appendChild(createSpan);</div><div class="line"></div><div class="line">	<span class="comment">//左右点击切换函数</span></div><div class="line">	clickSpan();</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">clickSpan</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		delegateEvent(createSpan, <span class="string">'span'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="keyword">var</span> index = getIndex(<span class="keyword">this</span>);</div><div class="line">			<span class="keyword">var</span> reverse = !!index;</div><div class="line">			<span class="built_in">console</span>.log(reverse);</div><div class="line">			<span class="keyword">if</span> (option.loop == <span class="literal">true</span>) &#123;</div><div class="line">				play1(reverse);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				play2(reverse);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//自动播放函数</span></div><div class="line">	<span class="keyword">var</span> timer = <span class="literal">null</span>;</div><div class="line">	timer = setInterval(autoPlay,speed);</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">autoPlay</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> icur = getIndex(createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		<span class="keyword">if</span> (option.loop==<span class="literal">true</span>) &#123;</div><div class="line">			play1(option.reverse);</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			play2(option.reverse);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//鼠标移入时取消自动播放</span></div><div class="line">	hoverEvent();</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hoverEvent</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			addEvent(element.parentNode,<span class="string">'mouseover'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				clearInterval(timer);</div><div class="line">			&#125;);</div><div class="line">			addEvent(element.parentNode,<span class="string">'mouseout'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				timer = setInterval(autoPlay,speed);</div><div class="line">			&#125;)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">removeAllClass</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="keyword">var</span> oLi = createUl.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; oLi.length; i++) &#123;</div><div class="line">			removeClass(oLi[i], <span class="string">'active'</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">play1</span>(<span class="params">reverse</span>)</span>&#123;<span class="comment">//允许循环时的运动函数</span></div><div class="line">		<span class="keyword">var</span> icur = createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>];</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		<span class="keyword">if</span> (reverse) &#123;<span class="comment">//正向运动时</span></div><div class="line">			iTarget = getIndex(icur)+<span class="number">1</span>==imgLen?<span class="number">0</span>: -(getIndex(icur)+<span class="number">1</span>)*imgWidth;</div><div class="line">			<span class="keyword">var</span> nextLi = icur.nextElementSibling;</div><div class="line">			<span class="built_in">console</span>.log(nextLi);</div><div class="line">			<span class="keyword">if</span> (nextLi) &#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(nextLi,<span class="string">'active'</span>);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(createUl.firstElementChild,<span class="string">'active'</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;<span class="comment">//反向运动时</span></div><div class="line">			iTarget = getIndex(icur) == <span class="number">0</span> ?-(imgLen<span class="number">-1</span>)*imgWidth:-(getIndex(icur)<span class="number">-1</span>)*imgWidth;</div><div class="line">			<span class="keyword">var</span> perviousLi = icur.previousElementSibling;</div><div class="line">			<span class="keyword">if</span> (perviousLi) &#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(perviousLi, <span class="string">'active'</span>);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(createUl.lastElementChild, <span class="string">'active'</span>)</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		startMove(element,&#123;<span class="string">'left'</span>:iTarget&#125;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">play2</span>(<span class="params">reverse</span>)</span>&#123;<span class="comment">//不允许循环时的运动函数</span></div><div class="line">		<span class="keyword">var</span> icur = createUl.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>];</div><div class="line">		<span class="keyword">var</span> iTarget;</div><div class="line">		<span class="keyword">if</span> (reverse) &#123;</div><div class="line">			iTarget = getIndex(icur)+<span class="number">1</span>==imgLen?-(imgLen<span class="number">-1</span>)*imgWidth: -(getIndex(icur)+<span class="number">1</span>)*imgWidth;</div><div class="line">			<span class="keyword">var</span> nextLi = icur.nextElementSibling;</div><div class="line">			<span class="keyword">if</span> (nextLi) &#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(nextLi,<span class="string">'active'</span>);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(createUl.firstElementChild,<span class="string">'active'</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			iTarget = getIndex(icur) == <span class="number">0</span> ?<span class="number">0</span>:-(getIndex(icur)<span class="number">-1</span>)*imgWidth;</div><div class="line">			<span class="keyword">var</span> perviousLi = icur.previousElementSibling;</div><div class="line">			<span class="keyword">if</span> (perviousLi) &#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(perviousLi, <span class="string">'active'</span>);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;</div><div class="line">				removeAllClass();</div><div class="line">				addClass(createUl.lastElementChild, <span class="string">'active'</span>)</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		startMove(element,&#123;<span class="string">'left'</span>:iTarget&#125;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>到这里轮播图插件就差不多完成了。以后我会对其进行更加完善的封装。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/ife/" rel="tag">#ife</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/08/2016-09-08-JavaScript-正则表达式/" rel="next" title="JavaScript 正则表达式理论基础篇">
+                <i class="fa fa-chevron-left"></i> JavaScript 正则表达式理论基础篇
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/11/2016-09-11-轮播图组件改进版/" rel="prev" title="轮播图组件改进版">
+                轮播图组件改进版 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/"
+     data-title="ife20ife2015-task2-轮播图插件"
+     data-content=""
+     data-url="https://hewei0928.github.io/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/"
+           data-title="ife20ife2015-task2-轮播图插件" data-url="https://hewei0928.github.io/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Wei He" />
+          <p class="site-author-name" itemprop="name">Wei He</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小练习3：轮播图组件"><span class="nav-number">1.</span> <span class="nav-text">小练习3：轮播图组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任务描述"><span class="nav-number">1.1.</span> <span class="nav-text">任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：实现点击切换"><span class="nav-number">1.2.</span> <span class="nav-text">第二步：实现点击切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：-实现自动播放"><span class="nav-number">1.3.</span> <span class="nav-text">第三步： 实现自动播放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四步：添加左右切换按钮"><span class="nav-number">1.4.</span> <span class="nav-text">第四步：添加左右切换按钮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五步：添加配置项"><span class="nav-number">1.5.</span> <span class="nav-text">第五步：添加配置项</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei He</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

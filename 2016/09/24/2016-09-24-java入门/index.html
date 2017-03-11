@@ -1,0 +1,727 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="-- java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="每个0,1为1位一个bit（字节）为8位；Unicode 统一所有编码：
+整数类型 byte：1字节  -2^7~（2^7-1）/127 short: 2字节 -2^15 int: 4字节  -2^31 long:8字节 -2^63
+ int x, y = 9; x未定义，y=9;
+八进制 0开头十六进制 0x开头
+布尔型 boolean只能为true或false;
+字符型 charjava u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java入门">
+<meta property="og:url" content="https://hewei0928.github.io/2016/09/24/2016-09-24-java入门/index.html">
+<meta property="og:site_name" content="小狗窝">
+<meta property="og:description" content="每个0,1为1位一个bit（字节）为8位；Unicode 统一所有编码：
+整数类型 byte：1字节  -2^7~（2^7-1）/127 short: 2字节 -2^15 int: 4字节  -2^31 long:8字节 -2^63
+ int x, y = 9; x未定义，y=9;
+八进制 0开头十六进制 0x开头
+布尔型 boolean只能为true或false;
+字符型 charjava u">
+<meta property="og:updated_time" content="2016-09-28T08:45:18.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java入门">
+<meta name="twitter:description" content="每个0,1为1位一个bit（字节）为8位；Unicode 统一所有编码：
+整数类型 byte：1字节  -2^7~（2^7-1）/127 short: 2字节 -2^15 int: 4字节  -2^31 long:8字节 -2^63
+ int x, y = 9; x未定义，y=9;
+八进制 0开头十六进制 0x开头
+布尔型 boolean只能为true或false;
+字符型 charjava u">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2016/09/24/2016-09-24-java入门/"/>
+
+  <title> java入门 | 小狗窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小狗窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">邪不压皮</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+            个人作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            Über
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2016-09-24T08:34:05+08:00" content="2016-09-24">
+              2016-09-24
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/24/2016-09-24-java入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/24/2016-09-24-java入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 每个0,1为1位<br>一个bit（字节）为8位；<br>Unicode 统一所有编码：</p>
+<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><p> byte：1字节  -2^7~（2^7-1）/127<br> short: 2字节 -2^15<br> int: 4字节  -2^31<br> long:8字节 -2^63</p>
+<p> int x, y = 9;<br> x未定义，y=9;</p>
+<p>八进制 0开头<br>十六进制 0x开头</p>
+<h2 id="布尔型-boolean"><a href="#布尔型-boolean" class="headerlink" title="布尔型 boolean"></a>布尔型 boolean</h2><pre><code>只能为true或false;
+</code></pre><h2 id="字符型-char"><a href="#字符型-char" class="headerlink" title="字符型 char"></a>字符型 char</h2><pre><code>java utf:16-&gt;每个字符占两个字节；
+</code></pre><p>中文GB2312编码；<br>\u0061 十六进制</p>
+<h2 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h2><p>float 4字节 精度7位。<br>double 8字节 精度15位。<br>少用于比较 有误差</p>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>boolean不能与其他类型转换。<br>容量小的自动转换为容量大的数据。<br><strong>指数字大而不是占内存字节数</strong><br>byte,short,char-&gt;int-&gt;long-&gt;float-&gt;double;<br>byte,short,char做运算时自动转换为int<br>byte: 141-&gt;-114;<br>(000000000 000000000 000000000 10001101)<br>-&gt;01110010;-&gt;-114-&gt;-1=-115;</p>
+<h2 id="final"><a href="#final" class="headerlink" title="final"></a>final</h2><p>不允许修改的变量；</p>
+<h2 id="基础类型占一个内存"><a href="#基础类型占一个内存" class="headerlink" title="基础类型占一个内存"></a>基础类型占一个内存</h2><h2 id="引用类型占两个内存"><a href="#引用类型占两个内存" class="headerlink" title="引用类型占两个内存"></a>引用类型占两个内存</h2><p>引用类型全为指针；对象是new出来的，放在堆内存。一小块内存指向一大块。</p>
+<h2 id="构造方法没有返回值"><a href="#构造方法没有返回值" class="headerlink" title="构造方法没有返回值"></a>构造方法没有返回值</h2><p>方法执行完毕，栈内存中的局部变量销毁</p>
+<p><strong>static声明的成员变量：</strong><br>可通过类名直接访问， 静态方法不针对某个对象调用，所以不能访问非静态成员</p>
+<h2 id="子类的构造过程中必须调用父类构造方法"><a href="#子类的构造过程中必须调用父类构造方法" class="headerlink" title="子类的构造过程中必须调用父类构造方法"></a>子类的构造过程中<strong>必须</strong>调用父类构造方法</h2><p>子类中使用super(argument_list)调用父类构造方法；<br>只用this(argument_list)调用本类的构造方法；<br>如果调用了super，必须写在子类构造方法内的第一行。<br>如果子类的构造方法没有显示调用父类构造方法，则系统默认调用父类的无参构造方法，而若父类中没有无参构造方法，则编译出错。</p>
+<p>new 出来的对象永远不“==”<br>.equals()重写后可以用于比较；<br>new String() equals 相等是因为重写了该方法；</p>
+<p>没有import即可使用的类一定在java.lang中</p>
+<p>hash 编码用于存储对象在堆内存中的地址</p>
+<p><strong>对象转型：<br>一个基类的引用不可以访问其子类对象新增的成员；<br>可以使用变量 instanceof 类名来判断引用类型变量所指向的对象是否属于该类或是该类的子类，子类的对象可以作为基类的对象来使用 称作向上转型，反之称为向下转型</strong></p>
+<p>多态：<br>在执行期间 判断所引用的实际类型，根据其<strong>实际</strong>的类型（即实际new 的class类型，或）调用相应的方法。（方法重写时）。</p>
+<p> <strong>存在的三个条件</strong></p>
+<ol>
+<li>要有继承。</li>
+<li>要有方法重写。</li>
+<li>父类引用类型指向子类对象。</li>
+</ol>
+<p>抽象方法 ： 用于多态的方法。 <strong>abstract</strong><br>抽象类不能实例化对象， 抽象方法只需声明， 不需实现。<br>抽象方法只用于被重写。</p>
+<p> final 的变量：不能被改变；<br> final 的方法：不能被重写；<br> final 的类：不能被继承。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p> 一种特殊的抽象类。只包含常量和方法的定义，没有变量和方法的实现。<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Runner</span></span>&#123;</div><div class="line">    oublic <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> id = <span class="number">1</span>;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>接口可以多重实现</li>
+<li>接口中的成员变量属性为public static final；</li>
+<li>接口中只能定义抽象方法，且方法只能为public；</li>
+<li>接口可以继承其他接口，并添加新属性和抽象方法。<br>interface Signer{</li>
+</ol>
+<p>}</p>
+<p>class Student implements Signer{<br>}</p>
+<p>类实现了接口 必须重写其中所有方法。</p>
+<p><strong>一个子类的对象可以强制转换为其超类对象</strong></p>
+<p> <strong>数组拷贝</strong><br> System.arraycopy( ,);</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#-- java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/2016-09-18-CSS3选择器详解/" rel="next" title="CSS3选择器详解">
+                <i class="fa fa-chevron-left"></i> CSS3选择器详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/25/2016-09-25-java-第三章-题纲/" rel="prev" title="java 第三章 题纲">
+                java 第三章 题纲 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/24/2016-09-24-java入门/"
+     data-title="java入门"
+     data-content=""
+     data-url="https://hewei0928.github.io/2016/09/24/2016-09-24-java入门/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/24/2016-09-24-java入门/"
+           data-title="java入门" data-url="https://hewei0928.github.io/2016/09/24/2016-09-24-java入门/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Wei He" />
+          <p class="site-author-name" itemprop="name">Wei He</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Kategorien</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#整数类型"><span class="nav-number">1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔型-boolean"><span class="nav-number">2.</span> <span class="nav-text">布尔型 boolean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符型-char"><span class="nav-number">3.</span> <span class="nav-text">字符型 char</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点类型"><span class="nav-number">4.</span> <span class="nav-text">浮点类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型转换"><span class="nav-number">5.</span> <span class="nav-text">类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final"><span class="nav-number">6.</span> <span class="nav-text">final</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础类型占一个内存"><span class="nav-number">7.</span> <span class="nav-text">基础类型占一个内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用类型占两个内存"><span class="nav-number">8.</span> <span class="nav-text">引用类型占两个内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法没有返回值"><span class="nav-number">9.</span> <span class="nav-text">构造方法没有返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子类的构造过程中必须调用父类构造方法"><span class="nav-number">10.</span> <span class="nav-text">子类的构造过程中必须调用父类构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">11.</span> <span class="nav-text">接口</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wei He</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
