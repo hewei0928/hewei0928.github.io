@@ -255,6 +255,318 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/27/2016-09-27-java-容器/" itemprop="url">
+                  java 容器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-27T10:26:59+08:00" content="2016-09-27">
+              2016-09-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/27/2016-09-27-java-容器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/27/2016-09-27-java-容器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h2><blockquote>
+<p><code>Collection</code>接口定义了存取一组对象的方法</p>
+</blockquote>
+<p>方法：</p>
+<ul>
+<li><code>int size()</code>;</li>
+<li><code>boolean isEmpty()</code>;</li>
+<li><code>void clear()</code>;</li>
+<li><code>boolean contains(Object element)</code>;</li>
+<li><code>boolean add(Object element)</code>;//<strong>多态思想</strong></li>
+<li><code>boolean remove(Object element)</code>;</li>
+<li><code>Iterator iterator()</code>;</li>
+<li><code>boolean containsAll(Collection c)</code>;</li>
+<li><code>boolean addAll(Collection c)</code>;</li>
+<li><code>boolean removeAll(Collection c)</code>;</li>
+<li><code>boolean retainAll(Collection c)</code>;</li>
+<li><code>Object[] toArray()</code>;<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Collection c = new ArrayList();</div><div class="line">//可以放入不同类型的对象;</div><div class="line">c.add(&quot;hello&quot;);//添加的是String类型对象</div><div class="line">c.add(new Name(&quot;f1&quot;, &quot;l1&quot;));</div><div class="line">c.add(new Integer(100));//只能添加对象而不能添加基础类型</div><div class="line"></div><div class="line">System.out.println(c);//调用c.toString()进而多态调用每个对象的toString();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>重写存储对象的<code>equals</code>方法必须重写其<code>hashCode()</code>方法；<br><code>Object</code>的<code>equals</code>方法即对内存中指向相同；</p>
+</blockquote>
+<h2 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h2><blockquote>
+<p><code>Collection</code>的子接口，定义了存储方式；<br><code>Set</code>中的数据对象没有顺序且不可重复。</p>
+<h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Set s1 = <span class="keyword">new</span> HashSet();</div><div class="line">Set s2 = <span class="keyword">new</span> HashSet();</div><div class="line"></div><div class="line">s1.add(<span class="string">"a"</span>);s1.add(<span class="string">"b"</span>);s1.add(<span class="string">"c"</span>);</div><div class="line">s2.add(<span class="string">"d"</span>);s2.add(<span class="string">"a"</span>);s2.add(<span class="string">"b"</span>);</div><div class="line"></div><div class="line">Set sn = <span class="keyword">new</span> HashSet(s1);</div><div class="line">sn.retainAll(s2);</div><div class="line">System.out.println(sn);</div><div class="line">Set su = <span class="keyword">new</span> HashSet(s1);</div><div class="line">su.addAll(s2);</div><div class="line">System.out.println(su);</div></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="List接口"><a href="#List接口" class="headerlink" title="List接口"></a>List接口</h2><blockquote>
+<p>Collection的子接口，定义了存储方式；<br>List中的数据对象有顺序且可以重复。</p>
+</blockquote>
+<ul>
+<li><code>Object get(int index)</code></li>
+<li><code>Onject set(int index, Object element)</code>;</li>
+<li><code>void add(int index, Object element)</code>;</li>
+<li><code>Object remove(int index)</code>;</li>
+<li><code>int indexOf(Object o)</code>;`</li>
+<li><code>int lastIndexOf(Object o)</code>;</li>
+</ul>
+<h3 id="LinkedList类"><a href="#LinkedList类" class="headerlink" title="LinkedList类"></a>LinkedList类</h3><h3 id="ArrayList类"><a href="#ArrayList类" class="headerlink" title="ArrayList类"></a>ArrayList类</h3><h2 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h2><blockquote>
+<p>定义了存储“键-值对”的方法；<br>实现类有<code>HashMap</code>和<code>TreeMap</code>等；<br><code>Map</code>类中存储的键-值对通过键来标识，所以键值不能重复。（这里比较的是<code>hashcode</code>）</p>
+</blockquote>
+<ul>
+<li><code>Object put (Object key, Object value)</code>;//若key不存在则返回null；</li>
+<li><code>Object get (Object key)</code>;</li>
+<li><code>Object remove (Object key)</code>;</li>
+<li><code>bollean containsKey (Object key)</code>;</li>
+<li><code>boolean containsValue (Object value)</code>;</li>
+<li><code>int size()</code>;</li>
+<li><code>boolean isEmpty()</code>;</li>
+<li><code>void putAll(Map t)</code>;</li>
+<li><code>void clear()</code>;</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">	<span class="comment">//Integer ONE = new Integer(1);</span></div><div class="line">	Map p = <span class="keyword">new</span> HashMap();</div><div class="line">	String[] s = &#123;<span class="string">"aaa"</span>, <span class="string">"ddd"</span>, <span class="string">"sss"</span>, <span class="string">"aaa"</span>, <span class="string">"sss"</span>&#125;;</div><div class="line"> 	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;s.length; i++)&#123;</div><div class="line"> 		Integer ferq = (Integer)p.get(s[i]);</div><div class="line"> 		p.put(s[i], (ferq == <span class="keyword">null</span> ? ONE : ((Integer)p.get(s[i])+<span class="number">1</span>)));</div><div class="line"> 	&#125;</div><div class="line"> 	System.out.println(p.size() + <span class="string">" words:"</span>);</div><div class="line"> 	System.out.println(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Iterator接口"><a href="#Iterator接口" class="headerlink" title="Iterator接口"></a>Iterator接口</h2><blockquote>
+<p>所有实现了<code>Collection</code>接口的容器类都有一个<code>iterator</code>方法用以返回一个实现了<code>Iterator</code>接口的对象。<br><code>Iterator</code>对象称作迭代器，用以方便的实现对容器内元素的遍历操作；</p>
+</blockquote>
+<p>方法：</p>
+<ul>
+<li><code>boolean hasNext()</code>;</li>
+<li><code>Object next()</code>;</li>
+<li><code>void remove()</code>;  </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Collection c = <span class="keyword">new</span> HashSet();</div><div class="line">c.add(<span class="keyword">new</span> Name(<span class="string">"123"</span>, <span class="string">"qwe"</span>));</div><div class="line">c.add(<span class="keyword">new</span> Name(<span class="string">"123we"</span>, <span class="string">"asd12"</span>));</div><div class="line">c.add(<span class="keyword">new</span> Name(<span class="string">"asdq1"</span>, <span class="string">"asd2"</span>));</div><div class="line"><span class="keyword">for</span>(Iterator i = c.iterator();i.hasNext();)&#123;</div><div class="line">	Name name = (Name)i.next();</div><div class="line">	<span class="keyword">if</span>(name.getFirstName().length()&lt;<span class="number">4</span>)&#123;</div><div class="line">		i.remove();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">System.out.println(c);</div></pre></td></tr></table></figure>
+<h2 id="java-util-Collections类"><a href="#java-util-Collections类" class="headerlink" title="java.util.Collections类"></a>java.util.Collections类</h2><blockquote>
+<p><code>java.util.Collections</code>类提供了一些<strong>静态</strong>方法实现基于<code>List</code>容器的一些常用算法。</p>
+</blockquote>
+<ul>
+<li><code>void sort(List)</code>//排序</li>
+<li><code>void shuffle(List)</code>//随机排序</li>
+<li><code>void reverse(List)</code>//逆序排序</li>
+<li><code>void fill(List, Object)</code>//用一个特定对象重写整个容器</li>
+<li><code>void copy(List dest, List src)</code>//将src List容器拷贝到dest List容器</li>
+<li><code>int binarySearch(List, object)</code>//折半查找</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">List l1 = <span class="keyword">new</span> LinkedList();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;=<span class="number">9</span>; i++)&#123;</div><div class="line">	l1.add(<span class="string">"a"</span> + i);</div><div class="line">&#125;</div><div class="line">System.out.println(l1);</div><div class="line">Collections.shuffle(l1);<span class="comment">//改变l1</span></div><div class="line">Collections.reverse(l1);</div><div class="line">Collections.sort(l1);</div><div class="line">System.out.println(Collections.binarySearch(l1, <span class="string">"a1"</span>));</div></pre></td></tr></table></figure>
+<h2 id="Comparable"><a href="#Comparable" class="headerlink" title="Comparable"></a>Comparable</h2><blockquote>
+<p><code>Collections</code>中排序的依据<br><code>public int compareTo(Object obj)</code></p>
+<ul>
+<li>返回0表示 <code>this</code> == <code>obj</code></li>
+<li>返回正数表示 <code>this</code> &gt; <code>obj</code></li>
+<li>返回复数表示 <code>this</code> &lt; <code>obj</code></li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Name</span> <span class="keyword">implements</span> <span class="title">Comparable</span> </span>&#123;</div><div class="line"><span class="keyword">private</span> String firstName, lastName;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Name</span><span class="params">(String firstName, String lastName)</span></span>&#123;</div><div class="line">	<span class="keyword">this</span>.firstName = firstName;</div><div class="line">	<span class="keyword">this</span>.lastName = lastName;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object o)</span></span>&#123;</div><div class="line">	Name name = (Name)o;</div><div class="line">	<span class="keyword">int</span> lastCmp = lastName.compareTo(name.lastName);</div><div class="line">	<span class="keyword">return</span> (lastCmp != <span class="number">0</span> ? lastCmp : firstName.compareTo(name.firstName));</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Auto-Boxing"><a href="#Auto-Boxing" class="headerlink" title="Auto_Boxing"></a>Auto_Boxing</h2><blockquote>
+<p>在合适的时机自动打包解包：<br>基础数据类型转换为相对应包装类<br>包装类转换为相对应基础数据类型<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Map m1 = <span class="keyword">new</span> hashMap();</div><div class="line"><span class="comment">//m1.put("one", new Integer(1));</span></div><div class="line">m1.put(<span class="string">"one"</span>, <span class="number">1</span>);<span class="comment">//自动打包</span></div><div class="line"><span class="comment">//m2.containsValue(new Integer(1));</span></div><div class="line">m2.containsValue(<span class="number">1</span>);</div><div class="line"></div><div class="line">Integer a = <span class="number">1</span>;</div><div class="line">Integer b = <span class="number">1</span>;</div><div class="line">System.out.println(a == b);<span class="comment">//true</span></div><div class="line">System.out.println(a.equals(b));<span class="comment">//true</span></div></pre></td></tr></table></figure></p>
+<p>在范围内的数字自动打包时会被重用所以“==”返回true；</p>
+</blockquote>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Name</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Name</span>&gt;</span>&#123;</div><div class="line"><span class="keyword">private</span> String firstName, lastName;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Name</span><span class="params">(String firstName, String lastName)</span></span>&#123;</div><div class="line">	<span class="keyword">this</span>.firstName = firstName;</div><div class="line">	<span class="keyword">this</span>.lastName = lastName;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Name o)</span></span>&#123;</div><div class="line">	Name name = o;</div><div class="line">	<span class="keyword">int</span> lastCmp = lastName.compareTo(name.lastName);</div><div class="line">	<span class="keyword">return</span> (lastCmp != <span class="number">0</span> ? lastCmp : firstName.compareTo(name.firstName));</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/26/2016-09-26-javaSE-中的常用类/" itemprop="url">
+                  javaSE 中的常用类
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-26T15:18:20+08:00" content="2016-09-26">
+              2016-09-26
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/26/2016-09-26-javaSE-中的常用类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/26/2016-09-26-javaSE-中的常用类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h2><p><strong><code>java.lang.String</code>类代表不可变的字符序列</strong><br><code>&#39;xxxxx&#39;</code>为该类的一个对象<br>String类常用构造方法</p>
+<p>String类常用方法：<br><code>String.valueOf()</code> 把基本数据类型转为字符串</p>
+<h2 id="StringBuffer类"><a href="#StringBuffer类" class="headerlink" title="StringBuffer类"></a>StringBuffer类</h2><p><strong><code>java.lang.StringBuffer</code>类代表可变的字符序列</strong></p>
+<p>StringBuffer类常用方法：<br><code>append()</code>;<code>insert()</code>;<code>delete()</code>;<code>reverse()</code></p>
+<h2 id="基础类型包装类"><a href="#基础类型包装类" class="headerlink" title="基础类型包装类"></a>基础类型包装类</h2><ul>
+<li>Double</li>
+<li>Integer</li>
+<li>Long</li>
+<li>Float</li>
+<li>Boolean</li>
+<li>Short</li>
+<li>Byte</li>
+<li>Character</li>
+</ul>
+<p><code>xxxValue()</code>由包装类型对象返回相应<code>xxx</code>类型的数据。</p>
+<p><code>.toString()</code>返回String类型对象。<br><code>.parseXXX(String s)</code>将字符串参数作为有符号的十进制整数进行解析。返回相应<code>XXX</code>类型。(Integer.parseInt(“1.2”))有错误， 括号内的数据也必须为int<br><code>XXX.valueOf()</code>返回保存指定的 String 的值的<code>XXX</code>对象。</p>
+<h2 id="Math类"><a href="#Math类" class="headerlink" title="Math类"></a>Math类</h2><h2 id="File类"><a href="#File类" class="headerlink" title="File类"></a>File类</h2><blockquote>
+<p>代表系统文件名（路径或文件名）</p>
+</blockquote>
+<ul>
+<li><code>File.separator</code>获取不同平台 下的路径分隔符</li>
+<li><code>new File()</code></li>
+</ul>
+<h2 id="ENUM-枚举类型"><a href="#ENUM-枚举类型" class="headerlink" title="ENUM 枚举类型"></a>ENUM 枚举类型</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> MyColor &#123;red, green, blue&#125;;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/25/2016-09-25-java-第三章-题纲/" itemprop="url">
                   java 第三章 题纲
                 </a>
@@ -598,213 +910,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/18/2016-09-18-CSS之各种居中/" itemprop="url">
-                  CSS之各种居中
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-18T13:02:31+08:00" content="2016-09-18">
-              2016-09-18
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/18/2016-09-18-CSS之各种居中/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/18/2016-09-18-CSS之各种居中/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本博客主要讨论<strong>父盒子宽度不定，子盒子宽度也不定</strong>时的居中方式（即宽度，高度任意变化时任然居中）。</p>
-<p>示例<code>HTML</code>代码统一如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/18/2016-09-18-CSS之各种居中/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="url">
-                  ife2015-task2 - BOM+AJAX
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T12:29:58+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><h3 id="判断是否为IE浏览器"><a href="#判断是否为IE浏览器" class="headerlink" title="判断是否为IE浏览器"></a>判断是否为IE浏览器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 判断是否为IE浏览器，返回-1或者版本号</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIE</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> user = navigator.userAgent;</div><div class="line">	<span class="keyword">var</span> ieAgent = user.match(<span class="regexp">/msie (\d+.\d+)/i</span>);</div><div class="line">	<span class="keyword">if</span> (ieAgent) &#123;</div><div class="line">		<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</div><div class="line">	&#125;<span class="keyword">else</span>&#123;</div><div class="line">		<span class="keyword">if</span> (user.match(<span class="regexp">/Trident\/7.0/i</span>)) &#123;</div><div class="line">			ieAgent = user.match(<span class="regexp">/rv:(\d+.\d+)/i</span>);</div><div class="line">			<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -850,7 +955,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
