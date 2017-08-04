@@ -255,8 +255,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/18/2016-09-18-CSS之各种居中/" itemprop="url">
-                  CSS之各种居中
+                <a class="post-title-link" href="/2016/09/07/2016-09-07-第一步/" itemprop="url">
+                  第一步
                 </a>
               
             
@@ -269,226 +269,38 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-18T13:02:31+08:00" content="2016-09-18">
-              2016-09-18
+            <time itemprop="dateCreated" datetime="2016-09-07T14:32:59+08:00" content="2016-09-07">
+              2016-09-07
             </time>
           </span>
 
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/18/2016-09-18-CSS之各种居中/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/18/2016-09-18-CSS之各种居中/" itemprop="commentsCount"></span>
-                </a>
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
               </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本博客主要讨论<strong>父盒子宽度不定，子盒子宽度也不定</strong>时的居中方式（即宽度，高度任意变化时任然居中）。</p>
-<p>示例<code>HTML</code>代码统一如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"child"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/18/2016-09-18-CSS之各种居中/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+              <span class="post-meta-item-text">分类于</span>
               
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/article/" itemprop="url" rel="index">
+                    <span itemprop="name">article</span>
+                  </a>
+                </span>
+
                 
-                <a class="post-title-link" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="url">
-                  ife2015-task2 - BOM+AJAX
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T12:29:58+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><h3 id="判断是否为IE浏览器"><a href="#判断是否为IE浏览器" class="headerlink" title="判断是否为IE浏览器"></a>判断是否为IE浏览器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 判断是否为IE浏览器，返回-1或者版本号</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIE</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> user = navigator.userAgent;</div><div class="line">	<span class="keyword">var</span> ieAgent = user.match(<span class="regexp">/msie (\d+.\d+)/i</span>);</div><div class="line">	<span class="keyword">if</span> (ieAgent) &#123;</div><div class="line">		<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</div><div class="line">	&#125;<span class="keyword">else</span>&#123;</div><div class="line">		<span class="keyword">if</span> (user.match(<span class="regexp">/Trident\/7.0/i</span>)) &#123;</div><div class="line">			ieAgent = user.match(<span class="regexp">/rv:(\d+.\d+)/i</span>);</div><div class="line">			<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/09/11/2016-09-11-ife2015-task2-DOM-事件/" itemprop="url">
-                  ife2015-task2 - DOM+事件
-                </a>
+
               
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T08:39:02+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/09/11/2016-09-11-ife2015-task2-DOM-事件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-DOM-事件/" itemprop="commentsCount"></span>
+                <a href="/2016/09/07/2016-09-07-第一步/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/07/2016-09-07-第一步/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -512,224 +324,10 @@
 
       
         
-          <h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><h3 id="添加class、移除class、-是否同级元素、获取元素位置"><a href="#添加class、移除class、-是否同级元素、获取元素位置" class="headerlink" title="添加class、移除class、 是否同级元素、获取元素位置"></a>添加class、移除class、 是否同级元素、获取元素位置</h3>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/2016-09-11-ife2015-task2-DOM-事件/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/11/2016-09-11-轮播图组件改进版/" itemprop="url">
-                  轮播图组件改进版
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T07:50:03+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
+          
+            <h1 id="吼吼-我的小狗窝终于搭好了！！！！"><a href="#吼吼-我的小狗窝终于搭好了！！！！" class="headerlink" title="吼吼 我的小狗窝终于搭好了！！！！"></a>吼吼 我的小狗窝终于搭好了！！！！</h1><p>从八月中旬决定搭建一个自己的博客开始到现在，20多天过去了。一开始是想自己写一个主页来着，但无奈水平有限，而且做出来的也的确不好看，最后还是决定使用网上很流行的hexo+github page的方式来搭建=￣ω￣=。不过，不管怎么说折腾了这么久也总算做出了个大概的样子来了，也算终于有了一个自己的小博客，就叫他小狗窝好了(<em>^__^</em>) 。</p>
 
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/11/2016-09-11-轮播图组件改进版/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-轮播图组件改进版/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="组件改进"><a href="#组件改进" class="headerlink" title="组件改进"></a>组件改进</h2><blockquote>
-<p>完成了前一个轮播图任务后，我又去网上查找了相关资料，最后模仿<a href="http://www.imooc.com/learn/386">慕课网旋转木马插件</a>的实现方式对代码进行了改进。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/2016-09-11-轮播图组件改进版/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/" itemprop="url">
-                  ife20ife2015-task2-轮播图插件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-10T13:40:51+08:00" content="2016-09-10">
-              2016-09-10
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="小练习3：轮播图组件"><a href="#小练习3：轮播图组件" class="headerlink" title="小练习3：轮播图组件"></a>小练习3：轮播图组件</h2><h3 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h3><p>实现一个轮播图的功能。</p>
-<ul>
-<li>图片数量及URL均在HTML中写好</li>
-<li>在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片</li>
-<li>图片切换的动画要流畅</li>
-<li>可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -760,7 +358,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
@@ -801,7 +399,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -818,7 +416,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
