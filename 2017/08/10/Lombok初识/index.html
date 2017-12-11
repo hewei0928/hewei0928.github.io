@@ -1,0 +1,698 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Lombok," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言 &amp;nbsp;&amp;nbsp;Lombok是最近看老大代码是发现的一个非常好用的小工具，刚看到就有一种相见恨晚的感觉，上手之后更觉不错，在此记录一下。&amp;nbsp;&amp;nbsp;官网地址：https://projectlombok.org/">
+<meta name="keywords" content="Java,Lombok">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lombok初识">
+<meta property="og:url" content="https://hewei0928.github.io/2017/08/10/Lombok初识/index.html">
+<meta property="og:site_name" content="灯光以南">
+<meta property="og:description" content="前言 &amp;nbsp;&amp;nbsp;Lombok是最近看老大代码是发现的一个非常好用的小工具，刚看到就有一种相见恨晚的感觉，上手之后更觉不错，在此记录一下。&amp;nbsp;&amp;nbsp;官网地址：https://projectlombok.org/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-11T09:00:45.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lombok初识">
+<meta name="twitter:description" content="前言 &amp;nbsp;&amp;nbsp;Lombok是最近看老大代码是发现的一个非常好用的小工具，刚看到就有一种相见恨晚的感觉，上手之后更觉不错，在此记录一下。&amp;nbsp;&amp;nbsp;官网地址：https://projectlombok.org/">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2017/08/10/Lombok初识/"/>
+
+  <title> Lombok初识 | 灯光以南 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">灯光以南</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">嬉皮笑脸</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            个人作品
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Lombok初识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-10T10:33:28+08:00" content="2017-08-10">
+              2017-08-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/10/Lombok初识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/10/Lombok初识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>&nbsp;&nbsp;<code>Lombok</code>是最近看老大代码是发现的一个非常好用的小工具，刚看到就有一种相见恨晚的感觉，上手之后更觉不错，在此记录一下。<br>&nbsp;&nbsp;官网地址：<a href="https://projectlombok.org/" target="_blank" rel="noopener">https://projectlombok.org/</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Lombok简介"><a href="#Lombok简介" class="headerlink" title="Lombok简介"></a>Lombok简介</h2><p>&ensp;&ensp;<code>Lombok</code>是一个可以通过简单的注解来简化一些必须有但显得十分臃肿的<code>Java</code>代码的工具。例如，在<code>java</code>项目编写的过程中，实体类总是有许多属性字段，而我们就必须为其添加对应的<code>get、set</code>方法，虽然有<code>idea</code>快捷键，但每次修改字段时任免不了这些操作， 还是十分不便。<code>Lombok</code>的作用就是为了省去这些手动创建代码的麻烦，它能够在编译源码的时候自动帮我们生成这些方法。</p>
+<h2 id="Lombok使用"><a href="#Lombok使用" class="headerlink" title="Lombok使用"></a>Lombok使用</h2><h3 id="1-设置Lombok环境"><a href="#1-设置Lombok环境" class="headerlink" title="1.设置Lombok环境"></a>1.设置<code>Lombok</code>环境</h3><ol>
+<li><p>下载<code>Lombok</code>插件<br>&ensp;&ensp;<code>File -&gt; setting -&gt; Plugins -&gt; Browse repositories -&gt; 搜索Lombok -&gt; 点击install</code><br>&ensp;&ensp;<code>Setting -&gt; Compiler -&gt; Annotation Processors -&gt; Enable annotation processing勾选</code><br>&ensp;&ensp;然后重启idea即可。</p>
+</li>
+<li><p>添加<code>Lombok</code>的<code>maven</code>的<code>pom.xml</code>依赖</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;  </span><br><span class="line">  &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;  </span><br><span class="line">  &lt;artifactId&gt;lombok&lt;/artifactId&gt;  </span><br><span class="line">  &lt;version&gt;1.16.10&lt;/version&gt;  </span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-Lombok使用示例"><a href="#2-Lombok使用示例" class="headerlink" title="2. Lombok使用示例"></a>2. <code>Lombok</code>使用示例</h3><ol>
+<li>示例类 <code>Student</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"><span class="keyword">import</span> lombok.ToString;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by Administrator</span></span><br><span class="line"><span class="comment"> * on 2017/8/10 11:34.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span></span><br><span class="line"><span class="meta">@ToString</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String age;</span><br><span class="line">    <span class="keyword">private</span> String group;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>测试类<code>Start</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.pojo.Student;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by Administrator</span></span><br><span class="line"><span class="comment"> * on 2017/8/10 11:09.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Start</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Student s = <span class="keyword">new</span> Student();</span><br><span class="line">        s.setAge(<span class="string">"23"</span>);</span><br><span class="line">        s.setName(<span class="string">"hewei"</span>);</span><br><span class="line">        Student s2 = <span class="keyword">new</span> Student();</span><br><span class="line">        s2.setAge(<span class="string">"23"</span>);</span><br><span class="line">        s2.setName(<span class="string">"hewei"</span>);</span><br><span class="line">        System.out.println(s.getAge());</span><br><span class="line">        System.out.println(s.equals(s2));</span><br><span class="line">        s2.setName(<span class="string">"he"</span>);</span><br><span class="line">        System.out.println(s.equals(s2));</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>输出结果<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">23</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="keyword">false</span></span><br><span class="line">Student(name=hewei, age=<span class="number">23</span>, group=<span class="keyword">null</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&ensp;&ensp;如上结果可以看出,<code>Lombok</code>注释省去了<code>get</code>、<code>set</code>、<code>equals</code>、<code>hashCode</code>、<code>toString</code>等代码，大大简化了代码编写，省去了没必要的代码量。</p>
+<h2 id="Lombok常用注解"><a href="#Lombok常用注解" class="headerlink" title="Lombok常用注解"></a>Lombok常用注解</h2><blockquote>
+<p><code>Lombok</code>官网上的文档里面有所有的注解，这里不一一罗列，只说明其中几个比较常用的。</p>
+</blockquote>
+<p><code>@NonNull</code>:  控制参数不为空<br><code>@NoArgsConstructor</code>:  自动生成无参构造函数<br><code>@AllArgsConstructor</code>: 自动生成全参构造函数<br><code>@EqualsAndHashCode</code>: 添加<code>equals()</code>，<code>hashcode()</code>方法<br><code>@Data</code>: 自动为所有字段添加<code>@ToString</code>, <code>@EqualsAndHashCode</code>, <code>@Getter</code>方法，为非<code>final</code>字段添加<code>@Setter</code>,和<code>@RequiredArgsConstructor</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/Lombok/" rel="tag">#Lombok</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/2016-09-18-CSS3选择器详解/" rel="next" title="CSS3选择器详解">
+                <i class="fa fa-chevron-left"></i> CSS3选择器详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/06/JDK源码学习系列01----AbstractStringBuilder/" rel="prev" title="JDK源码学习系列02----AbstractStringBuilder">
+                JDK源码学习系列02----AbstractStringBuilder <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/08/10/Lombok初识/"
+     data-title="Lombok初识"
+     data-content=""
+     data-url="https://hewei0928.github.io/2017/08/10/Lombok初识/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/08/10/Lombok初识/"
+           data-title="Lombok初识" data-url="https://hewei0928.github.io/2017/08/10/Lombok初识/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Mr H" />
+          <p class="site-author-name" itemprop="name">Mr H</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lombok简介"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Lombok&#x7B80;&#x4ECB;" class="headerlink" title="Lombok&#x7B80;&#x4ECB;"></a>Lombok&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lombok使用"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Lombok&#x4F7F;&#x7528;" class="headerlink" title="Lombok&#x4F7F;&#x7528;"></a>Lombok&#x4F7F;&#x7528;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-设置Lombok环境"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#1-&#x8BBE;&#x7F6E;Lombok&#x73AF;&#x5883;" class="headerlink" title="1.&#x8BBE;&#x7F6E;Lombok&#x73AF;&#x5883;"></a>1.&#x8BBE;&#x7F6E;<code>Lombok</code>&#x73AF;&#x5883;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Lombok使用示例"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#2-Lombok&#x4F7F;&#x7528;&#x793A;&#x4F8B;" class="headerlink" title="2. Lombok&#x4F7F;&#x7528;&#x793A;&#x4F8B;"></a>2. <code>Lombok</code>&#x4F7F;&#x7528;&#x793A;&#x4F8B;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lombok常用注解"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Lombok&#x5E38;&#x7528;&#x6CE8;&#x89E3;" class="headerlink" title="Lombok&#x5E38;&#x7528;&#x6CE8;&#x89E3;"></a>Lombok&#x5E38;&#x7528;&#x6CE8;&#x89E3;</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr H</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
