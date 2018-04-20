@@ -84,20 +84,20 @@
 
 
 
-<meta name="description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。  LinkedHashMap 类结构123public class LinkedHashMap&amp;lt;K,V&amp;gt;    extends HashMap&amp;lt;K,V&amp;gt;    im">
+<meta name="description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。">
 <meta name="keywords" content="Java,JDK,LinkedHashMap,Map">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK源码学习系列09----LinkedHashMap">
 <meta property="og:url" content="https://hewei0928.github.io/2018/04/19/JDK源码学习系列09----LinkedHashMap/index.html">
 <meta property="og:site_name" content="小跳蛙">
-<meta property="og:description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。  LinkedHashMap 类结构123public class LinkedHashMap&amp;lt;K,V&amp;gt;    extends HashMap&amp;lt;K,V&amp;gt;    im">
+<meta property="og:description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://static.zybuluo.com/hewei0928/ft2id7n1x62kmoyeqa3padq7/image_1cbdvdq381k4i1kqa11cq15rjos9.png">
 <meta property="og:image" content="http://static.zybuluo.com/hewei0928/eyyevf2p1ptq1tmo2pdq3k08/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.jpg">
-<meta property="og:updated_time" content="2018-04-19T08:35:25.471Z">
+<meta property="og:updated_time" content="2018-04-20T02:16:10.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码学习系列09----LinkedHashMap">
-<meta name="twitter:description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。  LinkedHashMap 类结构123public class LinkedHashMap&amp;lt;K,V&amp;gt;    extends HashMap&amp;lt;K,V&amp;gt;    im">
+<meta name="twitter:description" content="之前的博客已经分析了HashMap的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到LinkedHashMap。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。">
 <meta name="twitter:image" content="http://static.zybuluo.com/hewei0928/ft2id7n1x62kmoyeqa3padq7/image_1cbdvdq381k4i1kqa11cq15rjos9.png">
 
 
@@ -311,6 +311,7 @@
         <blockquote>
 <p>之前的博客已经分析了<code>HashMap</code>的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到<code>LinkedHashMap</code>。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="LinkedHashMap-类结构"><a href="#LinkedHashMap-类结构" class="headerlink" title="LinkedHashMap 类结构"></a>LinkedHashMap 类结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedHashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p><code>LinkedHashMap</code>  继承了<code>HashMap</code>, 后续仔细阅读源码也可以发现，两者之间有许多相似之处，我们只需要 着眼于他们的不同之处即可。</p>
 <h2 id="LinkedHashMap-的数据结构"><a href="#LinkedHashMap-的数据结构" class="headerlink" title="LinkedHashMap 的数据结构"></a>LinkedHashMap 的数据结构</h2><p><img src="http://static.zybuluo.com/hewei0928/ft2id7n1x62kmoyeqa3padq7/image_1cbdvdq381k4i1kqa11cq15rjos9.png" alt="image_1cbdvdq381k4i1kqa11cq15rjos9.png-19.8kB"></p>
