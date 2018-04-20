@@ -1,0 +1,667 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,ife," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="BOM判断是否为IE浏览器123456789101112131415// 判断是否为IE浏览器，返回-1或者版本号function isIE()&amp;#123;	var user = navigator.userAgent;	var ieAgent = user.match(/msie (\d+.\d+)/i);	if (ieAgent) &amp;#123;		return ieAgent[1];	&amp;#12">
+<meta name="keywords" content="JavaScript,ife">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ife2015-task2 - BOM+AJAX">
+<meta property="og:url" content="https://hewei0928.github.io/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/index.html">
+<meta property="og:site_name" content="小跳蛙">
+<meta property="og:description" content="BOM判断是否为IE浏览器123456789101112131415// 判断是否为IE浏览器，返回-1或者版本号function isIE()&amp;#123;	var user = navigator.userAgent;	var ieAgent = user.match(/msie (\d+.\d+)/i);	if (ieAgent) &amp;#123;		return ieAgent[1];	&amp;#12">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-09-11T06:58:46.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ife2015-task2 - BOM+AJAX">
+<meta name="twitter:description" content="BOM判断是否为IE浏览器123456789101112131415// 判断是否为IE浏览器，返回-1或者版本号function isIE()&amp;#123;	var user = navigator.userAgent;	var ieAgent = user.match(/msie (\d+.\d+)/i);	if (ieAgent) &amp;#123;		return ieAgent[1];	&amp;#12">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/"/>
+
+  <title> ife2015-task2 - BOM+AJAX | 小跳蛙 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小跳蛙</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">回忆是一个转不出的死巷子，所以我决定砸墙</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            个人作品
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ife2015-task2 - BOM+AJAX
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T12:29:58+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><h3 id="判断是否为IE浏览器"><a href="#判断是否为IE浏览器" class="headerlink" title="判断是否为IE浏览器"></a>判断是否为IE浏览器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断是否为IE浏览器，返回-1或者版本号</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIE</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> user = navigator.userAgent;</span><br><span class="line">	<span class="keyword">var</span> ieAgent = user.match(<span class="regexp">/msie (\d+.\d+)/i</span>);</span><br><span class="line">	<span class="keyword">if</span> (ieAgent) &#123;</span><br><span class="line">		<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (user.match(<span class="regexp">/Trident\/7.0/i</span>)) &#123;</span><br><span class="line">			ieAgent = user.match(<span class="regexp">/rv:(\d+.\d+)/i</span>);</span><br><span class="line">			<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="Cookie相关"><a href="#Cookie相关" class="headerlink" title="Cookie相关"></a>Cookie相关</h3><h4 id="设置Cookie"><a href="#设置Cookie" class="headerlink" title="设置Cookie"></a>设置Cookie</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置cookie</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; cookieName  设置cookie名</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; cookieValue 对应的cookie名</span></span><br><span class="line"><span class="comment"> * @param &#123;Number&#125; expiredays  过期的时间(多少天后)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span>(<span class="params">cookieName, cookieValue, expiredays</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> oDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    oDate.setDate(oDate.getDate() + expiredays);</span><br><span class="line">    <span class="built_in">document</span>.cookie = cookieName + <span class="string">'='</span> + cookieValue + <span class="string">";expiredays ="</span> + oDate.toGMTString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#### 获取Cookie ####</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取cookie</span></span><br><span class="line"><span class="comment"> * @param   &#123;String&#125; cookieName 待寻找的cookie名</span></span><br><span class="line"><span class="comment"> * @returns &#123;String&#125; 返回寻找到的cookie值,无时为空</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">cookieName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arr = <span class="built_in">document</span>.cookie.split(<span class="string">';'</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> arr2 = arr[i].split(<span class="string">'='</span>);</span><br><span class="line">        <span class="keyword">if</span>(arr2[<span class="number">0</span>] == cookieName)&#123;</span><br><span class="line">            <span class="keyword">return</span> arr2[<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="删除Cookie"><a href="#删除Cookie" class="headerlink" title="删除Cookie"></a>删除Cookie</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除cookie</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; cookieName 待删除的cookie名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeCookie</span>(<span class="params">cookieName</span>) </span>&#123;</span><br><span class="line">    setCookie(cookieName, <span class="string">"1"</span>, <span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h2><h3 id="尝试自己封装一个Ajax方法"><a href="#尝试自己封装一个Ajax方法" class="headerlink" title="尝试自己封装一个Ajax方法"></a>尝试自己封装一个Ajax方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">url, options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> request = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</span><br><span class="line">    	request = <span class="keyword">new</span> ActiveXObject(<span class="string">'Microsoft.XMLHTTP'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.XMLHttpRequest)&#123;</span><br><span class="line">    	request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">    	alert(<span class="string">'创建XMLHttp对象异常'</span>);</span><br><span class="line">    	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="keyword">var</span> param = <span class="string">''</span>;</span><br><span class="line">    	<span class="keyword">if</span> (option.data) &#123;</span><br><span class="line">    		<span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> option.data)&#123;</span><br><span class="line">    			<span class="keyword">if</span> (option.data.hasOwnProperty(i)) &#123;</span><br><span class="line">    				param = i + <span class="string">"="</span> + option.data[i] + <span class="string">"&amp;"</span>;</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;</span><br><span class="line">    		param = param.replace(<span class="regexp">/&amp;$/</span>,<span class="string">''</span>);</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">var</span> type = options.type? options.type.toUpperCase():<span class="string">"GET"</span></span><br><span class="line">    	<span class="keyword">if</span> (option.type == <span class="string">'GET'</span>) &#123;</span><br><span class="line">    		url = url+<span class="string">"?"</span>+param;</span><br><span class="line">    		request.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>);</span><br><span class="line">    		request.send();</span><br><span class="line">    	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    		oAjax.open(<span class="string">"POST"</span>, url, <span class="literal">true</span>);</span><br><span class="line">        	oAjax.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">        	oAjax.send(param);</span><br><span class="line">    	&#125;</span><br><span class="line"></span><br><span class="line">    	request.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    		<span class="keyword">if</span> (request.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">    			<span class="keyword">if</span> (request.status == <span class="number">200</span>) &#123;</span><br><span class="line">    				options.onsuccess(request.responseText, request);</span><br><span class="line">    			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    				<span class="keyword">if</span> (options.onfail) &#123;</span><br><span class="line">    					options.onfail(request);</span><br><span class="line">    				&#125;</span><br><span class="line">    			&#125;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> request;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例：</span></span><br><span class="line">ajax(</span><br><span class="line">    <span class="string">'http://localhost:8080/server/ajaxtest'</span>, </span><br><span class="line">    &#123;</span><br><span class="line">        data: &#123;</span><br><span class="line">            name: <span class="string">'simon'</span>,</span><br><span class="line">            password: <span class="string">'123456'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        onsuccess: <span class="function"><span class="keyword">function</span> (<span class="params">responseText, xhr</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line"><span class="comment">//options是一个对象，里面可以包括的参数为：</span></span><br><span class="line"><span class="comment">//type: post或者get，可以有一个默认值</span></span><br><span class="line"><span class="comment">//data: 发送的数据，为一个键值对象或者为一个用&amp;连接的赋值字符串</span></span><br><span class="line"><span class="comment">//onsuccess: 成功时的调用函数</span></span><br><span class="line"><span class="comment">//onfail: 失败时的调用函数</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/ife/" rel="tag">#ife</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/11/2016-09-11-ife2015-task2-DOM-事件/" rel="next" title="ife2015-task2 - DOM+事件">
+                <i class="fa fa-chevron-left"></i> ife2015-task2 - DOM+事件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/18/2016-09-18-CSS之各种居中/" rel="prev" title="CSS之各种居中">
+                CSS之各种居中 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/"
+     data-title="ife2015-task2 - BOM+AJAX"
+     data-content=""
+     data-url="https://hewei0928.github.io/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/"
+           data-title="ife2015-task2 - BOM+AJAX" data-url="https://hewei0928.github.io/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Mr H" />
+          <p class="site-author-name" itemprop="name">Mr H</p>
+          <p class="site-description motion-element" itemprop="description">小锤四十，大锤八十</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BOM"><span class="nav-number">1.</span> <span class="nav-text">BOM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否为IE浏览器"><span class="nav-number">1.1.</span> <span class="nav-text">判断是否为IE浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie相关"><span class="nav-number">1.2.</span> <span class="nav-text">Cookie相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Cookie"><span class="nav-number">1.2.1.</span> <span class="nav-text">设置Cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除Cookie"><span class="nav-number">1.2.2.</span> <span class="nav-text">删除Cookie</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax"><span class="nav-number">2.</span> <span class="nav-text">Ajax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试自己封装一个Ajax方法"><span class="nav-number">2.1.</span> <span class="nav-text">尝试自己封装一个Ajax方法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr H</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

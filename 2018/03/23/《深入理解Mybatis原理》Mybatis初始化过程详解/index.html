@@ -1,0 +1,695 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Mybatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+<meta name="keywords" content="Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深入理解Mybatis原理》Mybatis初始化过程详解">
+<meta property="og:url" content="https://hewei0928.github.io/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/index.html">
+<meta property="og:site_name" content="小跳蛙">
+<meta property="og:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-20T01:03:19.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《深入理解Mybatis原理》Mybatis初始化过程详解">
+<meta name="twitter:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/"/>
+
+  <title> 《深入理解Mybatis原理》Mybatis初始化过程详解 | 小跳蛙 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小跳蛙</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">回忆是一个转不出的死巷子，所以我决定砸墙</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            个人作品
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《深入理解Mybatis原理》Mybatis初始化过程详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-23T15:16:27+08:00" content="2018-03-23">
+              2018-03-23
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析</p>
+</blockquote>
+<h2 id="Mybatis-初始化做了什么"><a href="#Mybatis-初始化做了什么" class="headerlink" title="Mybatis 初始化做了什么"></a>Mybatis 初始化做了什么</h2><p>&ensp;&ensp;框架的初始化及加载运行时所需的配置信息，而<code>Mybatis</code>的配置则在<code>mybatis-config.xml</code>文件中。查看<code>dtd</code>文件即可知其主要标签结构如下：</p>
+<ul>
+<li>configuration 配置<ul>
+<li>properties 属性</li>
+<li>settings 设置</li>
+<li>typeAliases 对象别名命名</li>
+<li>typeHandlers 类型处理器</li>
+<li>objectFactory 对象工厂</li>
+<li>plugins 插件</li>
+<li>environments 环境<ul>
+<li>environment 环境变量</li>
+<li>transactionManager 事务管理器</li>
+<li>dataSource 数据源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>&ensp;&ensp; 众所周知，要使上述<code>Mybatis</code>配置加载入Mybatis内部首先要创建<code>SqlSession</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySqlSessionFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SqlSessionFactory sqlSessionFactory;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSessionFactory <span class="title">getSqlSessionFactory</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sqlSessionFactory == <span class="keyword">null</span>)&#123;</span><br><span class="line">            InputStream inputStream;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                inputStream = Resources.getResourceAsStream(<span class="string">"mybatis-config.xml"</span>);</span><br><span class="line">                sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sqlSessionFactory;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">openSession</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getSqlSessionFactory().openSession();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由上方代码可见此次<code>Mybatis</code>初始化源码阅读之旅的入口即为：<code>SqlSessionFactoryBuilder().build()</code>方法。进一步阅读，即可发现<code>Mybatis</code>中使用<code>org.apache.ibatis.session.Configuration</code>类作为配置信息对象的存储容器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Configuration</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> Environment environment;</span><br><span class="line">    <span class="keyword">protected</span> Properties variables = <span class="keyword">new</span> Properties();</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> MapperRegistry mapperRegistry = <span class="keyword">new</span> MapperRegistry(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> InterceptorChain interceptorChain = <span class="keyword">new</span> InterceptorChain();</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> TypeHandlerRegistry typeHandlerRegistry = <span class="keyword">new</span> TypeHandlerRegistry();</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> TypeAliasRegistry typeAliasRegistry = <span class="keyword">new</span> TypeAliasRegistry();</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> LanguageDriverRegistry languageRegistry = <span class="keyword">new</span> LanguageDriverRegistry();</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由此可见，<code>Mybatis</code>初始化的过程基本可以看成是<code>Configuration</code>对象创建的过程，接下来就将深入探讨<code>Mybatis</code>是如何通过<code>XML</code>配置的方式构建<code>COnfiguration</code>对象。</p>
+<h2 id="MyBatis基于XML配置文件创建Configuration对象的过程"><a href="#MyBatis基于XML配置文件创建Configuration对象的过程" class="headerlink" title="MyBatis基于XML配置文件创建Configuration对象的过程"></a>MyBatis基于XML配置文件创建Configuration对象的过程</h2><h3 id="Mybatis-初始化基本过程"><a href="#Mybatis-初始化基本过程" class="headerlink" title="Mybatis 初始化基本过程"></a>Mybatis 初始化基本过程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(Reader reader, String environment, Properties properties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      XMLConfigBuilder parser = <span class="keyword">new</span> XMLConfigBuilder(reader, environment, properties);</span><br><span class="line">      <span class="keyword">return</span> build(parser.parse());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> ExceptionFactory.wrapException(<span class="string">"Error building SqlSession."</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      ErrorContext.instance().reset();</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        reader.close();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="comment">// Intentionally ignore. Prefer previous error.</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>&ensp;&ensp; <code>SqlSessionFactoryBuilder</code> 根据传入的数据流生成<code>Configuration</code>对象，然后根据<code>Configuration</code>对象构建<code>SqlSessionFactory</code>对象。</p>
+<p>&ensp;&ensp;初始化的基本过程时序图如下所示：</p>
+<ul>
+<li>1 调用<code>SessionFactoryBuilder</code>的<code>builder(InputStream)</code>方法；</li>
+<li>2 根据输入流创建<code>XMLConfigBuilder</code>对象；</li>
+<li>3 <code>XMLConfigBuilder</code>调用<code>parse()</code>方法生成<code>Configuration</code>对象；</li>
+<li>4 <code>SqlSessionFactoryBuilder</code>根据<code>Configuration</code>对象创建一个<code>DefaultSessionFactory</code>对象；</li>
+</ul>
+<h3 id="创建Configuration对象的过程"><a href="#创建Configuration对象的过程" class="headerlink" title="创建Configuration对象的过程"></a>创建Configuration对象的过程</h3><p>进一步查看<code>XMLConfigBuilder</code>源码</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mybatis/" rel="tag">#Mybatis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/07/JDK源码学习系列05----LikedList/" rel="next" title="JDK源码学习系列05----LinkedList">
+                <i class="fa fa-chevron-left"></i> JDK源码学习系列05----LinkedList
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/19/JDK源码学习系列09----LinkedHashMap/" rel="prev" title="JDK源码学习系列09----LinkedHashMap">
+                JDK源码学习系列09----LinkedHashMap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/"
+     data-title="《深入理解Mybatis原理》Mybatis初始化过程详解"
+     data-content=""
+     data-url="https://hewei0928.github.io/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/"
+           data-title="《深入理解Mybatis原理》Mybatis初始化过程详解" data-url="https://hewei0928.github.io/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Mr H" />
+          <p class="site-author-name" itemprop="name">Mr H</p>
+          <p class="site-description motion-element" itemprop="description">小锤四十，大锤八十</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis-初始化做了什么"><span class="nav-number">1.</span> <span class="nav-text">Mybatis 初始化做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis基于XML配置文件创建Configuration对象的过程"><span class="nav-number">2.</span> <span class="nav-text">MyBatis基于XML配置文件创建Configuration对象的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis-初始化基本过程"><span class="nav-number">2.1.</span> <span class="nav-text">Mybatis 初始化基本过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Configuration对象的过程"><span class="nav-number">2.2.</span> <span class="nav-text">创建Configuration对象的过程</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr H</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

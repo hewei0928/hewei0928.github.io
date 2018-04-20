@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="运动框架的实现思路 运动，其实就是在一段时间内改变left、right、width、height、opactiy的值，到达目的地之后停止。  现在按照以下步骤来进行运动框架的封装：　　１．匀速运动　　２．缓冲运动　　３．多物体运动　　４．任意值变化　　５．链式运动　　６．同时运动">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript完美运动框架的进阶之旅">
+<meta property="og:url" content="https://hewei0928.github.io/2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/index.html">
+<meta property="og:site_name" content="小跳蛙">
+<meta property="og:description" content="运动框架的实现思路 运动，其实就是在一段时间内改变left、right、width、height、opactiy的值，到达目的地之后停止。  现在按照以下步骤来进行运动框架的封装：　　１．匀速运动　　２．缓冲运动　　３．多物体运动　　４．任意值变化　　５．链式运动　　６．同时运动">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-09-23T00:16:49.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript完美运动框架的进阶之旅">
+<meta name="twitter:description" content="运动框架的实现思路 运动，其实就是在一段时间内改变left、right、width、height、opactiy的值，到达目的地之后停止。  现在按照以下步骤来进行运动框架的封装：　　１．匀速运动　　２．缓冲运动　　３．多物体运动　　４．任意值变化　　５．链式运动　　６．同时运动">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/"/>
+
+  <title> JavaScript完美运动框架的进阶之旅 | 小跳蛙 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">小跳蛙</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">回忆是一个转不出的死巷子，所以我决定砸墙</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-works">
+          <a href="/works" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            个人作品
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript完美运动框架的进阶之旅
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-08T07:08:50+08:00" content="2016-09-08">
+              2016-09-08
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="运动框架的实现思路"><a href="#运动框架的实现思路" class="headerlink" title="运动框架的实现思路"></a>运动框架的实现思路</h2><blockquote>
+<p>运动，其实就是在一段时间内改变left、right、width、height、opactiy的值，到达目的地之后停止。</p>
+</blockquote>
+<p>现在按照以下步骤来进行运动框架的封装：<br>　　１．匀速运动<br>　　２．缓冲运动<br>　　３．多物体运动<br>　　４．任意值变化<br>　　５．链式运动<br>　　６．同时运动<br><a id="more"></a></p>
+<h2 id="（一）匀速运动"><a href="#（一）匀速运动" class="headerlink" title="（一）匀速运动"></a>（一）匀速运动</h2><h3 id="速度动画"><a href="#速度动画" class="headerlink" title="速度动画"></a>速度动画</h3><h4 id="运动基础"><a href="#运动基础" class="headerlink" title="运动基础"></a>运动基础</h4><p>思考:如何让<code>div</code>动起来<br>    １.设置元素为绝对定位，只有绝对定位后，left,top等值才生效。<br>    ２.定时器的使用（动态改变值），这里使用setInterval()每隔指定的时间执行代码。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 运动框架-1-动起来</span></span><br><span class="line"><span class="comment"> * @param &#123;HTMLElement&#125; element 进行运动的节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="comment">//定时器</span></span><br><span class="line">        <span class="keyword">if</span> (element.offsetLeft === iTarget)&#123;</span><br><span class="line">        　　clearInterval(timer);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        　　element.style.left = element.offsetLeft + <span class="number">5</span> + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>就这样是不是就完成了呢？已经ok了呢？<br>no。还有一些Bug需要处理。</p>
+<p>当我们将鼠标快速的移入或移出目标块时，运动会加快。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 运动框架-1-解决Bug</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element, iTarget</span>) </span>&#123;</span><br><span class="line">    clearInterval(timer);<span class="comment">//在开始运动时,关闭已有定时器</span></span><br><span class="line">    timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> iSpeed = <span class="number">5</span>;<span class="comment">//把速度用变量保存</span></span><br><span class="line">        <span class="comment">//把运动和停止隔开(if/else)</span></span><br><span class="line">        <span class="keyword">if</span> (element.offsetLeft === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">            clearInterval(timer);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            element.style.left = element.offsetLeft + iSpeed + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一个最简单的运动框架就完成了，现在再对速度值进行一些设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断距离目标位置，达到自动变化速度正负</span></span><br><span class="line"><span class="keyword">var</span> iSpeed = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (element.offsetLeft &lt; iTarget) &#123;</span><br><span class="line">    iSpeed = <span class="number">5</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    iSpeed = <span class="number">-5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="透明动画"><a href="#透明动画" class="headerlink" title="透明动画"></a>透明动画</h3><p>　　１．用变量alpha储存当前透明度。<br>　　２．把上面的element.offsetLeft改成变量alpha。<br>　　３．运动和停止条件部分进行更改。如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//透明度兼容实现</span></span><br><span class="line"><span class="keyword">if</span>(alpha === iTarget)&#123;</span><br><span class="line">　　clearInterval(time);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">　　alpha +=speed;</span><br><span class="line">　　element.style.filter = <span class="string">"alpha(opacity:"</span> + alpha + <span class="string">")"</span><span class="comment">//兼容IE</span></span><br><span class="line">　　element.style.opacity = alpha/<span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="（二）缓冲动画"><a href="#（二）缓冲动画" class="headerlink" title="（二）缓冲动画"></a>（二）缓冲动画</h2><p>　　- 速度值与距离值相关。<br>　　- Bug：当距离变小时，速度回小于1，会被浏览器默认向下取整。<br>　　　　- 向下取整。Math.floor()<br>　　　　- 向上取整。Math.ceil()<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 运动框架-2-缓冲动画</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element, iTarget</span>) </span>&#123;</span><br><span class="line">    clearInterval(timer);</span><br><span class="line">    timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//因为速度要动态改变，所以必须放在定时器中</span></span><br><span class="line">        <span class="keyword">var</span> iSpeed = (iTarget - element.offsetLeft) / <span class="number">10</span>; <span class="comment">//(目标值-当前值)/缩放系数=速度</span></span><br><span class="line">        <span class="built_in">console</span>.log(element.offsetLeft);</span><br><span class="line">        <span class="keyword">if</span> (element.offsetLeft === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">            clearInterval(timer);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            element.style.left = element.offsetLeft + iSpeed + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在浏览器F12中可以看到不断地console一个不为iTarget的整数，这便是运动速度不取整导致的BUG。<strong>在运动函数中，对运动速度取整这一点非常重要</strong></p>
+<p>改写如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 运动框架<span class="number">-3</span>-缓冲动画</span><br><span class="line"> *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">function startMove(element, iTarget) &#123;</span></span><br><span class="line"><span class="regexp">    clearInterval(timer);</span></span><br><span class="line"><span class="regexp">    timer = setInterval(function () &#123;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/因为速度要动态改变，所以必须放在定时器中</span></span><br><span class="line"><span class="regexp">        var iSpeed = (iTarget - element.offsetLeft) /</span> <span class="number">10</span>; <span class="comment">//(目标值-当前值)/缩放系数=速度</span></span><br><span class="line">        iSpeed = iSpeed &gt; <span class="number">0</span> ? <span class="built_in">Math</span>.ceil(iSpeed) : <span class="built_in">Math</span>.floor(iSpeed); <span class="comment">//速度取整</span></span><br><span class="line">        <span class="keyword">if</span> (element.offsetLeft === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">            clearInterval(timer);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            element.style.left = element.offsetLeft + iSpeed + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##（三）多物体运动 ##<br>　　- 直接使用element.timer把定时器变成对象上的一个属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> list = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;list.length;i++)&#123;</span><br><span class="line">            list[i].timer=<span class="literal">null</span>;</span><br><span class="line">            list[i].onmouseover=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                startMove(<span class="keyword">this</span>,<span class="number">400</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            list[i].onmouseout=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                startMove(<span class="keyword">this</span>,<span class="number">200</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//var timer=null;</span></span><br><span class="line">    <span class="comment">//多物体运动所有东西都不能共用</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">obj, iTarget</span>)</span>&#123;</span><br><span class="line">        clearInterval(obj.timer);</span><br><span class="line">        obj.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> speed=(iTarget-obj.clientWidth)/<span class="number">8</span>;</span><br><span class="line">            speed=speed&gt;<span class="number">0</span>?<span class="built_in">Math</span>.ceil(speed):<span class="built_in">Math</span>.floor(speed);</span><br><span class="line">            <span class="keyword">if</span>(obj.clientWidth==iTarget)&#123;</span><br><span class="line">                clearInterval(obj.timer);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                obj.style.width=obj.clientWidth+speed+<span class="string">"px"</span>; </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">30</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>多物体运动所有东西都不能共用</strong></p>
+<p>##（四）任意值变化 ##<br>我们来给div加个1px的边框。boder :1px solid #000</p>
+<p>然后来试试下面的代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    oDiv.style.width = oDiv.offsetWidth - <span class="number">1</span> + <span class="string">"px"</span>;</span><br><span class="line">&#125;, <span class="number">30</span>)</span><br></pre></td></tr></table></figure></p>
+<p>明明speed是-1结果宽度却在不断增大。<br>这是因为offsetWidth的值是width+2*border，所以其实函数每运行一次width都会+1s。</p>
+<h3 id="第一步：获取实际样式"><a href="#第一步：获取实际样式" class="headerlink" title="第一步：获取实际样式"></a>第一步：获取实际样式</h3><blockquote>
+<p>使用offsetLeft..等获取样式时, 若设置了边框, padding, 等可以改变元素宽度高度的属性时会出现BUG.<br>　　 - 利用getcomputedStyle(非IE)或currentStyle(IE)来获取实际样式。<br>　　 - 将两个函数封装为getStyle以兼容各浏览器。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取实际样式函数</span></span><br><span class="line"><span class="comment"> * @param   &#123;HTMLElement&#125;   element  需要寻找的样式的html节点</span></span><br><span class="line"><span class="comment"> * @param   &#123;String&#125; attr 在对象中寻找的样式属性</span></span><br><span class="line"><span class="comment"> * @returns &#123;String&#125; 获取到的属性</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getStyle</span>(<span class="params">element, attr</span>)</span>&#123;</span><br><span class="line">　　<span class="comment">//IE</span></span><br><span class="line">　　<span class="keyword">if</span>(element.currentStyle)&#123;</span><br><span class="line">　　　　<span class="keyword">return</span> element.currentStyle[attr];</span><br><span class="line">　　&#125;<span class="keyword">else</span>&#123;<span class="comment">//标准</span></span><br><span class="line">　　　　<span class="keyword">return</span> getComputedStyle(element, <span class="literal">false</span>);</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="第二部：改造原函数"><a href="#第二部：改造原函数" class="headerlink" title="第二部：改造原函数"></a>第二部：改造原函数</h3><p>　　１．添加参数，attr表示需要改变的属性值。<br>　　２．更改element.offsetLeft为getStyle(element, attr)。<br>　　　　* 注意：getStyle(element, attr)不能直接使用，因为它获取到的字符串。<br>　　３．element.style.left为element.style[attr]。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 运动框架-4-任意值变化</span></span><br><span class="line"><span class="comment"> * @param &#123;HTMLElement&#125; element 运动对象</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125;      attr    需要改变的属性。</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125;      iTarget 目标值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element, attr, iTarget</span>) </span>&#123;</span><br><span class="line">    clearInterval(element.timer);</span><br><span class="line">    element.timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">//因为速度要动态改变，所以必须放在定时器中</span></span><br><span class="line">    <span class="keyword">var</span> iCurrent=<span class="number">0</span>;</span><br><span class="line">    iCurrent = <span class="built_in">parseInt</span>(getStyle(element, attr));<span class="comment">//实际样式大小</span></span><br><span class="line">        <span class="keyword">var</span> iSpeed = (iTarget - iCurrent) / <span class="number">10</span>; <span class="comment">//(目标值-当前值)/缩放系数=速度</span></span><br><span class="line">        iSpeed = iSpeed &gt; <span class="number">0</span> ? <span class="built_in">Math</span>.ceil(iSpeed) : <span class="built_in">Math</span>.floor(iSpeed); <span class="comment">//速度取整</span></span><br><span class="line">        <span class="keyword">if</span> (iCurrent === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">            clearInterval(element.timer);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            element.style[attr] = iCurrent + iSpeed + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="第三步：透明度兼容处理"><a href="#第三步：透明度兼容处理" class="headerlink" title="第三步：透明度兼容处理"></a>第三步：透明度兼容处理</h3><p>　　１.判断<code>attr</code>是不是透明度<br>　　２.对透明度进行特殊处理<code>parseInt()</code>会对小数进行向下取整<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 运动框架-5-兼容透明度</span></span><br><span class="line"><span class="comment"> * @param &#123;HTMLElement&#125; element 运动对象</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125;      attr    需要改变的属性。</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125;      iTarget 目标值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element, attr, iTarget</span>) </span>&#123;</span><br><span class="line">    clearInterval(element.timer);</span><br><span class="line">    element.timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">//因为速度要动态改变，所以必须放在定时器中</span></span><br><span class="line">        <span class="keyword">var</span> iCurrent = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (attr === <span class="string">"opacity"</span>) &#123; <span class="comment">//为透明度时执行。</span></span><br><span class="line">            iCurrent = <span class="built_in">Math</span>.round(<span class="built_in">parseFloat</span>(getStyle(element, attr)) * <span class="number">100</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">//默认情况</span></span><br><span class="line">            iCurrent = <span class="built_in">parseInt</span>(getStyle(element, attr)); <span class="comment">//实际样式大小</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> iSpeed = (iTarget - iCurrent) / <span class="number">10</span>; <span class="comment">//(目标值-当前值)/缩放系数=速度</span></span><br><span class="line">        iSpeed = iSpeed &gt; <span class="number">0</span> ? <span class="built_in">Math</span>.ceil(iSpeed) : <span class="built_in">Math</span>.floor(iSpeed); <span class="comment">//速度取整</span></span><br><span class="line">        <span class="keyword">if</span> (iCurrent === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">            clearInterval(element.timer);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (attr === <span class="string">"opacity"</span>) &#123; <span class="comment">//为透明度时，执行</span></span><br><span class="line">                element.style.filter = <span class="string">"alpha(opacity:"</span> + (iCurrent + iSpeed) + <span class="string">")"</span>; <span class="comment">//IE</span></span><br><span class="line">                element.style.opacity = (iCurrent + iSpeed) / <span class="number">100</span>; <span class="comment">//标准</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//默认</span></span><br><span class="line">                element.style[attr] = iCurrent + iSpeed + <span class="string">"px"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##（五）链式运动 ##</p>
+<blockquote>
+<p>链式动画：顾名思义，就是在该次运动停止时，开始下一次运动。</p>
+</blockquote>
+<p>如何实现呢？<br>　　- 使用回调函数：运动停止时，执行函数<br>　　- 添加｀func｀形参（回调函数）。<br>　　- 在iCurrent === iTarget时，判断是否有回调函数存在，有则执行。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (iCurrent === iTarget) &#123;<span class="comment">//结束运动</span></span><br><span class="line">    clearInterval(element.timer);</span><br><span class="line">    <span class="keyword">if</span> (func) &#123;</span><br><span class="line">        func();<span class="comment">//回调函数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##（六）同时运动 ##<br>思考：<strong>如何实现同时运动</strong>？<br>　　１.使用对象传递多个值<br>　　２.使用<code>for in</code>循环，遍历属性，与值。<br>　　３.定时器问题!(运动提前停止)</p>
+<h2 id="完美运动框架"><a href="#完美运动框架" class="headerlink" title="完美运动框架"></a>完美运动框架</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取实际样式函数</span></span><br><span class="line"><span class="comment"> * @param   &#123;HTMLElement&#125;   element  需要寻找的样式的html节点</span></span><br><span class="line"><span class="comment"> * @param   &#123;String]&#125; attr 在对象中寻找的样式属性</span></span><br><span class="line"><span class="comment"> * @returns &#123;String&#125; 获取到的属性</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getStyle</span>(<span class="params">element, attr</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//IE写法</span></span><br><span class="line">    <span class="keyword">if</span> (element.currentStyle) &#123;</span><br><span class="line">        <span class="keyword">return</span> element.currentStyle[attr];</span><br><span class="line">        <span class="comment">//标准</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getComputedStyle(element, <span class="literal">false</span>)[attr];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 完美运动框架</span></span><br><span class="line"><span class="comment"> * @param &#123;HTMLElement&#125; element 运动对象</span></span><br><span class="line"><span class="comment"> * @param &#123;JSON&#125;        json    属性：目标值      </span></span><br><span class="line"><span class="comment"> *   @property &#123;String&#125; attr    属性值</span></span><br><span class="line"><span class="comment"> *   @config   &#123;Number&#125; target  目标值</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;    func    可选，回调函数，链式动画。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startMove</span>(<span class="params">element, json, fn</span>)</span>&#123;</span><br><span class="line">    clearInterval(element.timer);</span><br><span class="line">    element.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">true</span>;<span class="comment">//假设所有参数都已到达</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> attr <span class="keyword">in</span> json)&#123;</span><br><span class="line">            <span class="keyword">if</span>(attr === <span class="string">"opacity"</span>)&#123;</span><br><span class="line">                icur = <span class="built_in">Math</span>.round(paraseFloat(getStyle(element,attr)));</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                icur = <span class="built_in">parseInt</span>(getStyle(element,attr));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> speed = (json[attr]-icur)/<span class="number">10</span>;</span><br><span class="line">            speed = speed&gt;<span class="number">0</span>?<span class="built_in">Math</span>.ceil(speed):<span class="built_in">Math</span>.floor(speed);</span><br><span class="line">            <span class="keyword">if</span> (icur != json[attr]) &#123;</span><br><span class="line">                flag = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">if</span> (attr === <span class="string">"opacity"</span>) &#123;</span><br><span class="line">                    element.style.filter = <span class="string">"alpha(opacity:"</span> + (icur + speed) + <span class="string">")"</span>; <span class="comment">//IE</span></span><br><span class="line">                    element.style.opacity = (icur + speed) / <span class="number">100</span>;   </span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    element.style[attr] = icur + speed + <span class="string">"px"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">            clearInterval(element.timer);</span><br><span class="line">            <span class="keyword">if</span> (fn) &#123;</span><br><span class="line">                fn();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="number">30</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/07/2016-09-07-JavaScript类型识别/" rel="next" title="JavaScript类型识别">
+                <i class="fa fa-chevron-left"></i> JavaScript类型识别
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/08/2016-09-08-ife2015-task2-一-JavaScript数据类型及语言基础/" rel="prev" title="ife2015-task2(1)-JavaScript数据类型及语言基础">
+                ife2015-task2(1)-JavaScript数据类型及语言基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/"
+     data-title="JavaScript完美运动框架的进阶之旅"
+     data-content=""
+     data-url="https://hewei0928.github.io/2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/"
+           data-title="JavaScript完美运动框架的进阶之旅" data-url="https://hewei0928.github.io/2016/09/08/2016-09-08-JavaScript完美运动框架的进阶之旅/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Mr H" />
+          <p class="site-author-name" itemprop="name">Mr H</p>
+          <p class="site-description motion-element" itemprop="description">小锤四十，大锤八十</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#运动框架的实现思路"><span class="nav-number">1.</span> <span class="nav-text">运动框架的实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）匀速运动"><span class="nav-number">2.</span> <span class="nav-text">（一）匀速运动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#速度动画"><span class="nav-number">2.1.</span> <span class="nav-text">速度动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运动基础"><span class="nav-number">2.1.1.</span> <span class="nav-text">运动基础</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透明动画"><span class="nav-number">2.2.</span> <span class="nav-text">透明动画</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）缓冲动画"><span class="nav-number">3.</span> <span class="nav-text">（二）缓冲动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：获取实际样式"><span class="nav-number">3.1.</span> <span class="nav-text">第一步：获取实际样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部：改造原函数"><span class="nav-number">3.2.</span> <span class="nav-text">第二部：改造原函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：透明度兼容处理"><span class="nav-number">3.3.</span> <span class="nav-text">第三步：透明度兼容处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完美运动框架"><span class="nav-number">4.</span> <span class="nav-text">完美运动框架</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr H</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
