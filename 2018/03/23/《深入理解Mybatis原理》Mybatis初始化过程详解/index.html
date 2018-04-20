@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+<meta name="description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析">
 <meta name="keywords" content="Mybatis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《深入理解Mybatis原理》Mybatis初始化过程详解">
 <meta property="og:url" content="https://hewei0928.github.io/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/index.html">
 <meta property="og:site_name" content="小跳蛙">
-<meta property="og:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+<meta property="og:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-20T01:03:19.611Z">
+<meta property="og:updated_time" content="2018-04-20T02:19:13.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《深入理解Mybatis原理》Mybatis初始化过程详解">
-<meta name="twitter:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析  Mybatis 初始化做了什么&amp;ensp;&amp;ensp;框架的初始化及加载运行时所需的配置信息，而Mybatis的配置则在mybatis-config.">
+<meta name="twitter:description" content="最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析">
 
 
 
@@ -308,6 +308,7 @@
         <blockquote>
 <p>最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="Mybatis-初始化做了什么"><a href="#Mybatis-初始化做了什么" class="headerlink" title="Mybatis 初始化做了什么"></a>Mybatis 初始化做了什么</h2><p>&ensp;&ensp;框架的初始化及加载运行时所需的配置信息，而<code>Mybatis</code>的配置则在<code>mybatis-config.xml</code>文件中。查看<code>dtd</code>文件即可知其主要标签结构如下：</p>
 <ul>
 <li>configuration 配置<ul>
