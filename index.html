@@ -574,8 +574,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/02/07/JDK源码学习系列05----LikedList/" itemprop="url">
-                  JDK源码学习系列05----LinkedList
+                <a class="post-title-link" href="/2018/01/16/JDBC系列之数据库驱动加载/" itemprop="url">
+                  JDBC系列之数据库驱动加载
                 </a>
               
             
@@ -588,8 +588,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-07T23:51:30+08:00" content="2018-02-07">
-              2018-02-07
+            <time itemprop="dateCreated" datetime="2018-01-16T22:34:51+08:00" content="2018-01-16">
+              2018-01-16
             </time>
           </span>
 
@@ -599,8 +599,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/02/07/JDK源码学习系列05----LikedList/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/07/JDK源码学习系列05----LikedList/" itemprop="commentsCount"></span>
+                <a href="/2018/01/16/JDBC系列之数据库驱动加载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/01/16/JDBC系列之数据库驱动加载/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -625,12 +625,11 @@
       
         
           <blockquote>
-<p><code>LinkedList</code>是基于双向链表实现的，它也可以被当作堆栈、队列或双端队列进行操作。</p>
+<p>最近公司的数据库模板框架代码，发现自己mybatis用多了，JDBC知识忘得快差不多了。所以把JDBC翻出来，好好重新学习一番。</p>
 </blockquote>
-<h2 id="一-LinkedList简介"><a href="#一-LinkedList简介" class="headerlink" title="一. LinkedList简介"></a>一. LinkedList简介</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">extends</span> <span class="title">AbstractSequentialList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<p><code>LinkedList</code> 继承自<code>AbStractSequentiaList</code>,实现了<code>List</code>,<code>Deque</code>,<code>Cloneable</code>,<code>Serializable</code>接口</p>
+<h2 id="一、-概述"><a href="#一、-概述" class="headerlink" title="一、 概述"></a>一、 概述</h2><p>&ensp;&ensp;在应用程序中进行数据库连接，调用JDBC接口，首先要将特定厂商的JDBC驱动实现加载到系统内存中，然后供系统使用。基本结构图如下：<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/02/07/JDK源码学习系列05----LikedList/#more" rel="contents">
+            <a class="btn" href="/2018/01/16/JDBC系列之数据库驱动加载/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -681,8 +680,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/02/07/JDK源码学习系列04----ArrayList/" itemprop="url">
-                  JDK源码学习系列04----ArrayList
+                <a class="post-title-link" href="/2017/12/25/maven多模块微服务项目创建记录/" itemprop="url">
+                  maven多模块微服务项目创建记录
                 </a>
               
             
@@ -695,8 +694,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-07T23:51:30+08:00" content="2018-02-07">
-              2018-02-07
+            <time itemprop="dateCreated" datetime="2017-12-25T16:30:49+08:00" content="2017-12-25">
+              2017-12-25
             </time>
           </span>
 
@@ -706,8 +705,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/02/07/JDK源码学习系列04----ArrayList/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/07/JDK源码学习系列04----ArrayList/" itemprop="commentsCount"></span>
+                <a href="/2017/12/25/maven多模块微服务项目创建记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/25/maven多模块微服务项目创建记录/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -732,12 +731,10 @@
       
         
           <blockquote>
-<p>集合一直是java中的重点，今天开始慢慢学习它的源码。</p>
+<p>&ensp;&ensp;最近工作中需要将原先的项目进行一次重构，把各个模块封装成微服务。初次自己独立搭建maven多模块项目，而且是首次接触Dubbo和Zookeeper，踩了较多的坑终于完成了。这里记录一下大概的搭建过程以及搭建过程中踩到的坑，以便于日后的快速搭建。</p>
 </blockquote>
-<h2 id="一-ArrayList"><a href="#一-ArrayList" class="headerlink" title="一. ArrayList"></a>一. ArrayList</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<p><code>ArrayList</code>实现了<code>List</code>, <code>RandomAccess</code>, <code>Clonable</code>, <code>SeriaLizable</code>, 继承了<code>AbstractList</code>。<br><code>ArrayList</code>的类结构图如下：<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/02/07/JDK源码学习系列04----ArrayList/#more" rel="contents">
+            <a class="btn" href="/2017/12/25/maven多模块微服务项目创建记录/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -822,7 +819,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
