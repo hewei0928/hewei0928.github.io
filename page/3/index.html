@@ -259,6 +259,111 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/" itemprop="url">
+                  《深入理解Mybatis原理》Mybatis初始化过程详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-03-23T15:16:27+08:00" content="2018-03-23">
+              2018-03-23
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>最近阅读了《Java Persistence with MyBatis 3》一书，对Mybatis的各类配置及使用有了更深入的的了解。 进而产生了对Mybatis源码进行阅读解析的想法，就从这篇文章开始吧。先对Mybatis框架的初始化进行解析</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/03/23/《深入理解Mybatis原理》Mybatis初始化过程详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/01/16/JDBC系列之数据库驱动加载/" itemprop="url">
                   JDBC系列之数据库驱动加载
                 </a>
@@ -653,112 +758,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/12/18/JDK源码学习系列08----Arrays/" itemprop="url">
-                  JDK源码学习系列08----Arrays
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-12-18T09:27:02+08:00" content="2017-12-18">
-              2017-12-18
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/12/18/JDK源码学习系列08----Arrays/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/18/JDK源码学习系列08----Arrays/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。</p>
-</blockquote>
-<h2 id="一-方法汇总"><a href="#一-方法汇总" class="headerlink" title="一. 方法汇总"></a>一. 方法汇总</h2><p><code>Arrays</code>类中的方法大致可以分为以下几类：<br>| 方法名 | 用处|<br>|—–| :—–:|<br>| copyOf() | 复制指定的数组 |<br>| copyOfRange() | 将指定数组的某一范围内的数据复制到另一数组内 |<br>| binarySearch() | 使用二分搜索法查找数组内指定元素 |<br>| deeepEquals() | 比较两个数组是否深层次相等 |<br>| deepHashCode() | 基于指定数组的”深层内容”返回哈希值 |<br>| deepToString() | 返回指定数组”深层内容”的字符串表示形式 |<br>| equals() | 比较两个数组是否相等 |<br>| fill() | 将指定对象引用分配给数组的每个元素 |<br>| hashCode() | 基于数组的内容返回哈希值 |<br>| sort() | 按指定顺序对数组元素进行排序 |<br>| toString() | 返回指定数组内容的字符串表示形式 |<br>| asList() | 返回一个受指定数组支持的固定大小的列表 |</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/12/18/JDK源码学习系列08----Arrays/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -804,7 +803,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
