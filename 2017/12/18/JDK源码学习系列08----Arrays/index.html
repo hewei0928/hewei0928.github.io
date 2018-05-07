@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：| 方法名 | 用处||—–| :—–:|| copyOf() | 复制指定的数组 || copyOfRange() | 将指定数组的某一范围内的数据复制到另一数组内 || b">
+<meta name="description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：    方法名 用处     copyOf() 复制指定的数组   copyOfRange() 将指定数组的某一范围内的数据复制到另一数组内   binarySearch()">
 <meta name="keywords" content="Java,JDK,Arrays">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK源码学习系列08----Arrays">
 <meta property="og:url" content="https://hewei0928.github.io/2017/12/18/JDK源码学习系列08----Arrays/index.html">
 <meta property="og:site_name" content="小跳蛙">
-<meta property="og:description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：| 方法名 | 用处||—–| :—–:|| copyOf() | 复制指定的数组 || copyOfRange() | 将指定数组的某一范围内的数据复制到另一数组内 || b">
+<meta property="og:description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：    方法名 用处     copyOf() 复制指定的数组   copyOfRange() 将指定数组的某一范围内的数据复制到另一数组内   binarySearch()">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T09:28:54.247Z">
+<meta property="og:updated_time" content="2018-05-07T01:23:11.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码学习系列08----Arrays">
-<meta name="twitter:description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：| 方法名 | 用处||—–| :—–:|| copyOf() | 复制指定的数组 || copyOfRange() | 将指定数组的某一范围内的数据复制到另一数组内 || b">
+<meta name="twitter:description" content="Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。  一. 方法汇总Arrays类中的方法大致可以分为以下几类：    方法名 用处     copyOf() 复制指定的数组   copyOfRange() 将指定数组的某一范围内的数据复制到另一数组内   binarySearch()">
 
 
 
@@ -308,7 +308,65 @@
         <blockquote>
 <p>Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。</p>
 </blockquote>
-<h2 id="一-方法汇总"><a href="#一-方法汇总" class="headerlink" title="一. 方法汇总"></a>一. 方法汇总</h2><p><code>Arrays</code>类中的方法大致可以分为以下几类：<br>| 方法名 | 用处|<br>|—–| :—–:|<br>| copyOf() | 复制指定的数组 |<br>| copyOfRange() | 将指定数组的某一范围内的数据复制到另一数组内 |<br>| binarySearch() | 使用二分搜索法查找数组内指定元素 |<br>| deeepEquals() | 比较两个数组是否深层次相等 |<br>| deepHashCode() | 基于指定数组的”深层内容”返回哈希值 |<br>| deepToString() | 返回指定数组”深层内容”的字符串表示形式 |<br>| equals() | 比较两个数组是否相等 |<br>| fill() | 将指定对象引用分配给数组的每个元素 |<br>| hashCode() | 基于数组的内容返回哈希值 |<br>| sort() | 按指定顺序对数组元素进行排序 |<br>| toString() | 返回指定数组内容的字符串表示形式 |<br>| asList() | 返回一个受指定数组支持的固定大小的列表 |</p>
+<h2 id="一-方法汇总"><a href="#一-方法汇总" class="headerlink" title="一. 方法汇总"></a>一. 方法汇总</h2><p><code>Arrays</code>类中的方法大致可以分为以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th style="text-align:center">用处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>copyOf()</td>
+<td style="text-align:center">复制指定的数组</td>
+</tr>
+<tr>
+<td>copyOfRange()</td>
+<td style="text-align:center">将指定数组的某一范围内的数据复制到另一数组内</td>
+</tr>
+<tr>
+<td>binarySearch()</td>
+<td style="text-align:center">使用二分搜索法查找数组内指定元素</td>
+</tr>
+<tr>
+<td>deeepEquals()</td>
+<td style="text-align:center">比较两个数组是否深层次相等</td>
+</tr>
+<tr>
+<td>deepHashCode()</td>
+<td style="text-align:center">基于指定数组的”深层内容”返回哈希值</td>
+</tr>
+<tr>
+<td>deepToString()</td>
+<td style="text-align:center">返回指定数组”深层内容”的字符串表示形式</td>
+</tr>
+<tr>
+<td>equals()</td>
+<td style="text-align:center">比较两个数组是否相等</td>
+</tr>
+<tr>
+<td>fill()</td>
+<td style="text-align:center">将指定对象引用分配给数组的每个元素</td>
+</tr>
+<tr>
+<td>hashCode()</td>
+<td style="text-align:center">基于数组的内容返回哈希值</td>
+</tr>
+<tr>
+<td>sort()</td>
+<td style="text-align:center">按指定顺序对数组元素进行排序</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td style="text-align:center">返回指定数组内容的字符串表示形式</td>
+</tr>
+<tr>
+<td>asList()</td>
+<td style="text-align:center">返回一个受指定数组支持的固定大小的列表</td>
+</tr>
+</tbody>
+</table>
 <a id="more"></a>
       
     </div>
