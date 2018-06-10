@@ -259,6 +259,111 @@
             
               
                 
+                <a class="post-title-link" href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/" itemprop="url">
+                  JDK源码学习系列02----AbstractStringBuilder
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-30T13:02:31+08:00" content="2017-11-30">
+              2017-11-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/30/JDK源码学习系列02----AbstractStringBuilder/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>因为看<code>StringBuffer</code> 和 <code>StringBuilder</code> 的源码时发现两者都继承了<code>AbstractStringBuilder</code>，并且很多方法都是直接<code>super</code>的父类<code>AbstractStringBuilder</code>的方法，所以还是决定先看<code>AbstractStringBuilder</code>的源码，然后再看<code>StringBuffer</code> 和 <code>StringBuilder</code>.</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/11/20/JDK源码学习系列01----String/" itemprop="url">
                   JDK源码学习系列01----String
                 </a>
@@ -657,109 +762,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="url">
-                  ife2015-task2 - BOM+AJAX
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T12:29:58+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><h3 id="判断是否为IE浏览器"><a href="#判断是否为IE浏览器" class="headerlink" title="判断是否为IE浏览器"></a>判断是否为IE浏览器</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断是否为IE浏览器，返回-1或者版本号</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIE</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> user = navigator.userAgent;</span><br><span class="line">	<span class="keyword">var</span> ieAgent = user.match(<span class="regexp">/msie (\d+.\d+)/i</span>);</span><br><span class="line">	<span class="keyword">if</span> (ieAgent) &#123;</span><br><span class="line">		<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (user.match(<span class="regexp">/Trident\/7.0/i</span>)) &#123;</span><br><span class="line">			ieAgent = user.match(<span class="regexp">/rv:(\d+.\d+)/i</span>);</span><br><span class="line">			<span class="keyword">return</span> ieAgent[<span class="number">1</span>];</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/11/2016-09-11-ife2015-task2-BOM-AJAX/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -805,7 +807,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -815,7 +817,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
