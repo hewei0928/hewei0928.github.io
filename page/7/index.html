@@ -259,6 +259,113 @@
             
               
                 
+                <a class="post-title-link" href="/2017/12/07/JDK源码学习系列04----ArrayList/" itemprop="url">
+                  JDK源码学习系列04----ArrayList
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-07T13:00:47+08:00" content="2017-12-07">
+              2017-12-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/12/07/JDK源码学习系列04----ArrayList/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/07/JDK源码学习系列04----ArrayList/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>集合一直是java中的重点，今天开始慢慢学习它的源码。</p>
+</blockquote>
+<h2 id="一-ArrayList"><a href="#一-ArrayList" class="headerlink" title="一. ArrayList"></a>一. ArrayList</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+<p><code>ArrayList</code>实现了<code>List</code>, <code>RandomAccess</code>, <code>Clonable</code>, <code>SeriaLizable</code>, 继承了<code>AbstractList</code>。<br><code>ArrayList</code>的类结构图如下：<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/12/07/JDK源码学习系列04----ArrayList/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/12/03/JDK源码学习系列03----StringBuffer及StringBuilder/" itemprop="url">
                   JDK源码学习系列03----StringBilder和StringBuffer
                 </a>
@@ -658,111 +765,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/18/2016-09-18-CSS3选择器详解/" itemprop="url">
-                  CSS3选择器详解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-18T13:55:13+08:00" content="2016-09-18">
-              2016-09-18
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/18/2016-09-18-CSS3选择器详解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/18/2016-09-18-CSS3选择器详解/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-常用css选择器"><a href="#1-常用css选择器" class="headerlink" title="1.常用css选择器"></a>1.常用css选择器</h2><h3 id="1-1-标签选择器"><a href="#1-1-标签选择器" class="headerlink" title="1.1 标签选择器"></a>1.1 标签选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span>&#123;&#125;<span class="comment">/*选择标签名为p的元素*/</span></span><br></pre></td></tr></table></figure>
-<h3 id="1-2-类选择器"><a href="#1-2-类选择器" class="headerlink" title="1.2 类选择器"></a>1.2 类选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;&#125;<span class="comment">/*选择class名为box的元素*/</span></span><br></pre></td></tr></table></figure>
-<h3 id="1-3-ID选择器"><a href="#1-3-ID选择器" class="headerlink" title="1.3 ID选择器"></a>1.3 ID选择器</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#box</span>&#123;&#125;<span class="comment">/*选择id名为box的元素*/</span></span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/18/2016-09-18-CSS3选择器详解/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -808,7 +810,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
