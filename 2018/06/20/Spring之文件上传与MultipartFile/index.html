@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="Spring 文件上传使用的总结及MultipartFile的解析  文件上传前后台交互使用MultipartFile参数接收：单文件上传 前端&amp;lt;form&amp;gt;标签1234&amp;lt;form action=&quot;/UploadOneServlet.do&quot; method=&quot;post&quot; name=&quot;f_upload&quot; enctype=&quot;multipart/form-data&quot;&amp;gt;	&amp;lt;in">
+<meta name="description" content="Spring 文件上传使用的总结及MultipartFile的解析">
 <meta name="keywords" content="Java,Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring之文件上传与MultipartFile">
 <meta property="og:url" content="https://hewei0928.github.io/2018/06/20/Spring之文件上传与MultipartFile/index.html">
 <meta property="og:site_name" content="小跳蛙">
-<meta property="og:description" content="Spring 文件上传使用的总结及MultipartFile的解析  文件上传前后台交互使用MultipartFile参数接收：单文件上传 前端&amp;lt;form&amp;gt;标签1234&amp;lt;form action=&quot;/UploadOneServlet.do&quot; method=&quot;post&quot; name=&quot;f_upload&quot; enctype=&quot;multipart/form-data&quot;&amp;gt;	&amp;lt;in">
+<meta property="og:description" content="Spring 文件上传使用的总结及MultipartFile的解析">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-21T09:35:18.249Z">
+<meta property="og:updated_time" content="2018-06-22T09:26:07.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring之文件上传与MultipartFile">
-<meta name="twitter:description" content="Spring 文件上传使用的总结及MultipartFile的解析  文件上传前后台交互使用MultipartFile参数接收：单文件上传 前端&amp;lt;form&amp;gt;标签1234&amp;lt;form action=&quot;/UploadOneServlet.do&quot; method=&quot;post&quot; name=&quot;f_upload&quot; enctype=&quot;multipart/form-data&quot;&amp;gt;	&amp;lt;in">
+<meta name="twitter:description" content="Spring 文件上传使用的总结及MultipartFile的解析">
 
 
 
@@ -308,6 +308,7 @@
         <blockquote>
 <p>Spring 文件上传使用的总结及MultipartFile的解析</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="前后台交互"><a href="#前后台交互" class="headerlink" title="前后台交互"></a>前后台交互</h2><h3 id="使用MultipartFile参数接收："><a href="#使用MultipartFile参数接收：" class="headerlink" title="使用MultipartFile参数接收："></a>使用MultipartFile参数接收：</h3><h4 id="单文件上传"><a href="#单文件上传" class="headerlink" title="单文件上传"></a>单文件上传</h4><ol>
 <li>前端<code>&lt;form&gt;</code>标签<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/UploadOneServlet.do"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"f_upload"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"multipartFile"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"上传"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
