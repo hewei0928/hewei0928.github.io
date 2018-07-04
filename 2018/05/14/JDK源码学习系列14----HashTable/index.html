@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,Map," />
+  <meta name="keywords" content="Java,JDK,Map," />
 
 
 
@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="HashTable和HashMap是面试时必问的问题，之前已经对Hashtable有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
-<meta name="keywords" content="Java,Map">
+<meta name="description" content="HashTable和HashMap是面试时必问的问题，之前已经对HashMap有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
+<meta name="keywords" content="Java,JDK,Map">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK源码学习系列14----HashTable">
 <meta property="og:url" content="https://hewei0928.github.io/2018/05/14/JDK源码学习系列14----HashTable/index.html">
 <meta property="og:site_name" content="小跳蛙">
-<meta property="og:description" content="HashTable和HashMap是面试时必问的问题，之前已经对Hashtable有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
+<meta property="og:description" content="HashTable和HashMap是面试时必问的问题，之前已经对HashMap有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-15T15:22:24.336Z">
+<meta property="og:updated_time" content="2018-07-04T08:41:11.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JDK源码学习系列14----HashTable">
-<meta name="twitter:description" content="HashTable和HashMap是面试时必问的问题，之前已经对Hashtable有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
+<meta name="twitter:description" content="HashTable和HashMap是面试时必问的问题，之前已经对HashMap有了较深入的理解。但对HashTable的了解就少了不少，这里就对其进行简单的分析。">
 
 
 
@@ -306,7 +306,7 @@
 
       
         <blockquote>
-<p><code>HashTable</code>和<code>HashMap</code>是面试时必问的问题，之前已经对<code>Hashtable</code>有了较深入的理解。但对<code>HashTable</code>的了解就少了不少，这里就对其进行简单的分析。</p>
+<p><code>HashTable</code>和<code>HashMap</code>是面试时必问的问题，之前已经对<code>HashMap</code>有了较深入的理解。但对<code>HashTable</code>的了解就少了不少，这里就对其进行简单的分析。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="类结构"><a href="#类结构" class="headerlink" title="类结构"></a>类结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class Hashtable&lt;K,V&gt;</span><br><span class="line">    extends Dictionary&lt;K,V&gt;</span><br><span class="line">    implements Map&lt;K,V&gt;, Cloneable, java.io.Serializable</span><br></pre></td></tr></table></figure>
@@ -354,6 +354,8 @@
         <div class="post-tags">
           
             <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/JDK/" rel="tag">#JDK</a>
           
             <a href="/tags/Map/" rel="tag">#Map</a>
           
@@ -475,7 +477,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
