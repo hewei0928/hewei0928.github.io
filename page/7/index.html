@@ -249,120 +249,6 @@
             
               
                 
-                <a class="post-title-link" href="/2018/04/19/JDK源码学习系列09----LinkedHashMap/" itemprop="url">
-                  JDK源码学习系列09----LinkedHashMap
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-04-19T10:54:58+08:00" content="2018-04-19">
-              2018-04-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2018/04/19/JDK源码学习系列09----LinkedHashMap/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/19/JDK源码学习系列09----LinkedHashMap/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2018/04/19/JDK源码学习系列09----LinkedHashMap/" class="leancloud_visitors" data-flag-title="JDK源码学习系列09----LinkedHashMap">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>之前的博客已经分析了<code>HashMap</code>的源码，当遍历其内数据时是无序的，而当我们要按照元素插入的顺序来访问键-值对，就需要用到<code>LinkedHashMap</code>。他保持着元素的插入顺序，并可以按照我们的插入顺序进行访问。</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2018/04/19/JDK源码学习系列09----LinkedHashMap/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2018/01/16/JDBC系列之数据库驱动加载/" itemprop="url">
                   JDBC系列之数据库驱动加载
                 </a>
@@ -793,6 +679,179 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/18/JDK源码学习系列08----Arrays/" itemprop="url">
+                  JDK源码学习系列08----Arrays
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-18T09:27:02+08:00" content="2017-12-18">
+              2017-12-18
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/12/18/JDK源码学习系列08----Arrays/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/18/JDK源码学习系列08----Arrays/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/12/18/JDK源码学习系列08----Arrays/" class="leancloud_visitors" data-flag-title="JDK源码学习系列08----Arrays">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>Arrays类是JDK中专门用于进行数组操作的类。自己平时用到倒不是很多，在阅读集合类时发现大量用到了此类中的方法。因此决定开始详细的解析其源码，熟悉各个方法。</p>
+</blockquote>
+<h2 id="方法汇总"><a href="#方法汇总" class="headerlink" title="方法汇总"></a>方法汇总</h2><p><code>Arrays</code>类中的方法大致可以分为以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th style="text-align:center">用处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>copyOf()</td>
+<td style="text-align:center">复制指定的数组</td>
+</tr>
+<tr>
+<td>copyOfRange()</td>
+<td style="text-align:center">将指定数组的某一范围内的数据复制到另一数组内</td>
+</tr>
+<tr>
+<td>binarySearch()</td>
+<td style="text-align:center">使用二分搜索法查找数组内指定元素</td>
+</tr>
+<tr>
+<td>deeepEquals()</td>
+<td style="text-align:center">比较两个数组是否深层次相等</td>
+</tr>
+<tr>
+<td>deepHashCode()</td>
+<td style="text-align:center">基于指定数组的”深层内容”返回哈希值</td>
+</tr>
+<tr>
+<td>deepToString()</td>
+<td style="text-align:center">返回指定数组”深层内容”的字符串表示形式</td>
+</tr>
+<tr>
+<td>equals()</td>
+<td style="text-align:center">比较两个数组是否相等</td>
+</tr>
+<tr>
+<td>fill()</td>
+<td style="text-align:center">将指定对象引用分配给数组的每个元素</td>
+</tr>
+<tr>
+<td>hashCode()</td>
+<td style="text-align:center">基于数组的内容返回哈希值</td>
+</tr>
+<tr>
+<td>sort()</td>
+<td style="text-align:center">按指定顺序对数组元素进行排序</td>
+</tr>
+<tr>
+<td>toString()</td>
+<td style="text-align:center">返回指定数组内容的字符串表示形式</td>
+</tr>
+<tr>
+<td>asList()</td>
+<td style="text-align:center">返回一个受指定数组支持的固定大小的列表</td>
+</tr>
+</tbody>
+</table>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/12/18/JDK源码学习系列08----Arrays/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -838,7 +897,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -848,7 +907,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
