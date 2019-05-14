@@ -249,118 +249,6 @@
             
               
                 
-                <a class="post-title-link" href="/2017/12/15/JDK源码学习系列07----HashSet/" itemprop="url">
-                  JDK源码学习系列07----HashSet
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-12-15T15:12:15+08:00" content="2017-12-15">
-              2017-12-15
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/12/15/JDK源码学习系列07----HashSet/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/15/JDK源码学习系列07----HashSet/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/12/15/JDK源码学习系列07----HashSet/" class="leancloud_visitors" data-flag-title="JDK源码学习系列07----HashSet">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="一-HashSet概述"><a href="#一-HashSet概述" class="headerlink" title="一. HashSet概述"></a>一. HashSet概述</h2><p>HashSet实现Set接口，由哈希表（实际上是一个HashMap实例）支持。主要具有以下的特点：<br>&ensp;&ensp;不保证set的迭代顺序，特别是它不保证该顺序恒久不变有且只允许一个null元素；不允许有重复元素，非同步的。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/12/15/JDK源码学习系列07----HashSet/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2017/12/15/JDK源码学习系列06----HashMap/" itemprop="url">
                   JDK源码学习系列06----HashMap
                 </a>
@@ -800,6 +688,120 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/" itemprop="url">
+                  JDK源码学习系列02----AbstractStringBuilder
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-30T13:02:31+08:00" content="2017-11-30">
+              2017-11-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/30/JDK源码学习系列02----AbstractStringBuilder/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/" class="leancloud_visitors" data-flag-title="JDK源码学习系列02----AbstractStringBuilder">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>因为看<code>StringBuffer</code> 和 <code>StringBuilder</code> 的源码时发现两者都继承了<code>AbstractStringBuilder</code>，并且很多方法都是直接<code>super</code>的父类<code>AbstractStringBuilder</code>的方法，所以还是决定先看<code>AbstractStringBuilder</code>的源码，然后再看<code>StringBuffer</code> 和 <code>StringBuilder</code>.</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/11/30/JDK源码学习系列02----AbstractStringBuilder/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -845,7 +847,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
