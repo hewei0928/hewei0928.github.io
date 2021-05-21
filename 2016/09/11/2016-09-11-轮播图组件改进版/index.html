@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,ife," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="组件改进 完成了前一个轮播图任务后，我又去网上查找了相关资料，最后模仿慕课网旋转木马插件的实现方式对代码进行了改进。">
+<meta name="keywords" content="JavaScript,ife">
+<meta property="og:type" content="article">
+<meta property="og:title" content="轮播图组件改进版">
+<meta property="og:url" content="https://hewei0928.github.io/2016/09/11/2016-09-11-轮播图组件改进版/index.html">
+<meta property="og:site_name" content="气象先生">
+<meta property="og:description" content="组件改进 完成了前一个轮播图任务后，我又去网上查找了相关资料，最后模仿慕课网旋转木马插件的实现方式对代码进行了改进。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-09-11T00:20:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="轮播图组件改进版">
+<meta name="twitter:description" content="组件改进 完成了前一个轮播图任务后，我又去网上查找了相关资料，最后模仿慕课网旋转木马插件的实现方式对代码进行了改进。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://hewei0928.github.io/2016/09/11/2016-09-11-轮播图组件改进版/"/>
+
+  <title> 轮播图组件改进版 | 气象先生 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">气象先生</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">难做的事和应该做的事，往往是同一件事。凡是有意义的事都不会容易</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                轮播图组件改进版
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T07:50:03+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/11/2016-09-11-轮播图组件改进版/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/11/2016-09-11-轮播图组件改进版/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/11/2016-09-11-轮播图组件改进版/" class="leancloud_visitors" data-flag-title="轮播图组件改进版">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="组件改进"><a href="#组件改进" class="headerlink" title="组件改进"></a>组件改进</h2><blockquote>
+<p>完成了前一个轮播图任务后，我又去网上查找了相关资料，最后模仿<a href="http://www.imooc.com/learn/386" target="_blank" rel="noopener">慕课网旋转木马插件</a>的实现方式对代码进行了改进。<br><a id="more"></a></p>
+<h3 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> Carousel = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">this</span>.element = element;<span class="comment">//保存单个轮播图对象</span></span><br><span class="line">		<span class="keyword">this</span>.timer = <span class="literal">null</span>;</span><br><span class="line">		<span class="comment">//默认配置参数</span></span><br><span class="line">		<span class="keyword">this</span>.setting = &#123;</span><br><span class="line">			<span class="string">"width"</span>: <span class="number">500</span>,</span><br><span class="line">			<span class="string">"height"</span>: <span class="number">300</span>,</span><br><span class="line">			<span class="string">"speed"</span>: <span class="number">4000</span>,</span><br><span class="line">			<span class="string">"loop"</span>: <span class="literal">true</span>,</span><br><span class="line">			<span class="string">"reverse"</span>: <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		extend(<span class="keyword">this</span>.setting,<span class="keyword">this</span>.getSetting());</span><br><span class="line">		<span class="keyword">this</span>.imgContainer = element.firstElementChild;<span class="comment">//图像存放框</span></span><br><span class="line">		<span class="keyword">this</span>.img = <span class="keyword">this</span>.imgContainer.getElementsByTagName(<span class="string">'img'</span>)<span class="comment">//存放图像</span></span><br><span class="line">		<span class="keyword">this</span>.imgLen = <span class="keyword">this</span>.img.length;<span class="comment">//图像数量</span></span><br><span class="line">		<span class="keyword">this</span>.setSettingValue();</span><br><span class="line">		<span class="keyword">this</span>.insertArr();</span><br><span class="line">		<span class="keyword">this</span>.ul = element.getElementsByTagName(<span class="string">'ul'</span>)[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">this</span>.liArr = <span class="keyword">this</span>.ul.getElementsByTagName(<span class="string">'li'</span>);</span><br><span class="line">		<span class="keyword">this</span>.createSpan = element.getElementsByClassName(<span class="string">'left-right'</span>)[<span class="number">0</span>]</span><br><span class="line">		<span class="keyword">this</span>.clickLi();</span><br><span class="line">		<span class="comment">//注意使用band来改变setInterval中的作用域</span></span><br><span class="line">		<span class="keyword">this</span>.timer = setInterval(self.autoPlay.bind(self),self.setting.speed);</span><br><span class="line">		<span class="keyword">this</span>.hoverEvent();</span><br><span class="line">		<span class="keyword">this</span>.clickSpan();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Carousel.prototype = &#123;</span><br><span class="line">		<span class="keyword">constructor</span>: Carousel,</span><br><span class="line"></span><br><span class="line">		//设置配置参数去控制基本的宽度;</span><br><span class="line">		setSettingValue: function()&#123;</span><br><span class="line">			<span class="keyword">this</span>.element.style.width = <span class="keyword">this</span>.setting.width + <span class="string">'px'</span>;</span><br><span class="line">			<span class="keyword">this</span>.element.style.height = <span class="keyword">this</span>.setting.height + <span class="string">'px'</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.img.length; i++) &#123;</span><br><span class="line">				<span class="keyword">this</span>.img[i].style.width = <span class="keyword">this</span>.setting.width + <span class="string">'px'</span>;</span><br><span class="line">				<span class="keyword">this</span>.img[i].style.height = <span class="keyword">this</span>.setting.height + <span class="string">'px'</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">this</span>.imgContainer.style.width = <span class="keyword">this</span>.setting.width*<span class="keyword">this</span>.imgLen +<span class="string">'px'</span>;</span><br><span class="line">		&#125;,</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//插入ul和span</span></span><br><span class="line">		insertArr: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> createUl = <span class="built_in">document</span>.createElement(<span class="string">'ul'</span>);</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.imgLen; i++) &#123;</span><br><span class="line">    			createUl.innerHTML += <span class="string">"&lt;li&gt;&lt;/li&gt;"</span>;</span><br><span class="line">    		&#125;</span><br><span class="line">    		addClass(createUl,<span class="string">'Slideshow-nav'</span>);</span><br><span class="line">			addClass(createUl.firstElementChild, <span class="string">'active'</span>);</span><br><span class="line">			<span class="keyword">this</span>.element.appendChild(createUl);</span><br><span class="line">			<span class="keyword">var</span> createSpan = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">    		addClass(createSpan, <span class="string">'left-right'</span>);</span><br><span class="line">    		createSpan.innerHTML = <span class="string">"&lt;span class='nav-left'&gt;&amp;lt;&lt;/span&gt;&lt;span class='nav-right'&gt;&amp;gt;&lt;/span&gt;"</span>;</span><br><span class="line">    		<span class="keyword">this</span>.element.appendChild(createSpan);</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="comment">//点击导航栏切换函数</span></span><br><span class="line">		clickLi: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">			delegateEvent(<span class="keyword">this</span>.ul, <span class="string">'li'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">				<span class="keyword">var</span> iTarget = -that.setting.width*getIndex(<span class="keyword">this</span>);</span><br><span class="line">				<span class="built_in">console</span>.log(iTarget);</span><br><span class="line">				that.removeAllClass();</span><br><span class="line">				addClass(<span class="keyword">this</span>, <span class="string">'active'</span>);</span><br><span class="line">				startMove(that.imgContainer,&#123;</span><br><span class="line">					<span class="string">'left'</span>:iTarget</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">//左右点击切换函数</span></span><br><span class="line">		clickSpan: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">			delegateEvent(<span class="keyword">this</span>.createSpan, <span class="string">'span'</span>, <span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">				<span class="keyword">var</span> index = getIndex(<span class="keyword">this</span>);</span><br><span class="line">				<span class="keyword">var</span> reverse = !!index;</span><br><span class="line">				<span class="keyword">if</span> (self.setting.loop == <span class="literal">true</span>) &#123;</span><br><span class="line">					self.play1(reverse);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					self.play2(reverse);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		play1: <span class="function"><span class="keyword">function</span>(<span class="params">reverse</span>)</span>&#123;<span class="comment">//允许循环时的运动函数</span></span><br><span class="line">			<span class="keyword">var</span> icur = <span class="keyword">this</span>.ul.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>];</span><br><span class="line">			<span class="keyword">var</span> iTarget;</span><br><span class="line">			<span class="keyword">if</span> (reverse) &#123;<span class="comment">//正向运动时</span></span><br><span class="line">				iTarget = getIndex(icur)+<span class="number">1</span>==<span class="keyword">this</span>.imgLen?<span class="number">0</span>: -(getIndex(icur)+<span class="number">1</span>)*<span class="keyword">this</span>.setting.width;</span><br><span class="line">				<span class="keyword">var</span> nextLi = icur.nextElementSibling;</span><br><span class="line">				<span class="keyword">if</span> (nextLi) &#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(nextLi,<span class="string">'active'</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(<span class="keyword">this</span>.ul.firstElementChild,<span class="string">'active'</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;<span class="comment">//反向运动时</span></span><br><span class="line">				iTarget = getIndex(icur) == <span class="number">0</span> ?-(<span class="keyword">this</span>.imgLen<span class="number">-1</span>)*<span class="keyword">this</span>.setting.width:-(getIndex(icur)<span class="number">-1</span>)*<span class="keyword">this</span>.setting.width;</span><br><span class="line">				<span class="keyword">var</span> perviousLi = icur.previousElementSibling;</span><br><span class="line">				<span class="keyword">if</span> (perviousLi) &#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(perviousLi, <span class="string">'active'</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(<span class="keyword">this</span>.ul.lastElementChild, <span class="string">'active'</span>)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			startMove(<span class="keyword">this</span>.imgContainer,&#123;<span class="string">'left'</span>:iTarget&#125;);</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		play2: <span class="function"><span class="keyword">function</span>(<span class="params">reverse</span>)</span>&#123;<span class="comment">//不允许循环时的运动函数</span></span><br><span class="line">			<span class="keyword">var</span> icur = <span class="keyword">this</span>.ul.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>];</span><br><span class="line">			<span class="keyword">var</span> iTarget;</span><br><span class="line">			<span class="keyword">if</span> (reverse) &#123;</span><br><span class="line">				iTarget = getIndex(icur)+<span class="number">1</span>==<span class="keyword">this</span>.imgLen?-(<span class="keyword">this</span>.imgLen<span class="number">-1</span>)*<span class="keyword">this</span>.setting.width: -(getIndex(icur)+<span class="number">1</span>)*<span class="keyword">this</span>.setting.width;</span><br><span class="line">				<span class="keyword">var</span> nextLi = icur.nextElementSibling;</span><br><span class="line">				<span class="keyword">if</span> (nextLi) &#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(nextLi,<span class="string">'active'</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(<span class="keyword">this</span>.ul.firstElementChild,<span class="string">'active'</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				iTarget = getIndex(icur) == <span class="number">0</span> ? <span class="number">0</span>:-(getIndex(icur)<span class="number">-1</span>)*<span class="keyword">this</span>.setting.width;</span><br><span class="line">				<span class="keyword">var</span> perviousLi = icur.previousElementSibling;</span><br><span class="line">				<span class="keyword">if</span> (perviousLi) &#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(perviousLi, <span class="string">'active'</span>);</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					<span class="keyword">this</span>.removeAllClass();</span><br><span class="line">					addClass(createUl.lastElementChild, <span class="string">'active'</span>)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			startMove(element,&#123;<span class="string">'left'</span>:iTarget&#125;);</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">//自动播放函数</span></span><br><span class="line">		autoPlay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> icur = getIndex(<span class="keyword">this</span>.ul.getElementsByClassName(<span class="string">'active'</span>)[<span class="number">0</span>]);</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">var</span> iTarget;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.setting.loop==<span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="keyword">this</span>.play1(<span class="keyword">this</span>.setting.reverse);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">this</span>.play2(<span class="keyword">this</span>.setting.reverse);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">//鼠标移入时取消自动播放</span></span><br><span class="line">		hoverEvent: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">			addEvent(<span class="keyword">this</span>.element,<span class="string">'mouseover'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">				clearInterval(self.timer);</span><br><span class="line">			&#125;);</span><br><span class="line">			addEvent(<span class="keyword">this</span>.element,<span class="string">'mouseout'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">				self.timer = setInterval(self.autoPlay.bind(self),self.setting.speed);</span><br><span class="line">			&#125;)</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">//移除所有li的active状态</span></span><br><span class="line">		removeAllClass: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.liArr.length; i++) &#123;</span><br><span class="line">				removeClass(<span class="keyword">this</span>.liArr[i], <span class="string">'active'</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取人工配置参数</span></span><br><span class="line">		getSetting: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> setting = <span class="keyword">this</span>.element.dataset.setting;</span><br><span class="line">			<span class="keyword">if</span> (setting&amp;&amp;setting != <span class="string">""</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">JSON</span>.parse(setting);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Carousel.init = <span class="function"><span class="keyword">function</span>(<span class="params">elements</span>)</span>&#123;<span class="comment">//为所有元素</span></span><br><span class="line">		<span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">			<span class="keyword">new</span> _this(elements[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">window</span>.extend = <span class="function"><span class="keyword">function</span>(<span class="params">obj1, obj2</span>)</span>&#123;<span class="comment">//简单的类jQuery extend函数</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> obj2)&#123;</span><br><span class="line">			obj1[i] = obj2[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">window</span>.Carousel = Carousel;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// var setting = &#123;</span></span><br><span class="line">	<span class="comment">// 	width: 500,</span></span><br><span class="line">	<span class="comment">// 	height: 300,</span></span><br><span class="line">	<span class="comment">// 	posterWidth: 640,</span></span><br><span class="line">	<span class="comment">// 	posterHeight: 270,</span></span><br><span class="line">	<span class="comment">// 	speed: 4000//自动播放速度·</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line">	<span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'Slideshow'</span>);</span><br><span class="line">	Carousel.init(elements);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h3><p>通过在html的data-*中设置轮播图的具体参数来改变轮播图的配置。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data-setting = '&#123;</span><br><span class="line">							    			"width": 250,//组件宽，即为图片宽</span><br><span class="line">							    			"height": 150,//组件高，即为图片高</span><br><span class="line">							    			"loop": true,//是否循环播放</span><br><span class="line">							    			"reverse": 1,//是否倒序播放</span><br><span class="line">							    			"speed": 4000//自动播放时间间隔</span><br><span class="line">							    		&#125;'</span><br></pre></td></tr></table></figure></p>
+<h3 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h3><p>这一次自己动手封装了一个插件，不算多高级， 但是却很有成就感，而且收获了许多：</p>
+<ul>
+<li><code>clearInterval</code>和<code>setInterval</code>中<code>this</code>指向的问题，可以用<code>bind()</code>来解决。</li>
+<li>利用<strong>事件委托</strong>来绑定事件，可以提高性能，优化代码。</li>
+<li>设置init函数来为所有元素创建实例。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Carousel.init = function(elements)&#123;//为所有元素</span><br><span class="line">	var _this = this;</span><br><span class="line">	for (var i = 0; i &lt; elements.length; i++) &#123;</span><br><span class="line">		new _this(elements[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Carousel.init(elements);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="">轮播图demo</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/ife/" rel="tag">#ife</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/2016-09-10-ife20ife2015-task2-轮播图插件/" rel="next" title="ife20ife2015-task2-轮播图插件">
+                <i class="fa fa-chevron-left"></i> ife20ife2015-task2-轮播图插件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/11/2016-09-11-ife2015-task2-DOM-事件/" rel="prev" title="ife2015-task2 - DOM+事件">
+                ife2015-task2 - DOM+事件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/11/2016-09-11-轮播图组件改进版/"
+     data-title="轮播图组件改进版"
+     data-content=""
+     data-url="https://hewei0928.github.io/2016/09/11/2016-09-11-轮播图组件改进版/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/11/2016-09-11-轮播图组件改进版/"
+           data-title="轮播图组件改进版" data-url="https://hewei0928.github.io/2016/09/11/2016-09-11-轮播图组件改进版/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Mr H" />
+          <p class="site-author-name" itemprop="name">Mr H</p>
+          <p class="site-description motion-element" itemprop="description">气象先生的小博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组件改进"><span class="nav-number">1.</span> <span class="nav-text">组件改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码"><span class="nav-number">1.1.</span> <span class="nav-text">具体代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数设置"><span class="nav-number">1.2.</span> <span class="nav-text">参数设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收获"><span class="nav-number">1.3.</span> <span class="nav-text">收获</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr H</span>
+</div>
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hewei0928"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("62GtBM8MPBOXu58W2Nu1pULq-gzGzoHsz", "sgcbM9KgpdxfpMFpmPk4GUX1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
