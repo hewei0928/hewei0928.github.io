@@ -249,8 +249,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/05/14/JDK源码学习系列14----HashTable/" itemprop="url">
-                  JDK源码学习系列14----HashTable
+                <a class="post-title-link" href="/2020/11/20/JDK源码学习系列01----String/" itemprop="url">
+                  JDK源码学习系列01----String
                 </a>
               
             
@@ -263,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-14T14:27:29+08:00" content="2018-05-14">
-              2018-05-14
+            <time itemprop="dateCreated" datetime="2020-11-20T13:02:31+08:00" content="2020-11-20">
+              2020-11-20
             </time>
           </span>
 
@@ -274,8 +274,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/05/14/JDK源码学习系列14----HashTable/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/14/JDK源码学习系列14----HashTable/" itemprop="commentsCount"></span>
+                <a href="/2020/11/20/JDK源码学习系列01----String/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/11/20/JDK源码学习系列01----String/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -285,7 +285,7 @@
 
           
           
-             <span id="/2018/05/14/JDK源码学习系列14----HashTable/" class="leancloud_visitors" data-flag-title="JDK源码学习系列14----HashTable">
+             <span id="/2020/11/20/JDK源码学习系列01----String/" class="leancloud_visitors" data-flag-title="JDK源码学习系列01----String">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -309,10 +309,10 @@
       
         
           <blockquote>
-<p><code>HashTable</code>和<code>HashMap</code>是面试时必问的问题，之前已经对<code>HashMap</code>有了较深入的理解。但对<code>HashTable</code>的了解就少了不少，这里就对其进行简单的分析。</p>
+<h2 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面"></a>写在最前面</h2><p>&ensp;&ensp;这是我JDK源码学习系列的第一篇博文，我知道源码学习这条路很难坚持，但是我始终相信，不积跬步无以至千里。初步计划是每天早上晨会前看一个类的源码，虽然工作比较忙，但时间就像那个，挤挤总是有的嘛~~晚上回来写写博文，一是加深理解二来也加深记忆方便以后查阅。学习的步骤当然是先从自己已经用的非常熟练的类入手。</p>
 </blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/05/14/JDK源码学习系列14----HashTable/#more" rel="contents">
+            <a class="btn" href="/2020/11/20/JDK源码学习系列01----String/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -363,8 +363,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/05/14/JDK源码学习系列13----Iterator/" itemprop="url">
-                  JDK源码学习系列13-Iterator
+                <a class="post-title-link" href="/2020/07/26/JDK源码学习系列16----arraycopy与对象的复制/" itemprop="url">
+                  JDK源码学习系列16----System.arraycopy与对象的复制
                 </a>
               
             
@@ -377,8 +377,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-14T09:43:36+08:00" content="2018-05-14">
-              2018-05-14
+            <time itemprop="dateCreated" datetime="2020-07-26T09:28:33+08:00" content="2020-07-26">
+              2020-07-26
             </time>
           </span>
 
@@ -388,8 +388,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/05/14/JDK源码学习系列13----Iterator/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/14/JDK源码学习系列13----Iterator/" itemprop="commentsCount"></span>
+                <a href="/2020/07/26/JDK源码学习系列16----arraycopy与对象的复制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/07/26/JDK源码学习系列16----arraycopy与对象的复制/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -399,7 +399,117 @@
 
           
           
-             <span id="/2018/05/14/JDK源码学习系列13----Iterator/" class="leancloud_visitors" data-flag-title="JDK源码学习系列13-Iterator">
+             <span id="/2020/07/26/JDK源码学习系列16----arraycopy与对象的复制/" class="leancloud_visitors" data-flag-title="JDK源码学习系列16----System.arraycopy与对象的复制">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>&ensp;&ensp;观察源码可以发现类中大量方法用到了<code>System.arraycopy()</code>方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*   src:源数组;</span></span><br><span class="line"><span class="comment">*   srcPos:源数组要复制的起始位置; 起始下标，包括</span></span><br><span class="line"><span class="comment">*   dest:目的数组;</span></span><br><span class="line"><span class="comment">*   destPos:目的数组放置的起始位置; 起始下标，包括</span></span><br><span class="line"><span class="comment">*   length:复制的长度; 不包括下标length+start</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">arraycopy</span><span class="params">(Object src,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> srcPos,</span></span></span><br><span class="line"><span class="function"><span class="params">                             Object dest,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> destPos,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> length)</span></span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/06/14/设计模式初识系列06----模板方法模式/" itemprop="url">
+                  设计模式初识系列06----模板方法模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-06-14T20:46:46+08:00" content="2020-06-14">
+              2020-06-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2020/06/14/设计模式初识系列06----模板方法模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/06/14/设计模式初识系列06----模板方法模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2020/06/14/设计模式初识系列06----模板方法模式/" class="leancloud_visitors" data-flag-title="设计模式初识系列06----模板方法模式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -423,10 +533,10 @@
       
         
           <blockquote>
-<p>Iterator与迭代器模应用于集合中，是集合的最佳遍历方式。</p>
+<p>模板方法模式是一种十分常见的设计模式，阅读源码是可以说是处处可见。在日常的工作代码编写中也经常使用。这里来记录一下。模板方法模式在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。</p>
 </blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/05/14/JDK源码学习系列13----Iterator/#more" rel="contents">
+            <a class="btn" href="/2020/06/14/设计模式初识系列06----模板方法模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -477,8 +587,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/05/14/设计模式初识系列03----迭代器模式/" itemprop="url">
-                  设计模式初识系列03----迭代器模式
+                <a class="post-title-link" href="/2020/06/04/《深入理解mybatis原理》一级缓存/" itemprop="url">
+                  《深入理解mybatis原理》一级缓存
                 </a>
               
             
@@ -491,8 +601,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-14T09:13:48+08:00" content="2018-05-14">
-              2018-05-14
+            <time itemprop="dateCreated" datetime="2020-06-04T16:36:49+08:00" content="2020-06-04">
+              2020-06-04
             </time>
           </span>
 
@@ -502,8 +612,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/05/14/设计模式初识系列03----迭代器模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/14/设计模式初识系列03----迭代器模式/" itemprop="commentsCount"></span>
+                <a href="/2020/06/04/《深入理解mybatis原理》一级缓存/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/06/04/《深入理解mybatis原理》一级缓存/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -513,7 +623,7 @@
 
           
           
-             <span id="/2018/05/14/设计模式初识系列03----迭代器模式/" class="leancloud_visitors" data-flag-title="设计模式初识系列03----迭代器模式">
+             <span id="/2020/06/04/《深入理解mybatis原理》一级缓存/" class="leancloud_visitors" data-flag-title="《深入理解mybatis原理》一级缓存">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -536,123 +646,11 @@
 
       
         
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/05/04/多线程及并发学习05----synchornized的用法/" itemprop="url">
-                  多线程及并发学习05-synchornized的用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-04T13:42:41+08:00" content="2018-05-04">
-              2018-05-04
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2018/05/04/多线程及并发学习05----synchornized的用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/04/多线程及并发学习05----synchornized的用法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2018/05/04/多线程及并发学习05----synchornized的用法/" class="leancloud_visitors" data-flag-title="多线程及并发学习05-synchornized的用法">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>synchornized</code>关键字用于控制同步，它修饰的对象主要有以下几种：</p>
-<ul>
-<li>修饰一个代码块，称为同步语块，其作用是获取某个对象或类的锁，直到同步语块结束释放锁</li>
-<li>修饰一个方法，被修饰的方法称为同步方法，其作用是获取<code>this</code>对象的锁，直至方法运行结束释放锁</li>
-<li>修饰一个静态方法，其作用是获取类锁，直至方法运行结束释放锁</li>
-</ul>
+          <blockquote>
+<p><code>MyBatis</code>提供了一级缓存、二级缓存 这两个缓存机制，能够很好地处理和维护缓存，以提高系统的性能。这里主要介绍一级缓存，深入源码，解析其实现原理。</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/05/04/多线程及并发学习05----synchornized的用法/#more" rel="contents">
+            <a class="btn" href="/2020/06/04/《深入理解mybatis原理》一级缓存/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -703,8 +701,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/05/04/多线程及并发学习04----生产者消费者问题/" itemprop="url">
-                  多线程及并发学习04----生产者消费者问题
+                <a class="post-title-link" href="/2020/06/01/《深入理解mybatis原理》Mapper接口绑定及代理 /" itemprop="url">
+                  《深入理解mybatis原理》 Mapper接口绑定及代理
                 </a>
               
             
@@ -717,8 +715,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-04T09:05:52+08:00" content="2018-05-04">
-              2018-05-04
+            <time itemprop="dateCreated" datetime="2020-06-01T14:27:56+08:00" content="2020-06-01">
+              2020-06-01
             </time>
           </span>
 
@@ -728,8 +726,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/05/04/多线程及并发学习04----生产者消费者问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/04/多线程及并发学习04----生产者消费者问题/" itemprop="commentsCount"></span>
+                <a href="/2020/06/01/《深入理解mybatis原理》Mapper接口绑定及代理 /#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/06/01/《深入理解mybatis原理》Mapper接口绑定及代理 /" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -739,7 +737,7 @@
 
           
           
-             <span id="/2018/05/04/多线程及并发学习04----生产者消费者问题/" class="leancloud_visitors" data-flag-title="多线程及并发学习04----生产者消费者问题">
+             <span id="/2020/06/01/《深入理解mybatis原理》Mapper接口绑定及代理 /" class="leancloud_visitors" data-flag-title="《深入理解mybatis原理》 Mapper接口绑定及代理">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -763,10 +761,10 @@
       
         
           <blockquote>
-<p>生产者消费者问题是一个经典的多线程问题，今天花了点时间写了一个，有助于巩固多线程知识</p>
+<p>当定义好一个<code>Mapper接口(UserDao)</code>里，我们并不需要去实现这个类，但<code>sqlSession.getMapper()</code>最终会返回一个实现该接口的对象。这个对象是<code>Mybatis</code>利用<code>jdk</code>的动态代理实现的。这里将介绍这个代理对象的生成过程及其方法的实现过程。</p>
 </blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2018/05/04/多线程及并发学习04----生产者消费者问题/#more" rel="contents">
+            <a class="btn" href="/2020/06/01/《深入理解mybatis原理》Mapper接口绑定及代理 /#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -800,7 +798,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -841,7 +839,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -851,7 +849,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
