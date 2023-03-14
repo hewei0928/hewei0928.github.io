@@ -1,571 +1,204 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion">
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="JDK,">
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="前言 因为看StringBuffer 和 StringBuilder 的源码时发现两者都继承了AbstractStringBuilder，并且很多方法都是直接super的父类AbstractStringBuilder的方法，所以还是决定先看AbstractStringBuilder的源码，然后再看StringBuffer 和 StringBuilder.">
-<meta name="keywords" content="JDK">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>JDK源码学习系列02----AbstractStringBuilder | 气象先生</title><meta name="author" content="Mr H"><meta name="copyright" content="Mr H"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 因为看StringBuffer 和 StringBuilder 的源码时发现两者都继承了AbstractStringBuilder，并且很多方法都是直接super的父类AbstractStringBuilder的方法，所以还是决定先看AbstractStringBuilder的源码，然后再看StringBuffer 和 StringBuilder.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JDK源码学习系列02----AbstractStringBuilder">
-<meta property="og:url" content="https://hewei0928.github.io/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/index.html">
+<meta property="og:url" content="https://hewei0928.github.io/2020/11/30/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9702----AbstractStringBuilder/index.html">
 <meta property="og:site_name" content="气象先生">
 <meta property="og:description" content="前言 因为看StringBuffer 和 StringBuilder 的源码时发现两者都继承了AbstractStringBuilder，并且很多方法都是直接super的父类AbstractStringBuilder的方法，所以还是决定先看AbstractStringBuilder的源码，然后再看StringBuffer 和 StringBuilder.">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-05-21T07:53:03.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2020-11-30T05:02:31.000Z">
+<meta property="article:modified_time" content="2021-05-21T07:53:03.000Z">
+<meta property="article:author" content="Mr H">
+<meta property="article:tag" content="JDK">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK源码学习系列02----AbstractStringBuilder">
-<meta name="twitter:description" content="前言 因为看StringBuffer 和 StringBuilder 的源码时发现两者都继承了AbstractStringBuilder，并且很多方法都是直接super的父类AbstractStringBuilder的方法，所以还是决定先看AbstractStringBuilder的源码，然后再看StringBuffer 和 StringBuilder.">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 0,
-      author: '博主'
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hewei0928.github.io/2020/11/30/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9702----AbstractStringBuilder/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
     }
-  };
-</script>
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JDK源码学习系列02----AbstractStringBuilder',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-05-21 15:53:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
 
-  <link rel="canonical" href="https://hewei0928.github.io/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/">
-
-  <title> JDK源码学习系列02----AbstractStringBuilder | 气象先生 </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
   
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?9683c94ef7d395da3415a0dc4c9ce989";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-
-
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
   
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
   
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">气象先生</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle">难做的事和应该做的事，往往是同一件事。凡是有意义的事都不会容易</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                JDK源码学习系列02----AbstractStringBuilder
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2020-11-30T13:02:31+08:00" content="2020-11-30">
-              2020-11-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/11/30/JDK源码学习系列02----AbstractStringBuilder/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/" class="leancloud_visitors" data-flag-title="JDK源码学习系列02----AbstractStringBuilder">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="气象先生"><span class="site-name">气象先生</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JDK源码学习系列02----AbstractStringBuilder</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-11-30T05:02:31.000Z" title="Created 2020-11-30 13:02:31">2020-11-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-05-21T07:53:03.000Z" title="Updated 2021-05-21 15:53:03">2021-05-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JDK源码学习系列02----AbstractStringBuilder"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>因为看<code>StringBuffer</code> 和 <code>StringBuilder</code> 的源码时发现两者都继承了<code>AbstractStringBuilder</code>，并且很多方法都是直接<code>super</code>的父类<code>AbstractStringBuilder</code>的方法，所以还是决定先看<code>AbstractStringBuilder</code>的源码，然后再看<code>StringBuffer</code> 和 <code>StringBuilder</code>.</p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>##方法汇总</p>
-<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p>&ensp;&ensp;<code>AbstractStringBuilder</code>和<code>String</code>一样，在其内部都是以字符数组的形式存储数据的。也就是<code>String</code>,<code>StringBuffer</code>以及<code>StringBuilder</code>在其内部都是以字符数组的形式存储的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> value[]; <span class="comment">//用于存储字符串</span></span><br><span class="line"><span class="keyword">int</span> count; <span class="comment">//表示字符串的实际长度</span></span><br></pre></td></tr></table></figure>
-<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>&ensp;&ensp;<code>AbstractStringBuilder</code>的构造函数中传入的<code>capacity</code>是指<code>char</code>数组容量，实际长度是以count表示的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AbstractStringBuilder() &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AbstractStringBuilder(<span class="keyword">int</span> capacity) &#123;</span><br><span class="line">    value = <span class="keyword">new</span> <span class="keyword">char</span>[capacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><h4 id="容量和长度"><a href="#容量和长度" class="headerlink" title="容量和长度"></a>容量和长度</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 返回字符串长度，即实际存储的字符数量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 返回char数组容量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">capacity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="AbstractStringBuilder的扩容"><a href="#AbstractStringBuilder的扩容" class="headerlink" title="AbstractStringBuilder的扩容"></a><code>AbstractStringBuilder</code>的扩容</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minimumCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (minimumCapacity &gt; <span class="number">0</span>)</span><br><span class="line">        ensureCapacityInternal(minimumCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minimumCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minimumCapacity - value.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//将char数组进行扩容，并将原数据赋值入新数组内， 浅拷贝</span></span><br><span class="line">        value = Arrays.copyOf(value,</span><br><span class="line">                newCapacity(minimumCapacity));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 计算扩容的长度 </span></span><br><span class="line"><span class="comment">* 不考虑数组长度超出int长的情况下， 数组长度变为value.length*2+2和minCapacity的较大值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">newCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//默认扩容量为原char数组长度*2 + 2;</span></span><br><span class="line">    <span class="keyword">int</span> newCapacity = (value.length &lt;&lt; <span class="number">1</span>) + <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//如果传入的容量大于默认扩容量，则传入容量为新容量  </span></span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//newCapacity &lt;= 0 说明(value.length &lt;&lt; 1) + 2 操作数值溢出 （&gt;Integer.MAX_VALUE） 且newCapacity小于规定最大值</span></span><br><span class="line">    <span class="keyword">return</span> (newCapacity &lt;= <span class="number">0</span> || MAX_ARRAY_SIZE - newCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        ? hugeCapacity(minCapacity)</span><br><span class="line">        : newCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 处理超大容量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hugeCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Integer.MAX_VALUE - minCapacity &lt; <span class="number">0</span>) &#123; <span class="comment">// overflow</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> OutOfMemoryError();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE)</span><br><span class="line">        ? minCapacity : MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符串减少存储空间"><a href="#字符串减少存储空间" class="headerlink" title="字符串减少存储空间"></a>字符串减少存储空间</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把数组长度削减到最小</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trimToSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (count &lt; value.length) &#123;</span><br><span class="line">        <span class="comment">//返回新数组，长度为count</span></span><br><span class="line">        value = Arrays.copyOf(value, count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符数组设置新长度"><a href="#字符数组设置新长度" class="headerlink" title="字符数组设置新长度"></a>字符数组设置新长度</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">int</span> newLength)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (newLength &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(newLength);</span><br><span class="line">    ensureCapacityInternal(newLength);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (count &lt; newLength) &#123;<span class="comment">//设置长度大于原来长度时，后面部分补以空白字符</span></span><br><span class="line">        Arrays.fill(value, count, newLength, <span class="string">'\0'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新字符数量</span></span><br><span class="line">    count = newLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符获取，设置"><a href="#字符获取，设置" class="headerlink" title="字符获取，设置"></a>字符获取，设置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据下标获取对应字符</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charAt</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    <span class="keyword">return</span> value[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回对应下标处的字符对应ASCII码</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">codePointAt</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Character.codePointAtImpl(value, index, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回对应下标前一个字符的ASCII码</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">codePointBefore</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = index - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> ((i &lt; <span class="number">0</span>) || (i &gt;= count)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Character.codePointBeforeImpl(value, index, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取子串，把它拷贝到目标字符数组指定起始位置 （不包括srcEnd下标）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getChars</span><span class="params">(<span class="keyword">int</span> srcBegin, <span class="keyword">int</span> srcEnd, <span class="keyword">char</span>[] dst, <span class="keyword">int</span> dstBegin)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (srcBegin &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(srcBegin);</span><br><span class="line">    <span class="keyword">if</span> ((srcEnd &lt; <span class="number">0</span>) || (srcEnd &gt; count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(srcEnd);</span><br><span class="line">    <span class="keyword">if</span> (srcBegin &gt; srcEnd)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(<span class="string">"srcBegin &gt; srcEnd"</span>);</span><br><span class="line">    System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//字符数组中指定下标字符替换 index:[0~count]</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCharAt</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    value[index] = ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="比较常用的各类append方法"><a href="#比较常用的各类append方法" class="headerlink" title="比较常用的各类append方法"></a>比较常用的各类append方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> append(String.valueOf(obj));<span class="comment">//如果obj==null则返回"null"， 否则调用obj.toString()方法</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>) <span class="comment">//如果为空则添加"null"</span></span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="keyword">int</span> len = str.length();</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">// count + len &gt; 数组长则进行扩容</span></span><br><span class="line">    str.getChars(<span class="number">0</span>, len, value, count);<span class="comment">//将str中的char数组添加至value数组末尾</span></span><br><span class="line">    count += len;<span class="comment">//改变字符串实际长度</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(StringBuffer sb)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (sb == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="keyword">int</span> len = sb.length();</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    sb.getChars(<span class="number">0</span>, len, value, count);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 末尾追加AbstractStringBuilder引用指向的对象</span></span><br><span class="line"><span class="function">AbstractStringBuilder <span class="title">append</span><span class="params">(AbstractStringBuilder asb)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (asb == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="keyword">int</span> len = asb.length();<span class="comment">//返回asb内char数组实际字符数</span></span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//char数组扩容</span></span><br><span class="line">    asb.getChars(<span class="number">0</span>, len, value, count);<span class="comment">//在value数组末尾添加asb内的char数组</span></span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 末尾追加CharSequence引用指向的对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(CharSequence s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> String)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.append((String)s);</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> AbstractStringBuilder)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.append((AbstractStringBuilder)s);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.append(s, <span class="number">0</span>, s.length());<span class="comment">//将charsequence添加至value尾部</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符序列start(包括)到end(不包括)中的字符添加至末尾</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>)</span><br><span class="line">        s = <span class="string">"null"</span>;</span><br><span class="line">    <span class="keyword">if</span> ((start &lt; <span class="number">0</span>) || (start &gt; end) || (end &gt; s.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(</span><br><span class="line">            <span class="string">"start "</span> + start + <span class="string">", end "</span> + end + <span class="string">", s.length() "</span></span><br><span class="line">            + s.length());</span><br><span class="line">    <span class="keyword">int</span> len = end - start;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = start, j = count; i &lt; end; i++, j++)</span><br><span class="line">        value[j] = s.charAt(i);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">char</span>[] str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = str.length;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(str, <span class="number">0</span>, value, count, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 包括str的offset下标， 不包括offset+len下标</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">char</span> str[], <span class="keyword">int</span> offset, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>)                <span class="comment">// let arraycopy report AIOOBE for len &lt; 0</span></span><br><span class="line">        ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(str, offset, value, count, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b) &#123;</span><br><span class="line">        ensureCapacityInternal(count + <span class="number">4</span>);</span><br><span class="line">        value[count++] = <span class="string">'t'</span>;</span><br><span class="line">        value[count++] = <span class="string">'r'</span>;</span><br><span class="line">        value[count++] = <span class="string">'u'</span>;</span><br><span class="line">        value[count++] = <span class="string">'e'</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ensureCapacityInternal(count + <span class="number">5</span>);</span><br><span class="line">        value[count++] = <span class="string">'f'</span>;</span><br><span class="line">        value[count++] = <span class="string">'a'</span>;</span><br><span class="line">        value[count++] = <span class="string">'l'</span>;</span><br><span class="line">        value[count++] = <span class="string">'s'</span>;</span><br><span class="line">        value[count++] = <span class="string">'e'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">    ensureCapacityInternal(count + <span class="number">1</span>);</span><br><span class="line">    value[count++] = c;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i == Integer.MIN_VALUE) &#123;<span class="comment">//为什么单独拎出最小值来添加？？？</span></span><br><span class="line">        append(<span class="string">"-2147483648"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> appendedLength = (i &lt; <span class="number">0</span>) ? Integer.stringSize(-i) + <span class="number">1</span></span><br><span class="line">                                 : Integer.stringSize(i);</span><br><span class="line">    <span class="keyword">int</span> spaceNeeded = count + appendedLength;</span><br><span class="line">    ensureCapacityInternal(spaceNeeded);</span><br><span class="line">    Integer.getChars(i, spaceNeeded, value);</span><br><span class="line">    count = spaceNeeded;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == Long.MIN_VALUE) &#123;</span><br><span class="line">        append(<span class="string">"-9223372036854775808"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> appendedLength = (l &lt; <span class="number">0</span>) ? Long.stringSize(-l) + <span class="number">1</span></span><br><span class="line">                                 : Long.stringSize(l);</span><br><span class="line">    <span class="keyword">int</span> spaceNeeded = count + appendedLength;</span><br><span class="line">    ensureCapacityInternal(spaceNeeded);</span><br><span class="line">    Long.getChars(l, spaceNeeded, value);</span><br><span class="line">    count = spaceNeeded;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">float</span> f)</span> </span>&#123;</span><br><span class="line">    FloatingDecimal.appendTo(f,<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">append</span><span class="params">(<span class="keyword">double</span> d)</span> </span>&#123;</span><br><span class="line">    FloatingDecimal.appendTo(d,<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* append null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> AbstractStringBuilder <span class="title">appendNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c = count;</span><br><span class="line">    ensureCapacityInternal(c + <span class="number">4</span>);</span><br><span class="line">    <span class="comment">// 数组对象及变量在堆栈中的存储需加深了解</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">char</span>[] value = <span class="keyword">this</span>.value;</span><br><span class="line">    value[c++] = <span class="string">'n'</span>;</span><br><span class="line">    value[c++] = <span class="string">'u'</span>;</span><br><span class="line">    value[c++] = <span class="string">'l'</span>;</span><br><span class="line">    value[c++] = <span class="string">'l'</span>;</span><br><span class="line">    count = c;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符删除-delete"><a href="#字符删除-delete" class="headerlink" title="字符删除 delete"></a>字符删除 delete</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*   char数组部分去除</span></span><br><span class="line"><span class="comment">*   </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">delete</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(start);</span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        end = count;</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException();</span><br><span class="line">    <span class="keyword">int</span> len = end - start;</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 复制了之后数组后也许会多出重复的数据，但由于count的限制，外部无法读取这些数据，因此可以当成不存在</span></span><br><span class="line">        System.arraycopy(value, start+len, value, start, count-end);<span class="comment">//从下标为start(包括)删除到下标为end(不包括)</span></span><br><span class="line">        count -= len;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">deleteCharAt</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    System.arraycopy(value, index+<span class="number">1</span>, value, index, count-index-<span class="number">1</span>);</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符串替换-replace"><a href="#字符串替换-replace" class="headerlink" title="字符串替换 replace"></a>字符串替换 replace</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 下标start(包括)至end(不包括)替换为str</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">replace</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end, String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(start);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; count)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(<span class="string">"start &gt; length()"</span>);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(<span class="string">"start &gt; end"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        end = count;</span><br><span class="line">    <span class="keyword">int</span> len = str.length();</span><br><span class="line">    <span class="keyword">int</span> newCount = count + len - (end - start);</span><br><span class="line">    ensureCapacityInternal(newCount);</span><br><span class="line"></span><br><span class="line">    System.arraycopy(value, end, value, start + len, count - end);</span><br><span class="line">    str.getChars(value, start);</span><br><span class="line">    count = newCount;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符串截取-substring"><a href="#字符串截取-substring" class="headerlink" title="字符串截取 substring"></a>字符串截取 substring</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包括start下标处的字符</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> start)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> substring(start, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> CharSequence <span class="title">subSequence</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> substring(start, end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* char数组截取</span></span><br><span class="line"><span class="comment">* start下标（包括） 至 end下标（不包括） </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">substring</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(start);</span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        <span class="comment">// end超出的话会报越界错误</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(end);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(end - start);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(value, start, end - start);<span class="comment">//构造函数中调用Arrays.copyOfRange())进行数组截取</span></span><br><span class="line">    <span class="comment">// 最后相当于调用了System.arraycopy(value, start, 新数组, 0, end-start)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="插入字符-insert"><a href="#插入字符-insert" class="headerlink" title="插入字符 insert"></a>插入字符 insert</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通对象插入</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(obj));<span class="comment">//调用obj.toString()</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//从下标offset处起(包括)插入str</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (offset &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(offset);</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>)</span><br><span class="line">        str = <span class="string">"null"</span>;</span><br><span class="line">    <span class="keyword">int</span> len = str.length();</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//数组扩容len长度</span></span><br><span class="line">    System.arraycopy(value, offset, value, offset + len, count - offset);<span class="comment">//从下标offset处起（包括）将后部char数组后移至len格</span></span><br><span class="line">    str.getChars(value, offset);<span class="comment">//将str内的整个char数组复制入value数组内, 存放位置从下标offset处起（包括）</span></span><br><span class="line">    count += len;<span class="comment">//实际字符数增加</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value数组在下标index字符之前插入str数组从offset下标起（包括）len长度的字符</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">char</span>[] str, <span class="keyword">int</span> offset,<span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(index);</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (len &lt; <span class="number">0</span>) || (offset &gt; str.length - len))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(</span><br><span class="line">            <span class="string">"offset "</span> + offset + <span class="string">", len "</span> + len + <span class="string">", str.length "</span></span><br><span class="line">            + str.length);</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//扩容</span></span><br><span class="line">    System.arraycopy(value, index, value, index + len, count - index);<span class="comment">//value数组从index位置处（包括）右移len格</span></span><br><span class="line">    System.arraycopy(str, offset, value, index, len);<span class="comment">//str从offset处起len长度个char字符复制入value数组内；</span></span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value从下标offset处起（包括）插入字符数组str</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, <span class="keyword">char</span>[] str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (offset &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(offset);</span><br><span class="line">    <span class="keyword">int</span> len = str.length;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(value, offset, value, offset + len, count - offset);</span><br><span class="line">    <span class="comment">// 复制str数组入value数组内</span></span><br><span class="line">    System.arraycopy(str, <span class="number">0</span>, value, offset, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> dstOffset, CharSequence s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>)</span><br><span class="line">        s = <span class="string">"null"</span>;</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> String)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.insert(dstOffset, (String)s);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.insert(dstOffset, s, <span class="number">0</span>, s.length());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value从下标offset处起（包括）插入s的[start,end)部分字符</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> dstOffset, CharSequence s,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>)</span><br><span class="line">        s = <span class="string">"null"</span>;</span><br><span class="line">    <span class="keyword">if</span> ((dstOffset &lt; <span class="number">0</span>) || (dstOffset &gt; <span class="keyword">this</span>.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(<span class="string">"dstOffset "</span>+dstOffset);</span><br><span class="line">    <span class="keyword">if</span> ((start &lt; <span class="number">0</span>) || (end &lt; <span class="number">0</span>) || (start &gt; end) || (end &gt; s.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(</span><br><span class="line">            <span class="string">"start "</span> + start + <span class="string">", end "</span> + end + <span class="string">", s.length() "</span></span><br><span class="line">            + s.length());</span><br><span class="line">    <span class="keyword">int</span> len = end - start;<span class="comment">//插入数组长度</span></span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(value, dstOffset, value, dstOffset + len,</span><br><span class="line">                     count - dstOffset);<span class="comment">//从dstOffset处右移len长度</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=start; i&lt;end; i++)<span class="comment">//[start,end)字符插入value数组内</span></span><br><span class="line">        value[dstOffset++] = s.charAt(i);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, <span class="keyword">boolean</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(b));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, <span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">    ensureCapacityInternal(count + <span class="number">1</span>);</span><br><span class="line">    System.arraycopy(value, offset, value, offset + <span class="number">1</span>, count - offset);</span><br><span class="line">    value[offset] = c;</span><br><span class="line">    count += <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">insert</span><span class="params">(<span class="keyword">int</span> offset, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//省略基础数据类型的插入，类比插入int类型</span></span><br></pre></td></tr></table></figure>
-<h4 id="字符位置获取-indexOf-lastIndexOf"><a href="#字符位置获取-indexOf-lastIndexOf" class="headerlink" title="字符位置获取 indexOf()/lastIndexOf()"></a>字符位置获取 indexOf()/lastIndexOf()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取子串顺序下首次出现的位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> indexOf(str, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取子串顺序下从fromIndex开始（包括）首次出现的位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str, <span class="keyword">int</span> fromIndex)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//value数组在0-count范围内从下标fromIndex起（包括）首次出现str的下标</span></span><br><span class="line">    <span class="keyword">return</span> String.indexOf(value, <span class="number">0</span>, count, str, fromIndex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> lastIndexOf(str, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(String str, <span class="keyword">int</span> fromIndex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> String.lastIndexOf(value, <span class="number">0</span>, count, str, fromIndex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="字符数组倒序排列-reverse"><a href="#字符数组倒序排列-reverse" class="headerlink" title="字符数组倒序排列 reverse()"></a>字符数组倒序排列 reverse()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> AbstractStringBuilder <span class="title">reverse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> hasSurrogates = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">int</span> n = count - <span class="number">1</span>;<span class="comment">// 最大下标</span></span><br><span class="line">    <span class="comment">// 折半交换</span></span><br><span class="line">    <span class="comment">// 如果存在奇数个字符，则跳过中间字符</span></span><br><span class="line">    <span class="comment">//巧妙的循环方式 </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = (n-<span class="number">1</span>) &gt;&gt; <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">        <span class="keyword">int</span> k = n - j; </span><br><span class="line">        <span class="keyword">char</span> cj = value[j];</span><br><span class="line">        <span class="keyword">char</span> ck = value[k];</span><br><span class="line">        value[j] = ck;</span><br><span class="line">        value[k] = cj;</span><br><span class="line">        <span class="keyword">if</span> (Character.isSurrogate(cj) ||</span><br><span class="line">            Character.isSurrogate(ck)) &#123;</span><br><span class="line">            hasSurrogates = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (hasSurrogates) &#123;</span><br><span class="line">        reverseAllValidSurrogatePairs();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">reverseAllValidSurrogatePairs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">char</span> c2 = value[i];</span><br><span class="line">        <span class="keyword">if</span> (Character.isLowSurrogate(c2)) &#123;</span><br><span class="line">            <span class="keyword">char</span> c1 = value[i + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (Character.isHighSurrogate(c1)) &#123;</span><br><span class="line">                value[i++] = c1;</span><br><span class="line">                value[i] = c2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/JDK/" rel="tag">#JDK</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/11/20/JDK源码学习系列01----String/" rel="next" title="JDK源码学习系列01----String">
-                <i class="fa fa-chevron-left"></i> JDK源码学习系列01----String
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/12/03/JDK源码学习系列03----StringBuffer及StringBuilder/" rel="prev" title="JDK源码学习系列03----StringBilder和StringBuffer">
-                JDK源码学习系列03----StringBilder和StringBuffer <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2020/11/30/JDK源码学习系列02----AbstractStringBuilder/" data-title="JDK源码学习系列02----AbstractStringBuilder" data-content data-url="https://hewei0928.github.io/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/">
-  <div class="ds-share-inline">
-    <ul class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2020/11/30/JDK源码学习系列02----AbstractStringBuilder/" data-title="JDK源码学习系列02----AbstractStringBuilder" data-url="https://hewei0928.github.io/2020/11/30/JDK源码学习系列02----AbstractStringBuilder/">
-      </div>
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Mr H">
-          <p class="site-author-name" itemprop="name">Mr H</p>
-          <p class="site-description motion-element" itemprop="description">气象先生的小博客</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">40</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">10</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/hewei0928" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/hewei0928" target="_blank" title="weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  weibo
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://www.zhihu.com/people/hewei0928" target="_blank" title="zhihu">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  zhihu
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p>&amp;ensp;&amp;ensp;<code>AbstractStringBuilder</code>和<code>String</code>一样，在其内部都是以字符数组的形式存储数据的。也就是<code>String</code>,<code>StringBuffer</code>以及<code>StringBuilder</code>在其内部都是以字符数组的形式存储的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> value[]; <span class="comment">//用于存储字符串</span></span><br><span class="line"><span class="type">int</span> count; <span class="comment">//表示字符串的实际长度</span></span><br></pre></td></tr></table></figure>
 
-        
-        
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>&amp;ensp;&amp;ensp;<code>AbstractStringBuilder</code>的构造函数中传入的<code>capacity</code>是指<code>char</code>数组容量，实际长度是以count表示的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AbstractStringBuilder() &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AbstractStringBuilder(<span class="type">int</span> capacity) &#123;</span><br><span class="line">    value = <span class="keyword">new</span> <span class="title class_">char</span>[capacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      </section>
+<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><h4 id="容量和长度"><a href="#容量和长度" class="headerlink" title="容量和长度"></a>容量和长度</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 返回字符串长度，即实际存储的字符数量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">length</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 返回char数组容量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">capacity</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> value.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#成员变量"><span class="nav-number">1.1.</span> <span class="nav-text">成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数"><span class="nav-number">1.2.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#成员方法"><span class="nav-number">1.3.</span> <span class="nav-text">成员方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#容量和长度"><span class="nav-number">1.3.1.</span> <span class="nav-text">容量和长度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AbstractStringBuilder的扩容"><span class="nav-number">1.3.2.</span> <span class="nav-text">AbstractStringBuilder的扩容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串减少存储空间"><span class="nav-number">1.3.3.</span> <span class="nav-text">字符串减少存储空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符数组设置新长度"><span class="nav-number">1.3.4.</span> <span class="nav-text">字符数组设置新长度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符获取，设置"><span class="nav-number">1.3.5.</span> <span class="nav-text">字符获取，设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较常用的各类append方法"><span class="nav-number">1.3.6.</span> <span class="nav-text">比较常用的各类append方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符删除-delete"><span class="nav-number">1.3.7.</span> <span class="nav-text">字符删除 delete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串替换-replace"><span class="nav-number">1.3.8.</span> <span class="nav-text">字符串替换 replace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串截取-substring"><span class="nav-number">1.3.9.</span> <span class="nav-text">字符串截取 substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入字符-insert"><span class="nav-number">1.3.10.</span> <span class="nav-text">插入字符 insert</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符位置获取-indexOf-lastIndexOf"><span class="nav-number">1.3.11.</span> <span class="nav-text">字符位置获取 indexOf()/lastIndexOf()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符数组倒序排列-reverse"><span class="nav-number">1.3.12.</span> <span class="nav-text">字符数组倒序排列 reverse()</span></a></li></ol></li></ol></li></ol></div>
-            
-          </div>
-        </section>
-      
+<h4 id="AbstractStringBuilder的扩容"><a href="#AbstractStringBuilder的扩容" class="headerlink" title="AbstractStringBuilder的扩容"></a><code>AbstractStringBuilder</code>的扩容</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ensureCapacity</span><span class="params">(<span class="type">int</span> minimumCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (minimumCapacity &gt; <span class="number">0</span>)</span><br><span class="line">        ensureCapacityInternal(minimumCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureCapacityInternal</span><span class="params">(<span class="type">int</span> minimumCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minimumCapacity - value.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//将char数组进行扩容，并将原数据赋值入新数组内， 浅拷贝</span></span><br><span class="line">        value = Arrays.copyOf(value,</span><br><span class="line">                newCapacity(minimumCapacity));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 计算扩容的长度 </span></span><br><span class="line"><span class="comment">* 不考虑数组长度超出int长的情况下， 数组长度变为value.length*2+2和minCapacity的较大值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">newCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//默认扩容量为原char数组长度*2 + 2;</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> (value.length &lt;&lt; <span class="number">1</span>) + <span class="number">2</span>;</span><br><span class="line">    <span class="comment">//如果传入的容量大于默认扩容量，则传入容量为新容量  </span></span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//newCapacity &lt;= 0 说明(value.length &lt;&lt; 1) + 2 操作数值溢出 （&gt;Integer.MAX_VALUE） 且newCapacity小于规定最大值</span></span><br><span class="line">    <span class="keyword">return</span> (newCapacity &lt;= <span class="number">0</span> || MAX_ARRAY_SIZE - newCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        ? hugeCapacity(minCapacity)</span><br><span class="line">        : newCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 处理超大容量</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">hugeCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (Integer.MAX_VALUE - minCapacity &lt; <span class="number">0</span>) &#123; <span class="comment">// overflow</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">OutOfMemoryError</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE)</span><br><span class="line">        ? minCapacity : MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    </div>
-  </aside>
+<h4 id="字符串减少存储空间"><a href="#字符串减少存储空间" class="headerlink" title="字符串减少存储空间"></a>字符串减少存储空间</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把数组长度削减到最小</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">trimToSize</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (count &lt; value.length) &#123;</span><br><span class="line">        <span class="comment">//返回新数组，长度为count</span></span><br><span class="line">        value = Arrays.copyOf(value, count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h4 id="字符数组设置新长度"><a href="#字符数组设置新长度" class="headerlink" title="字符数组设置新长度"></a>字符数组设置新长度</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setLength</span><span class="params">(<span class="type">int</span> newLength)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (newLength &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(newLength);</span><br><span class="line">    ensureCapacityInternal(newLength);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (count &lt; newLength) &#123;<span class="comment">//设置长度大于原来长度时，后面部分补以空白字符</span></span><br><span class="line">        Arrays.fill(value, count, newLength, <span class="string">&#x27;\0&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新字符数量</span></span><br><span class="line">    count = newLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
-      </div>
-    </main>
+<h4 id="字符获取，设置"><a href="#字符获取，设置" class="headerlink" title="字符获取，设置"></a>字符获取，设置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据下标获取对应字符</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">char</span> <span class="title function_">charAt</span><span class="params">(<span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    <span class="keyword">return</span> value[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回对应下标处的字符对应ASCII码</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">codePointAt</span><span class="params">(<span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Character.codePointAtImpl(value, index, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回对应下标前一个字符的ASCII码</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">codePointBefore</span><span class="params">(<span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> index - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> ((i &lt; <span class="number">0</span>) || (i &gt;= count)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Character.codePointBeforeImpl(value, index, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取子串，把它拷贝到目标字符数组指定起始位置 （不包括srcEnd下标）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getChars</span><span class="params">(<span class="type">int</span> srcBegin, <span class="type">int</span> srcEnd, <span class="type">char</span>[] dst, <span class="type">int</span> dstBegin)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (srcBegin &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(srcBegin);</span><br><span class="line">    <span class="keyword">if</span> ((srcEnd &lt; <span class="number">0</span>) || (srcEnd &gt; count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(srcEnd);</span><br><span class="line">    <span class="keyword">if</span> (srcBegin &gt; srcEnd)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(<span class="string">&quot;srcBegin &gt; srcEnd&quot;</span>);</span><br><span class="line">    System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//字符数组中指定下标字符替换 index:[0~count]</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCharAt</span><span class="params">(<span class="type">int</span> index, <span class="type">char</span> ch)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    value[index] = ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Mr H</span>
-</div>
 
+<h4 id="比较常用的各类append方法"><a href="#比较常用的各类append方法" class="headerlink" title="比较常用的各类append方法"></a>比较常用的各类append方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> append(String.valueOf(obj));<span class="comment">//如果obj==null则返回&quot;null&quot;， 否则调用obj.toString()方法</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(String str)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="literal">null</span>) <span class="comment">//如果为空则添加&quot;null&quot;</span></span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">// count + len &gt; 数组长则进行扩容</span></span><br><span class="line">    str.getChars(<span class="number">0</span>, len, value, count);<span class="comment">//将str中的char数组添加至value数组末尾</span></span><br><span class="line">    count += len;<span class="comment">//改变字符串实际长度</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(StringBuffer sb)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (sb == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> sb.length();</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    sb.getChars(<span class="number">0</span>, len, value, count);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 末尾追加AbstractStringBuilder引用指向的对象</span></span><br><span class="line">AbstractStringBuilder <span class="title function_">append</span><span class="params">(AbstractStringBuilder asb)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (asb == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> asb.length();<span class="comment">//返回asb内char数组实际字符数</span></span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//char数组扩容</span></span><br><span class="line">    asb.getChars(<span class="number">0</span>, len, value, count);<span class="comment">//在value数组末尾添加asb内的char数组</span></span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 末尾追加CharSequence引用指向的对象</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(CharSequence s)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> appendNull();</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> String)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.append((String)s);</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> AbstractStringBuilder)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.append((AbstractStringBuilder)s);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.append(s, <span class="number">0</span>, s.length());<span class="comment">//将charsequence添加至value尾部</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字符序列start(包括)到end(不包括)中的字符添加至末尾</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(CharSequence s, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">null</span>)</span><br><span class="line">        s = <span class="string">&quot;null&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> ((start &lt; <span class="number">0</span>) || (start &gt; end) || (end &gt; s.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IndexOutOfBoundsException</span>(</span><br><span class="line">            <span class="string">&quot;start &quot;</span> + start + <span class="string">&quot;, end &quot;</span> + end + <span class="string">&quot;, s.length() &quot;</span></span><br><span class="line">            + s.length());</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> end - start;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> start, j = count; i &lt; end; i++, j++)</span><br><span class="line">        value[j] = s.charAt(i);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">char</span>[] str)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(str, <span class="number">0</span>, value, count, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 包括str的offset下标， 不包括offset+len下标</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">char</span> str[], <span class="type">int</span> offset, <span class="type">int</span> len)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>)                <span class="comment">// let arraycopy report AIOOBE for len &lt; 0</span></span><br><span class="line">        ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(str, offset, value, count, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">boolean</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (b) &#123;</span><br><span class="line">        ensureCapacityInternal(count + <span class="number">4</span>);</span><br><span class="line">        value[count++] = <span class="string">&#x27;t&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;r&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;u&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ensureCapacityInternal(count + <span class="number">5</span>);</span><br><span class="line">        value[count++] = <span class="string">&#x27;f&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line">        value[count++] = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">char</span> c)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(count + <span class="number">1</span>);</span><br><span class="line">    value[count++] = c;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (i == Integer.MIN_VALUE) &#123;<span class="comment">//为什么单独拎出最小值来添加？？？</span></span><br><span class="line">        append(<span class="string">&quot;-2147483648&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">appendedLength</span> <span class="operator">=</span> (i &lt; <span class="number">0</span>) ? Integer.stringSize(-i) + <span class="number">1</span></span><br><span class="line">                                 : Integer.stringSize(i);</span><br><span class="line">    <span class="type">int</span> <span class="variable">spaceNeeded</span> <span class="operator">=</span> count + appendedLength;</span><br><span class="line">    ensureCapacityInternal(spaceNeeded);</span><br><span class="line">    Integer.getChars(i, spaceNeeded, value);</span><br><span class="line">    count = spaceNeeded;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">long</span> l)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (l == Long.MIN_VALUE) &#123;</span><br><span class="line">        append(<span class="string">&quot;-9223372036854775808&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">appendedLength</span> <span class="operator">=</span> (l &lt; <span class="number">0</span>) ? Long.stringSize(-l) + <span class="number">1</span></span><br><span class="line">                                 : Long.stringSize(l);</span><br><span class="line">    <span class="type">int</span> <span class="variable">spaceNeeded</span> <span class="operator">=</span> count + appendedLength;</span><br><span class="line">    ensureCapacityInternal(spaceNeeded);</span><br><span class="line">    Long.getChars(l, spaceNeeded, value);</span><br><span class="line">    count = spaceNeeded;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">float</span> f)</span> &#123;</span><br><span class="line">    FloatingDecimal.appendTo(f,<span class="built_in">this</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">append</span><span class="params">(<span class="type">double</span> d)</span> &#123;</span><br><span class="line">    FloatingDecimal.appendTo(d,<span class="built_in">this</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* append null</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">private</span> AbstractStringBuilder <span class="title function_">appendNull</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> count;</span><br><span class="line">    ensureCapacityInternal(c + <span class="number">4</span>);</span><br><span class="line">    <span class="comment">// 数组对象及变量在堆栈中的存储需加深了解</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">char</span>[] value = <span class="built_in">this</span>.value;</span><br><span class="line">    value[c++] = <span class="string">&#x27;n&#x27;</span>;</span><br><span class="line">    value[c++] = <span class="string">&#x27;u&#x27;</span>;</span><br><span class="line">    value[c++] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">    value[c++] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">    count = c;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h4 id="字符删除-delete"><a href="#字符删除-delete" class="headerlink" title="字符删除 delete"></a>字符删除 delete</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*   char数组部分去除</span></span><br><span class="line"><span class="comment">*   </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">delete</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(start);</span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        end = count;</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>();</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> end - start;</span><br><span class="line">    <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 复制了之后数组后也许会多出重复的数据，但由于count的限制，外部无法读取这些数据，因此可以当成不存在</span></span><br><span class="line">        System.arraycopy(value, start+len, value, start, count-end);<span class="comment">//从下标为start(包括)删除到下标为end(不包括)</span></span><br><span class="line">        count -= len;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">deleteCharAt</span><span class="params">(<span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt;= count))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    System.arraycopy(value, index+<span class="number">1</span>, value, index, count-index-<span class="number">1</span>);</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
+<h4 id="字符串替换-replace"><a href="#字符串替换-replace" class="headerlink" title="字符串替换 replace"></a>字符串替换 replace</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 下标start(包括)至end(不包括)替换为str</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">replace</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, String str)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(start);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; count)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(<span class="string">&quot;start &gt; length()&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(<span class="string">&quot;start &gt; end&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        end = count;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">    <span class="type">int</span> <span class="variable">newCount</span> <span class="operator">=</span> count + len - (end - start);</span><br><span class="line">    ensureCapacityInternal(newCount);</span><br><span class="line"></span><br><span class="line">    System.arraycopy(value, end, value, start + len, count - end);</span><br><span class="line">    str.getChars(value, start);</span><br><span class="line">    count = newCount;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
-      </div>
-    </footer>
+<h4 id="字符串截取-substring"><a href="#字符串截取-substring" class="headerlink" title="字符串截取 substring"></a>字符串截取 substring</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包括start下标处的字符</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">substring</span><span class="params">(<span class="type">int</span> start)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> substring(start, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="keyword">public</span> CharSequence <span class="title function_">subSequence</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> substring(start, end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* char数组截取</span></span><br><span class="line"><span class="comment">* start下标（包括） 至 end下标（不包括） </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">substring</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(start);</span><br><span class="line">    <span class="keyword">if</span> (end &gt; count)</span><br><span class="line">        <span class="comment">// end超出的话会报越界错误</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(end);</span><br><span class="line">    <span class="keyword">if</span> (start &gt; end)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(end - start);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(value, start, end - start);<span class="comment">//构造函数中调用Arrays.copyOfRange())进行数组截取</span></span><br><span class="line">    <span class="comment">// 最后相当于调用了System.arraycopy(value, start, 新数组, 0, end-start)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+<h4 id="插入字符-insert"><a href="#插入字符-insert" class="headerlink" title="插入字符 insert"></a>插入字符 insert</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通对象插入</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, Object obj)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(obj));<span class="comment">//调用obj.toString()</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//从下标offset处起(包括)插入str</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, String str)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (offset &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(offset);</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="literal">null</span>)</span><br><span class="line">        str = <span class="string">&quot;null&quot;</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//数组扩容len长度</span></span><br><span class="line">    System.arraycopy(value, offset, value, offset + len, count - offset);<span class="comment">//从下标offset处起（包括）将后部char数组后移至len格</span></span><br><span class="line">    str.getChars(value, offset);<span class="comment">//将str内的整个char数组复制入value数组内, 存放位置从下标offset处起（包括）</span></span><br><span class="line">    count += len;<span class="comment">//实际字符数增加</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value数组在下标index字符之前插入str数组从offset下标起（包括）len长度的字符</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> index, <span class="type">char</span>[] str, <span class="type">int</span> offset,<span class="type">int</span> len)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> ((index &lt; <span class="number">0</span>) || (index &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(index);</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (len &lt; <span class="number">0</span>) || (offset &gt; str.length - len))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(</span><br><span class="line">            <span class="string">&quot;offset &quot;</span> + offset + <span class="string">&quot;, len &quot;</span> + len + <span class="string">&quot;, str.length &quot;</span></span><br><span class="line">            + str.length);</span><br><span class="line">    ensureCapacityInternal(count + len);<span class="comment">//扩容</span></span><br><span class="line">    System.arraycopy(value, index, value, index + len, count - index);<span class="comment">//value数组从index位置处（包括）右移len格</span></span><br><span class="line">    System.arraycopy(str, offset, value, index, len);<span class="comment">//str从offset处起len长度个char字符复制入value数组内；</span></span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value从下标offset处起（包括）插入字符数组str</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, <span class="type">char</span>[] str)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((offset &lt; <span class="number">0</span>) || (offset &gt; length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">StringIndexOutOfBoundsException</span>(offset);</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length;</span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(value, offset, value, offset + len, count - offset);</span><br><span class="line">    <span class="comment">// 复制str数组入value数组内</span></span><br><span class="line">    System.arraycopy(str, <span class="number">0</span>, value, offset, len);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> dstOffset, CharSequence s)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">null</span>)</span><br><span class="line">        s = <span class="string">&quot;null&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> (s <span class="keyword">instanceof</span> String)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.insert(dstOffset, (String)s);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.insert(dstOffset, s, <span class="number">0</span>, s.length());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//value从下标offset处起（包括）插入s的[start,end)部分字符</span></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> dstOffset, CharSequence s,</span></span><br><span class="line"><span class="params">                                     <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">null</span>)</span><br><span class="line">        s = <span class="string">&quot;null&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span> ((dstOffset &lt; <span class="number">0</span>) || (dstOffset &gt; <span class="built_in">this</span>.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IndexOutOfBoundsException</span>(<span class="string">&quot;dstOffset &quot;</span>+dstOffset);</span><br><span class="line">    <span class="keyword">if</span> ((start &lt; <span class="number">0</span>) || (end &lt; <span class="number">0</span>) || (start &gt; end) || (end &gt; s.length()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IndexOutOfBoundsException</span>(</span><br><span class="line">            <span class="string">&quot;start &quot;</span> + start + <span class="string">&quot;, end &quot;</span> + end + <span class="string">&quot;, s.length() &quot;</span></span><br><span class="line">            + s.length());</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> end - start;<span class="comment">//插入数组长度</span></span><br><span class="line">    ensureCapacityInternal(count + len);</span><br><span class="line">    System.arraycopy(value, dstOffset, value, dstOffset + len,</span><br><span class="line">                     count - dstOffset);<span class="comment">//从dstOffset处右移len长度</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=start; i&lt;end; i++)<span class="comment">//[start,end)字符插入value数组内</span></span><br><span class="line">        value[dstOffset++] = s.charAt(i);</span><br><span class="line">    count += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, <span class="type">boolean</span> b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(b));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, <span class="type">char</span> c)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(count + <span class="number">1</span>);</span><br><span class="line">    System.arraycopy(value, offset, value, offset + <span class="number">1</span>, count - offset);</span><br><span class="line">    value[offset] = c;</span><br><span class="line">    count += <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">insert</span><span class="params">(<span class="type">int</span> offset, <span class="type">int</span> i)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> insert(offset, String.valueOf(i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//省略基础数据类型的插入，类比插入int类型</span></span><br></pre></td></tr></table></figure>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
+<h4 id="字符位置获取-indexOf-x2F-lastIndexOf"><a href="#字符位置获取-indexOf-x2F-lastIndexOf" class="headerlink" title="字符位置获取 indexOf()&#x2F;lastIndexOf()"></a>字符位置获取 indexOf()&#x2F;lastIndexOf()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取子串顺序下首次出现的位置</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">indexOf</span><span class="params">(String str)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> indexOf(str, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取子串顺序下从fromIndex开始（包括）首次出现的位置</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">indexOf</span><span class="params">(String str, <span class="type">int</span> fromIndex)</span> &#123;</span><br><span class="line">    <span class="comment">//value数组在0-count范围内从下标fromIndex起（包括）首次出现str的下标</span></span><br><span class="line">    <span class="keyword">return</span> String.indexOf(value, <span class="number">0</span>, count, str, fromIndex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lastIndexOf</span><span class="params">(String str)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> lastIndexOf(str, count);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lastIndexOf</span><span class="params">(String str, <span class="type">int</span> fromIndex)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> String.lastIndexOf(value, <span class="number">0</span>, count, str, fromIndex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+<h4 id="字符数组倒序排列-reverse"><a href="#字符数组倒序排列-reverse" class="headerlink" title="字符数组倒序排列 reverse()"></a>字符数组倒序排列 reverse()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> AbstractStringBuilder <span class="title function_">reverse</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">hasSurrogates</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> count - <span class="number">1</span>;<span class="comment">// 最大下标</span></span><br><span class="line">    <span class="comment">// 折半交换</span></span><br><span class="line">    <span class="comment">// 如果存在奇数个字符，则跳过中间字符</span></span><br><span class="line">    <span class="comment">//巧妙的循环方式 </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> (n-<span class="number">1</span>) &gt;&gt; <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> n - j; </span><br><span class="line">        <span class="type">char</span> <span class="variable">cj</span> <span class="operator">=</span> value[j];</span><br><span class="line">        <span class="type">char</span> <span class="variable">ck</span> <span class="operator">=</span> value[k];</span><br><span class="line">        value[j] = ck;</span><br><span class="line">        value[k] = cj;</span><br><span class="line">        <span class="keyword">if</span> (Character.isSurrogate(cj) ||</span><br><span class="line">            Character.isSurrogate(ck)) &#123;</span><br><span class="line">            hasSurrogates = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (hasSurrogates) &#123;</span><br><span class="line">        reverseAllValidSurrogatePairs();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">reverseAllValidSurrogatePairs</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; count - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="type">char</span> <span class="variable">c2</span> <span class="operator">=</span> value[i];</span><br><span class="line">        <span class="keyword">if</span> (Character.isLowSurrogate(c2)) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">c1</span> <span class="operator">=</span> value[i + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (Character.isHighSurrogate(c1)) &#123;</span><br><span class="line">                value[i++] = c1;</span><br><span class="line">                value[i] = c2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -573,199 +206,6 @@
 
 
 
-  
 
 
-
-  
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"hewei0928"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("62GtBM8MPBOXu58W2Nu1pULq-gzGzoHsz", "sgcbM9KgpdxfpMFpmPk4GUX1");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-</body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://hewei0928.github.io">Mr H</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://hewei0928.github.io/2020/11/30/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9702----AbstractStringBuilder/">https://hewei0928.github.io/2020/11/30/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9702----AbstractStringBuilder/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JDK/">JDK</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/03/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9703----StringBuffer%E5%8F%8AStringBuilder/" title="JDK源码学习系列03----StringBilder和StringBuffer"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">JDK源码学习系列03----StringBilder和StringBuffer</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/20/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701----String/" title="JDK源码学习系列01----String"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">JDK源码学习系列01----String</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2020/11/20/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701----String/" title="JDK源码学习系列01----String"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-20</div><div class="title">JDK源码学习系列01----String</div></div></a></div><div><a href="/2020/12/07/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9704----ArrayList/" title="JDK源码学习系列04----ArrayList"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-07</div><div class="title">JDK源码学习系列04----ArrayList</div></div></a></div><div><a href="/2020/12/03/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9703----StringBuffer%E5%8F%8AStringBuilder/" title="JDK源码学习系列03----StringBilder和StringBuffer"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-03</div><div class="title">JDK源码学习系列03----StringBilder和StringBuffer</div></div></a></div><div><a href="/2020/12/10/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9705----LinkedList/" title="JDK源码学习系列05----LinkedList"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-10</div><div class="title">JDK源码学习系列05----LinkedList</div></div></a></div><div><a href="/2020/12/15/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9706----HashMap/" title="JDK源码学习系列06----HashMap"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-15</div><div class="title">JDK源码学习系列06----HashMap</div></div></a></div><div><a href="/2020/04/19/JDK%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9709----LinkedHashMap/" title="JDK源码学习系列09----LinkedHashMap"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-19</div><div class="title">JDK源码学习系列09----LinkedHashMap</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mr H</div><div class="author-info__description">气象先生的小博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">40</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">成员变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">成员方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%B9%E9%87%8F%E5%92%8C%E9%95%BF%E5%BA%A6"><span class="toc-number">1.3.1.</span> <span class="toc-text">容量和长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AbstractStringBuilder%E7%9A%84%E6%89%A9%E5%AE%B9"><span class="toc-number">1.3.2.</span> <span class="toc-text">AbstractStringBuilder的扩容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%8F%E5%B0%91%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">1.3.3.</span> <span class="toc-text">字符串减少存储空间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E8%AE%BE%E7%BD%AE%E6%96%B0%E9%95%BF%E5%BA%A6"><span class="toc-number">1.3.4.</span> <span class="toc-text">字符数组设置新长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E8%8E%B7%E5%8F%96%EF%BC%8C%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.3.5.</span> <span class="toc-text">字符获取，设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E5%B8%B8%E7%94%A8%E7%9A%84%E5%90%84%E7%B1%BBappend%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.6.</span> <span class="toc-text">比较常用的各类append方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%88%A0%E9%99%A4-delete"><span class="toc-number">1.3.7.</span> <span class="toc-text">字符删除 delete</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2-replace"><span class="toc-number">1.3.8.</span> <span class="toc-text">字符串替换 replace</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96-substring"><span class="toc-number">1.3.9.</span> <span class="toc-text">字符串截取 substring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E5%AD%97%E7%AC%A6-insert"><span class="toc-number">1.3.10.</span> <span class="toc-text">插入字符 insert</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%BD%8D%E7%BD%AE%E8%8E%B7%E5%8F%96-indexOf-x2F-lastIndexOf"><span class="toc-number">1.3.11.</span> <span class="toc-text">字符位置获取 indexOf()&#x2F;lastIndexOf()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E5%80%92%E5%BA%8F%E6%8E%92%E5%88%97-reverse"><span class="toc-number">1.3.12.</span> <span class="toc-text">字符数组倒序排列 reverse()</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/06/19/Spring%E4%B9%8B%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%ACApplicationEvent/" title="Spring之事件监听ApplicationEvent">Spring之事件监听ApplicationEvent</a><time datetime="2021-06-19T07:56:49.000Z" title="Created 2021-06-19 15:56:49">2021-06-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/05/04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%8F%8A%E5%B9%B6%E5%8F%91%E5%AD%A6%E4%B9%A005----synchornized%E7%9A%84%E7%94%A8%E6%B3%95/" title="多线程及并发学习05-synchornized的用法">多线程及并发学习05-synchornized的用法</a><time datetime="2021-05-04T05:42:41.000Z" title="Created 2021-05-04 13:42:41">2021-05-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/05/04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%8F%8A%E5%B9%B6%E5%8F%91%E5%AD%A6%E4%B9%A004----%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/" title="多线程及并发学习04----生产者消费者问题">多线程及并发学习04----生产者消费者问题</a><time datetime="2021-05-04T01:05:52.000Z" title="Created 2021-05-04 09:05:52">2021-05-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/05/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%8F%8A%E5%B9%B6%E5%8F%91%E5%AD%A6%E4%B9%A003----volatile/" title="多线程及并发学习03----volatile 与 可见性">多线程及并发学习03----volatile 与 可见性</a><time datetime="2021-05-03T00:45:36.000Z" title="Created 2021-05-03 08:45:36">2021-05-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/04/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%8F%8A%E5%B9%B6%E5%8F%91%E5%AD%A6%E4%B9%A006----Lock/" title="多线程及并发学习06----Lock">多线程及并发学习06----Lock</a><time datetime="2021-04-26T13:10:47.000Z" title="Created 2021-04-26 21:10:47">2021-04-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Mr H</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
